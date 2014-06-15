@@ -1,20 +1,28 @@
-# Bootstrap
-app/bootstrap*
+/web/bundles/
+/app/bootstrap.php.cache
+/app/cache/*
+/app/logs/*
+/build/
+/vendor/
+/bin/*
+/composer.phar
 
-# Symfony directories
-vendor/*
-*/logs/*
-*/cache/*
-web/uploads/*
-web/bundles/*
+/app/sessions/*
+/app/spool/*
+/app/files/*
 
-# Configuration files
-app/config/parameters.ini
-app/config/parameters.yml
+/web/media/cache/*
+/web/media/test/*
 
-# Composer
-composer.phar
-/nbproject/
+/app/config/parameters.yml
+/app/phpunit.xml
+
+/nbproject/*
+/.rsync_cache
+phantomjsdriver.log
+
+!app/cache/.gitkeep
+!app/logs/.gitkeep
+
 *~
-
 !*.gitkeep
