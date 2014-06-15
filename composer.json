@@ -1,5 +1,5 @@
 {
-    "name": "symfony/framework-standard-edition",
+    "name": "dan/blab",
     "license": "MIT",
     "type": "project",
     "description": "The \"Symfony Standard Edition\" distribution",
@@ -20,7 +20,8 @@
         "incenteev/composer-parameter-handler": "~2.0"
     },
     "require-dev": {
-        "sensio/generator-bundle": "~2.3"
+        "sensio/generator-bundle": "~2.3",
+        "ideato/idephix": "*@dev"
     },
     "scripts": {
         "post-root-package-install": [
@@ -46,6 +47,12 @@
     "config": {
         "bin-dir": "bin"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:danielsan80/Idephix.git"
+        }
+    ],
     "extra": {
         "symfony-app-dir": "app",
         "symfony-web-dir": "web",
