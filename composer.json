@@ -20,8 +20,7 @@
         "incenteev/composer-parameter-handler": "~2.0"
     },
     "require-dev": {
-        "sensio/generator-bundle": "~2.3",
-        "ideato/idephix": "*@dev"
+        "sensio/generator-bundle": "~2.3"
     },
     "scripts": {
         "post-root-package-install": [
@@ -47,12 +46,6 @@
     "config": {
         "bin-dir": "bin"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:danielsan80/Idephix.git"
-        }
-    ],
     "extra": {
         "symfony-app-dir": "app",
         "symfony-web-dir": "web",

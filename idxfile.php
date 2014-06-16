@@ -24,6 +24,15 @@ $targets = array(
                 'app/files/images/users',
                 'app/files/uploads/media',
                 'web/media'
+            ),
+            'shared_symlinks' => array(
+                'app/config/parameters.yml',
+                'app/logs',
+//                'app/sessions',
+//                'app/spool',
+//                'app/files/images/users',
+//                'app/files/uploads/media',
+//                'web/media'
             )
             // 'rsync_include_file' => 'rsync_include.txt'
             // 'migrations' => true
