@@ -6,6 +6,13 @@
     "autoload": {
         "psr-0": { "": "src/", "SymfonyStandard": "app/" }
     },
+    "require-dev": {
+        "sensio/generator-bundle": "~2.3",
+        "phpunit/phpunit": "3.7.*",
+        "behat/mink": "1.5.*@dev",
+        "behat/mink-selenium2-driver": "*",
+        "behat/mink-browserkit-driver": "*"
+    },
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "2.5.*",
@@ -17,11 +24,21 @@
         "symfony/monolog-bundle": "~2.4",
         "sensio/distribution-bundle": "~3.0",
         "sensio/framework-extra-bundle": "~3.0",
-        "incenteev/composer-parameter-handler": "~2.0"
+        "incenteev/composer-parameter-handler": "~2.0",
+
+        "doctrine/migrations": "~1.0@dev",
+        "doctrine/doctrine-migrations-bundle": "dev-master",
+        "doctrine/doctrine-fixtures-bundle": "dev-master",
+        "stof/doctrine-extensions-bundle": "*",
+
+        "liip/doctrine-cache-bundle": "dev-master",
+        "liip/functional-test-bundle": "dev-master",
+
+        "friendsofsymfony/user-bundle": "*",
+        "friendsofsymfony/rest-bundle": "1.1.*",
+        "jms/serializer-bundle": "*"
     },
-    "require-dev": {
-        "sensio/generator-bundle": "~2.3"
-    },
+    
     "scripts": {
         "post-root-package-install": [
             "SymfonyStandard\\Composer::hookRootPackageInstall"
