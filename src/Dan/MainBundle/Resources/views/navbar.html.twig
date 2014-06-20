@@ -1,0 +1,43 @@
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            {#<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>#}
+
+            {% image '@DanMainBundle/Resources/public/img/logo.png'
+                output='/img/logo.png' %}
+                <a class="brand logo" href="{{ path('home') }}"><img src="{{ asset_url }}" alt="Ventoonirico"/></a>
+            {% endimage %}
+            {#<a class="brand" href="{{ path('home') }}">Home</a>#}
+
+            {% if app.user %}
+                <div class="logout pull-right">
+                    <a href="{{ path('logout')}}" class="icon-off" title="logout" ></a>
+                </div>
+                <div class="user pull-right">
+                    {{app.user.username}}
+                </div>
+                <div class="image pull-right">
+                    <a href="{{ path('sonata_user_profile_edit') }}" >
+                        <img class="img-polaroid" src="{{user_image(app.user) | apply_filter('mini', true)}}" />
+                    </a>
+                </div>
+            {% else %}
+                <div class="login pull-right">
+                    <a href="{{path('fos_user_security_login')}}" class="btn btn-mini btn-mini-micro" >login</a>
+                    &nbsp;
+                    <a alt="Login with Google" title="Login with Google" href="{{path('hwi_oauth_service_redirect', { service: 'google' })}}" class="icon-google"></a>
+                    &nbsp;
+                    <a alt="Login with Facebook" title="Login with Facebook" href="{{path('hwi_oauth_service_redirect', { service: 'facebook' })}}" class="icon-facebook"></a>
+                </div>
+            {% endif %}
+                    
+            <div class="nav-collapse">
+                {#{{ knp_menu_render(mainMenu, {'currentClass': 'active', 'ancestorClass': 'active'}) }}#}
+            </div>
+        </div>
+    </div>
+</div>

@@ -2,8 +2,70 @@ dan_core:
     resource: "@DanCoreBundle/Resources/config/routing.yml"
     prefix:   /
 
-
 dan_main:
     resource: "@DanMainBundle/Resources/config/routing.yml"
     prefix:   /
     
+dan_user:
+    resource: "@DanUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+fos_user_profile:
+    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /profile
+
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /register
+
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /resetting
+
+fos_user_change_password:
+    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
+    prefix: /profile
+
+hwi_oauth_redirect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
+    prefix: /login
+
+hwi_oauth_security:
+    resource: "@HWIOAuthBundle/Resources/config/routing/login.xml"
+    prefix: /login
+ 
+hwi_oauth_connect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/connect.xml"
+    prefix: /login
+
+admin:
+    resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
+    prefix: /admin
+
+_sonata_admin:
+    resource: .
+    type: sonata_admin
+    prefix: /admin
+    
+sonata_user:
+    resource: '@SonataUserBundle/Resources/config/routing/admin_security.xml'
+    prefix: /admin
+    
+google_login:
+    pattern: (/admin)?/login/check-google
+    
+facebook_login:
+    pattern: (/admin)?/login/check-facebook
+    
+_security_check:
+    pattern:  (/admin)?/login_check
+    
+_imagine:
+    resource: .
+    type:     imagine
+
+logout:
+    pattern: /logout

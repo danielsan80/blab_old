@@ -1,0 +1,12 @@
+"User account is disabled.": Account disabilitato. Ti è stata inviata un'email con il link di attivazione.
+"User account is locked.": Account bloccato. 
+"User account has expired.": Account scaduto.
+
+profile:
+  flash:
+    updated: |
+      I tuoi dati di accesso sono stati salvati.
+
+change_password:
+  flash:
+    success: La tua password è stata aggiornata.

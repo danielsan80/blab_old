@@ -33,10 +33,25 @@
 
         "liip/doctrine-cache-bundle": "dev-master",
         "liip/functional-test-bundle": "dev-master",
+        
 
         "friendsofsymfony/user-bundle": "*",
         "friendsofsymfony/rest-bundle": "1.1.*",
-        "jms/serializer-bundle": "*"
+        "jms/serializer-bundle": "*",
+
+        "sonata-project/core-bundle": "~2.2@dev",
+        "sonata-project/admin-bundle": "*",
+        "sonata-project/doctrine-orm-admin-bundle": "*",
+        "sonata-project/user-bundle": "*",
+        
+        "knplabs/knp-gaufrette-bundle" : "dev-master",
+        "knplabs/gaufrette" : "0.2.*@dev",
+        "avalanche123/imagine-bundle": "v2.1.2",
+
+        "leafo/lessphp": "0.3.*",
+        "guzzle/guzzle": "~3.1",
+        
+        "hwi/oauth-bundle": "0.3.*@dev"
     },
     
     "scripts": {

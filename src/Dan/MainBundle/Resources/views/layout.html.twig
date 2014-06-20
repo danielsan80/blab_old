@@ -1,0 +1,54 @@
+{% extends 'DanCoreBundle::base.html.twig' %}
+{% from 'DanCoreBundle::flash.html.twig' import session_flashes, flash %}
+
+{% block title %}My Title{% endblock %}
+
+{% block head_style %}
+    {% stylesheets filter='lessphp,cssembed,?yui_css'
+        '@DanMainBundle/Resources/public/less/index.less'
+        %}
+        <link href="{{ asset_url }}" type="text/css" rel="stylesheet"
+            media="screen" />
+    {% endstylesheets %}
+    {% stylesheets filter='cssembed,?yui_css'
+        '@DanMainBundle/Resources/public/jquery-ui-1.8.18.custom/css/ui-lightness/jquery-ui-1.8.18.custom.css'
+         %}
+        <link href="{{ asset_url }}"
+            type="text/css"
+            rel="stylesheet"
+            media="screen" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block head_script %}
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    {#<script data-main="{{ asset('/bundles/danmain/js/main') }}" src="{{ asset('/bundles/danmain/js/libs/require/require.js') }}"></script>#}
+    {#<script src="{{ asset('/bundles/danmain/js/libs/require/require.js') }}"></script>
+    <script src="{{ asset('/bundles/danmain/js/main-built.js') }}"></script>#}
+{% endblock %}
+    
+{% block foot_script %}
+    {% include 'DanMainBundle::_main.js.html.twig' %}
+{% endblock %}
+
+{% block body %}
+
+    {% block container %}
+        {% block navbar %}
+            {% include 'DanMainBundle::navbar.html.twig' %}
+        {% endblock navbar %}
+        <div class="container">
+            <div class="content">
+                {% block content %}
+                {% endblock content %}
+            </div>
+            <footer>
+                {% block footer %}
+                {% endblock footer %}
+            </footer>
+        </div>
+    {% endblock container %}
+{% endblock %}
+    
+
+    

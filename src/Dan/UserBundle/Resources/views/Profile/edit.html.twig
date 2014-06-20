@@ -1,0 +1,18 @@
+{% extends 'DanUserBundle::layout.html.twig' %}
+
+{% block fos_user_content %}
+        <div class="pull-left" >
+            <h4>I tuo account</h4>
+            <div class="well account" >
+                <p>
+                    Email:<br/>
+                    <strong>{{user.email}}</strong>
+                </p>
+                <hr/>
+                {% include "DanUserBundle:Profile:_edit_account.html.twig" with {form: accountForm} %}
+                <hr/>
+                {% include "DanUserBundle:ChangePassword:_changePassword.html.twig" with {form: changePasswordForm} %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,19 @@
+<form name="edit-account" action="" method="post" {{ form_enctype(form) }}>
+    {{form_errors(form)}}
+    <div>
+        {{form_label(form.username)}}
+        {{form_errors(form.username)}}
+        {{form_widget(form.username)}}
+    </div>
+    {#
+        <div>
+            {{form_label(form.email)}}
+            {{form_errors(form.email)}}
+            {{form_widget(form.email)}}
+        </div>
+    #}
+        
+    <input type="submit" value="Cambia" class="btn btn-primary" />
+    {{ form_rest(form) }}
+
+</form>

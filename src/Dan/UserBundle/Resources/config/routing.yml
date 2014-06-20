@@ -1,0 +1,4 @@
+user:
+    resource: "@DanUserBundle/Controller"
+    type: annotation
+

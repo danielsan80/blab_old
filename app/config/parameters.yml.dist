@@ -1,4 +1,5 @@
 parameters:
+    base_url:          http://yourdomain.com
     database_driver:   pdo_mysql
     database_host:     127.0.0.1
     database_port:     ~
@@ -17,3 +18,9 @@ parameters:
     debug_toolbar:          true
     debug_redirects:        false
     use_assetic_controller: true
+
+    google_client_id: 123456789
+    google_client_secret: s3cr3t
+
+    facebook_client_id: 123456789
+    facebook_client_secret: s3cr3t

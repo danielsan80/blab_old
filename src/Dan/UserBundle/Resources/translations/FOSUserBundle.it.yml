@@ -1,0 +1,9 @@
+Bad credentials: Username o password non corretti
+
+security.login.remember_me: ricordami
+resetting.reset.submit: Cambia
+
+registration:
+    check_email: Un'email di attivazione ti è stata inviata a %email%.
+
+change_password.submit: Cambia

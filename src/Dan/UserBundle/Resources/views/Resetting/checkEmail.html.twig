@@ -1,0 +1,13 @@
+{% extends 'DanUserBundle::layout.html.twig' %}
+
+{% block fos_user_content %}
+    <div class="page-center" style="width:50%" >
+        <h4>Password dimenticata?</h4>
+        <div class="well">
+            <p>
+                Ti è stata inviata un'email all'indirizzo {{email}} per il ripristino della tua password.
+            </p>
+        </div>
+    </div>
+{% endblock %}
+

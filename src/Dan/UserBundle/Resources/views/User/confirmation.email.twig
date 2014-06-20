@@ -1,0 +1,16 @@
+{% block subject %}Registration{% endblock %}
+
+{% block body_text %}
+{% autoescape false %}
+Hello {{ user.username }} !
+
+You can confirm your email by accessing {{ confirmationUrl }}
+
+Greetings,
+the Dan team
+{% endautoescape %}
+{% endblock %}
+
+{% block body_html %}
+{% include 'DanUserBundle:User:confirmation_email.html.twig' %}
+{% endblock %}

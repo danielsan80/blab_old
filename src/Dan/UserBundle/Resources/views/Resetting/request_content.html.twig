@@ -1,0 +1,13 @@
+
+<form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
+    <div>
+        {% if invalid_username is defined %}
+            <p>{{invalid_username}} inesistente</p>
+        {% endif %}
+        <label for="username">Username o email:</label>
+        <input type="text" id="username" name="username" required="required" />
+    </div>
+    <div>
+        <input type="submit" value="ripristina" class="btn btn-primary" />
+    </div>
+</form>

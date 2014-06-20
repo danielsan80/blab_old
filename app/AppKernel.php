@@ -16,9 +16,36 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+            
+            new JMS\SerializerBundle\JMSSerializerBundle(),
+            
+            new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
+            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            
+            new Liip\FunctionalTestBundle\LiipFunctionalTestBundle(),
+            new Liip\DoctrineCacheBundle\LiipDoctrineCacheBundle(),
 
+            new FOS\UserBundle\FOSUserBundle(),
+            new FOS\RestBundle\FOSRestBundle(),
+            
+            new Sonata\CoreBundle\SonataCoreBundle(),
+            new Sonata\BlockBundle\SonataBlockBundle(),
+            new Sonata\jQueryBundle\SonatajQueryBundle(),
+            new Sonata\AdminBundle\SonataAdminBundle(),
+            new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
+            new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
+            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
+            
+            new Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(),
+            new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
+            
+            new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
+            
             new Dan\CoreBundle\DanCoreBundle(),
             new Dan\MainBundle\DanMainBundle(),
+            new Dan\UserBundle\DanUserBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

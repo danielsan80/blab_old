@@ -1,0 +1,6 @@
+{% extends 'DanUserBundle::layout.html.twig' %}
+
+{% block fos_user_content %}
+    <h4>Registrazione</h4>
+    {{ 'registration.check_email'|trans({'%email%': user.email}, 'FOSUserBundle') }}</small>
+{% endblock %}

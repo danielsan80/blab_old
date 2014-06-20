@@ -1,0 +1,10 @@
+{% extends 'DanUserBundle::layout.html.twig' %}
+
+{% block fos_user_content %}
+    <div class="page-center">
+        <h4>Registrati</h4>
+        <div class="well" >
+            {% include "FOSUserBundle:Registration:register_content.html.twig" %}
+        </div>
+    </div>
+{% endblock %}

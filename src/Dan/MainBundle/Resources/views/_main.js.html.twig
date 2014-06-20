@@ -1,0 +1,22 @@
+<script type="text/javascript">
+    var require = {
+        config: {
+        }
+    };
+</script>
+
+{% if app.environment=='prod' %}
+    <script data-main="{{ asset('/bundles/danmain/js/main-built') }}" src="{{ asset('/bundles/danmain/js/libs/require/require.js') }}"></script>
+{% else %}
+    <script data-main="{{ asset('/bundles/danmain/js/main') }}" src="{{ asset('/bundles/danmain/js/libs/require/require.js') }}"></script>
+{% endif %}
+
+{# To only use a subset or add more js overwrite and copy paste this block #}
+<script type="text/javascript">
+    if (window.location.hash == '#_=_'){
+        window.location.hash = '';
+    }
+    if (window.location.pathname == '/_=_'){
+        window.location.pathname = '';
+    }
+</script>

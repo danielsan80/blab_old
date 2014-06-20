@@ -1,0 +1,6 @@
+Dan\UserBundle\Entity\User:
+    exclusion_policy: ALL
+    properties:
+        image:
+            expose: true
+            type: string
