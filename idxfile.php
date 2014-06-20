@@ -44,9 +44,6 @@ $targets = array(
 $idx = new Idephix($targets);
 
 $idx->
-    /**
-     * Symfony2 basic deploy
-     */
     add('deploy',
         function($go = false) use ($idx)
         {
@@ -55,32 +52,25 @@ $idx->
             }
             $idx->deploySF2Copy($go);
         })->
-    /**
-     * Build your Symfony project after you have downloaded it for the first time
-     */
-    add('build:fromscratch',
-        function () use ($idx)
+                
+    add('cc',
+        function() use ($idx)
         {
-            if (!file_exists(__DIR__.'/composer.phar')) {
-                $idx->output->writeln("Downloading composer.phar ...");
-                shell_exec('curl -sS https://getcomposer.org/installer | php');
-            }
-
-            passthru("php composer.phar update");
-            passthru("./app/console doctrine:schema:update --force");
-            $idx->runTask('asset:install');
-            passthru("./app/console cache:clear --env=dev");
-            passthru("./app/console cache:clear --env=test");
-            //$idx->runTask('test:run');
+             $idx->local('rm -Rf app/cache/*');
         })->
-    /**
-     * Symfony2 installing assets and running assetic command
-     */
+    
+    add('chmod',
+        function() use ($idx)
+        {
+            $idx->local("chmod -R 777 app/cache app/logs");
+            $idx->local("setfacl -Rn -m u:www-data:rwX -m u:`whoami`:rwX app/cache app/logs");
+            $idx->local("setfacl -dRn -m u:www-data:rwX -m u:`whoami`:rwX app/cache app/logs");
+        })->
     add('asset:install',
         function () use ($idx)
         {
-            passthru("app/console assets:install web");
-            passthru("app/console assetic:dump");
+            $idx->local("app/console assets:install web");
+            $idx->local("app/console assetic:dump");
         })->
     /**
      * run phpunit tests

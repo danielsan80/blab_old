@@ -1,0 +1,4 @@
+main:
+    resource: "@DanMainBundle/Controller"
+    type: annotation
+
