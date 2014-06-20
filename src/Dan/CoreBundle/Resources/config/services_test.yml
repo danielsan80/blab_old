@@ -1,0 +1,16 @@
+parameters:
+#    dan_core.example.class: Dan\CoreBundle\Example
+
+services:
+#    dan_core.example:
+#        class: %dan_core.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+    now:
+        class: DateTime
+        arguments: ["2012-01-01 00:00:00"]
+        public: false
+        
+    dan.clock:
+        class: Dan\CoreBundle\Test\Time\Clock
+        arguments: [@now]

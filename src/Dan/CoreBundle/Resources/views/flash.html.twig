@@ -1,0 +1,40 @@
+{% macro flash(type, message, close, use_raw) %}
+    <div class="alert alert-{{ type }}" data-alert="alert">
+	{% if close|default(true) %}
+            <a class="close pull-right" data-dismiss="alert" href="#">×</a>
+	{% endif %}
+	<p>
+            {% if message is iterable %}
+                {% set messages = message %}
+            {% else %}
+                {% set messages = [message] %}
+            {% endif %}
+                
+            {% for message in messages %}
+                {% if use_raw|default(false) %}
+                    {{ message|trans|raw }}
+                {% else %}
+                    {{ message|trans }}
+                {% endif %}
+                {% if not loop.last %}<br/>{% endif %}
+            {% endfor %}
+                
+	</p>
+    </div>
+{% endmacro %}
+
+{% macro session_flashes(use_raw) %}
+    {% if use_raw is not defined %}
+        {% set use_raw = false %}
+    {% endif %}
+    
+    {% set flashes = app.session.flashbag.all %}
+    {% if flashes|length %}
+        <div class="flashes">
+            {% for type, message in flashes %}
+                {{ _self.flash(type, message, true, use_raw) }}
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endmacro %}
+

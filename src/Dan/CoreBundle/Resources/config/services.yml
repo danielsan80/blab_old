@@ -1,0 +1,29 @@
+parameters:
+#    dan_core.example.class: Dan\CoreBundle\Example
+
+services:
+#    dan_core.example:
+#        class: %dan_core.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+    dan.clock:
+        class: Dan\CoreBundle\Time\Clock
+        
+    router.current_route.factory:
+        class: Dan\CoreBundle\Service\CurrentRoute
+        arguments: [@router, @request]
+        scope: request
+        
+    router.current_route:
+        class: array
+        factory_service: router.current_route.factory
+        factory_method: get
+        
+    dan_core.json_array.form.type:
+        class: Dan\CoreBundle\Form\Type\JsonArrayType
+        tags:
+            - { name: form.type, alias: json_array }
+    dan_core.yaml.form.type:
+        class: Dan\CoreBundle\Form\Type\YamlType
+        tags:
+            - { name: form.type, alias: yaml }
