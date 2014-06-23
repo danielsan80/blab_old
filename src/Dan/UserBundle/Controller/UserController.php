@@ -2,7 +2,7 @@
 
 namespace Dan\UserBundle\Controller;
 
-use Dan\CommonBundle\Controller\Controller;
+use Dan\CoreBundle\Controller\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;

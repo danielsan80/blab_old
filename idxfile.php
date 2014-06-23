@@ -62,14 +62,14 @@ $idx->
     add('chmod',
         function() use ($idx)
         {
-            $idx->local("chmod -R 777 app/cache app/logs");
-            $idx->local("setfacl -Rn -m u:www-data:rwX -m u:`whoami`:rwX app/cache app/logs");
-            $idx->local("setfacl -dRn -m u:www-data:rwX -m u:`whoami`:rwX app/cache app/logs");
+            $idx->local("chmod -R 777 app/cache app/logs  app/files app/sessions web/media");
+            $idx->local("setfacl -Rn -m u:www-data:rwX -m u:`whoami`:rwX app/cache app/logs  app/files app/sessions web/media");
+            $idx->local("setfacl -dRn -m u:www-data:rwX -m u:`whoami`:rwX app/cache app/logs  app/files app/sessions web/media");
         })->
     add('asset:install',
         function () use ($idx)
         {
-            $idx->local("app/console assets:install web");
+            $idx->local("app/console assets:install");
             $idx->local("app/console assetic:dump");
         })->
     /**
