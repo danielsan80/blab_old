@@ -28,6 +28,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
 
         $user = new User();
         $user->setUsername('admin');
+        $user->setDisplayName('Admin');
         $user->setEmail('admin@admin.it');
         $user->setPlainPassword('admin');
         $user->setEnabled(true);
@@ -41,6 +42,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         
         $user = new User();
         $user->setUsername('mario');
+        $user->setDisplayName('Mario');
         $user->setEmail('mario@mario.it');
         $user->setPlainPassword('mario');
         $user->setEnabled(true);
@@ -52,6 +54,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
  
         $user = new User();
         $user->setUsername('luigi');
+        $user->setDisplayName('Luigi');
         $user->setEmail('luigi@luigi.it');
         $user->setPlainPassword('luigi');
         $user->setEnabled(true);

@@ -53,6 +53,16 @@ $idx->
             $idx->deploySF2Copy($go);
         })->
                 
+    add('dbreset',
+        function() use ($idx)
+        {
+             $idx->local('app/console doctrine:database:drop --force');
+             $idx->local('app/console doctrine:database:create');
+             $idx->local('app/console doctrine:migrations:migrate --no-interaction');
+             $idx->local('app/console doctrine:fixtures:load --no-interaction');
+             $idx->runTask('cc');
+        })->
+                
     add('cc',
         function() use ($idx)
         {

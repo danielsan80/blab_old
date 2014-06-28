@@ -1,0 +1,24 @@
+services:
+    dan_user.registration.form.type:
+        class: Dan\UserBundle\Form\Type\RegistrationFormType
+        arguments: [Dan\UserBundle\Entity\User]
+        calls:
+            - [ setUserManager, [ @fos_user.user_manager ]]
+        tags:
+            - { name: form.type, alias: dan_user_registration }
+
+    dan_user.resetting.form.type:
+        class: Dan\UserBundle\Form\Type\ResettingFormType
+        tags:
+            - { name: form.type, alias: dan_user_resetting }
+            
+    dan_user.change_password.form.type:
+        class: Dan\UserBundle\Form\Type\ChangePasswordFormType
+        tags:
+            - { name: form.type, alias: dan_user_change_password }
+            
+    dan_user.profile.form.type:
+        class: Dan\UserBundle\Form\Type\ProfileFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: dan_user_profile_account }

@@ -21,6 +21,11 @@ class User extends BaseUser
     protected $id;
     
     /**
+     * @ORM\Column(name="display_name", type="string", length=255, nullable=false)
+     */
+    protected $displayName;
+ 
+    /**
      * @ORM\Column(name="google_id", type="string", length=255, nullable=true)
      */
     protected $googleId;
@@ -54,6 +59,16 @@ class User extends BaseUser
     public function getId()
     {
         return $this->id;
+    }
+    
+    public function setDisplayName( $name )
+    {
+        $this->displayName = $name;
+    }
+
+    public function getDisplayName()
+    {
+        return $this->displayName;
     }
     
     public function setGoogleId( $googleId )
@@ -104,6 +119,13 @@ class User extends BaseUser
     public function getImage()
     {
         return $this->image;
+    }
+    
+    
+    public function generateDisplayName()
+    {
+        $name = explode('@', $this->getEmail());
+        $this->displayName = $name[0];
     }
     
 }

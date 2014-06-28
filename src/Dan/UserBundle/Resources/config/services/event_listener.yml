@@ -1,0 +1,5 @@
+services:
+    kernel.listener.user_listener:
+        class: Dan\UserBundle\EventListener\UserListener
+        tags:
+            - { name: doctrine.event_listener, event: prePersist, connection: default }

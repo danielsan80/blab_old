@@ -10,6 +10,21 @@ use Symfony\Component\Security\Core\User\UserInterface;
  
 class FOSUBUserProvider extends BaseClass implements UserProviderInterface
 {
+    private $logger;
+    
+    public function setLogger($logger)
+    {
+        $this->logger = $logger;
+    }
+
+    private function log($message, $params=array())
+    {
+        if (!$this->logger) {
+            return;
+        }
+
+        $this->logger->info('[FOS] '.$message, $params);
+    }
     /**
      * {@inheritDoc}
      */
@@ -38,7 +53,6 @@ class FOSUBUserProvider extends BaseClass implements UserProviderInterface
         $userId = $response->getUsername();
         $email = $response->getEmail();
         
-        
         $service = $response->getResourceOwner()->getName();
         $getServiceId = 'get'.ucfirst($service).'Id';
         $setServiceId = 'set'.ucfirst($service).'Id';
@@ -52,17 +66,21 @@ class FOSUBUserProvider extends BaseClass implements UserProviderInterface
         
         if (null === $user) {
             $user = $this->userManager->createUser();
-            $username = $response->getUsername();
             if (!($email = $response->getEmail())) {
                 $email = $response->getUsername();
             }
 
-            $pos = strpos($username,'@');
+            $pos = strpos($email,'@');
             $pos = $pos!==false?$pos:null;
             $username = substr($email,0,$pos);
+            $name = $response->getRealName();
+            if (!$name) {
+                $name = $username;
+            }
 
             $user->setUsername($username);
             $user->setEmail($email);
+            $user->setDisplayName($name);
             $user->setPassword('');
             $user->setEnabled(true);
         }
