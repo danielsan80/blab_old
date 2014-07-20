@@ -11,6 +11,10 @@ class ProfileFormType extends BaseProfileFormType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
+        $builder->add('displayName', 'text', array(
+            'label' => 'Display name',
+            'required' => true,
+        ));
         $builder->remove('current_password');
         $builder->remove('email');
     }

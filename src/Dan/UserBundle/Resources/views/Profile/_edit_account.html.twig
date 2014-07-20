@@ -1,9 +1,14 @@
-<form name="edit-account" action="" method="post" {{ form_enctype(form) }}>
+{{ form_start(form, { attr: { class: "edit-account" } }) }}
     {{form_errors(form)}}
     <div>
         {{form_label(form.username)}}
         {{form_errors(form.username)}}
         {{form_widget(form.username)}}
+    </div>
+    <div>
+        {{form_label(form.displayName)}}
+        {{form_errors(form.displayName)}}
+        {{form_widget(form.displayName)}}
     </div>
     {#
         <div>
@@ -13,7 +18,6 @@
         </div>
     #}
         
-    <input type="submit" value="Cambia" class="btn btn-primary" />
-    {{ form_rest(form) }}
-
-</form>
+    {{form_widget(form.submit, {attr: {class: "btn btn-primary" }})}}
+    {#<input type="submit" value="Cambia" class="btn btn-primary" />#}
+{{ form_end(form) }}

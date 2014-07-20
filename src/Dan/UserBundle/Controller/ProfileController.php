@@ -44,16 +44,14 @@ class ProfileController extends Controller
      *
      * @throws AccessDeniedException
      */
-    public function editProfileAction()
+    public function editAction()
     {
         $user = $this->getUser();
-        $userManager = $this->get('model.manager.user');
         
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
         }
         
-//        $user = $userManager->findUserBy(array('id' => $user->getId()));
         
         $accountForm = $this->getAccountForm($user);
         $passwordChangeForm = $this->getPasswordChangeForm($user);
@@ -64,7 +62,7 @@ class ProfileController extends Controller
             'changePasswordForm' => $passwordChangeForm->createView(),
         ));
     }
-    
+
     /**
      * @param string $action
      * @param string $value
@@ -89,9 +87,15 @@ class ProfileController extends Controller
     {
         $confirmationEnabled = $this->container->getParameter('fos_user.registration.confirmation.enabled');
         
-        $form = $this->get('sonata_user_authentication_form');
+        $form = $this->container->get('fos_user.profile.form');
         $form->setData($user);
-        $formHandler = $this->get('sonata_user_authentication_form_handler');
+
+
+        $form->add('submit', 'submit', array(
+            'label' => 'Save',
+        ));
+
+        $formHandler = $this->container->get('fos_user.profile.form.handler');
         
         if ($this->getRequestDataFormName()==$form->getName()) {
             $process = $formHandler->process($user, $confirmationEnabled);
@@ -107,6 +111,10 @@ class ProfileController extends Controller
     {
         $form = $this->get('fos_user.change_password.form');
         $formHandler = $this->get('fos_user.change_password.form.handler');
+
+        $form->add('submit', 'submit', array(
+            'label' => 'Change',
+        ));
 
         if ($this->getRequestDataFormName()==$form->getName()) {
             $process = $formHandler->process($user);
