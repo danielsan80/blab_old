@@ -46,6 +46,7 @@ class AppKernel extends Kernel
             new Dan\CoreBundle\DanCoreBundle(),
             new Dan\MainBundle\DanMainBundle(),
             new Dan\UserBundle\DanUserBundle(),
+            new Dan\Plugin\DiaryBundle\DanPluginDiaryBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

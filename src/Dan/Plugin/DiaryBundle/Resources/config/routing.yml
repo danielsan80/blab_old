@@ -1,0 +1,4 @@
+main:
+    resource: "@DanPluginDiaryBundle/Controller"
+    type: annotation
+

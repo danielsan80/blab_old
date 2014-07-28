@@ -5,10 +5,18 @@ dan_core:
 dan_main:
     resource: "@DanMainBundle/Resources/config/routing.yml"
     prefix:   /
-    
+
 dan_user:
     resource: "@DanUserBundle/Resources/config/routing.yml"
     prefix:   /
+
+dan_plugin_diary:
+    resource: "@DanPluginDiaryBundle/Resources/config/routing.yml"
+    prefix:   /
+
+
+
+
 
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
@@ -36,7 +44,7 @@ hwi_oauth_redirect:
 hwi_oauth_security:
     resource: "@HWIOAuthBundle/Resources/config/routing/login.xml"
     prefix: /login
- 
+
 hwi_oauth_connect:
     resource: "@HWIOAuthBundle/Resources/config/routing/connect.xml"
     prefix: /login
@@ -49,20 +57,20 @@ _sonata_admin:
     resource: .
     type: sonata_admin
     prefix: /admin
-    
+
 sonata_user:
     resource: '@SonataUserBundle/Resources/config/routing/admin_security.xml'
     prefix: /admin
-    
+
 google_login:
     pattern: (/admin)?/login/check-google
-    
+
 facebook_login:
     pattern: (/admin)?/login/check-facebook
-    
+
 _security_check:
     pattern:  (/admin)?/login_check
-    
+
 _imagine:
     resource: .
     type:     imagine
