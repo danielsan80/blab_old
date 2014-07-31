@@ -1,0 +1,23 @@
+{% extends 'DanMainBundle::layout.html.twig' %}
+
+{% block title %}blab{% endblock %}
+{% block content %}
+    <div class="pull-right">
+        <ul class="unstyled inline record_actions">
+            <li>
+                {{ form_start(delete_form) }}
+                    {{ form_widget(delete_form.submit, {attr: {class:"btn btn-mini btn-danger"}}) }}
+                {{ form_end(delete_form) }}
+            </li>
+            <li>
+                <a href="{{ path('report') }}" class="btn btn-mini">
+                    Back
+                </a>
+            </li>
+        </ul>
+    </div>
+    <h3>Report</h3>
+
+
+    {% include 'DanPluginDiaryBundle:Report:_form.html.twig' with {form: edit_form} %}
+{% endblock %}

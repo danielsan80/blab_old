@@ -1,0 +1,19 @@
+{% extends 'DanMainBundle::layout.html.twig' %}
+
+{% block title %}blab{% endblock %}
+{% block content %}
+    <div class="pull-right" >
+        <ul class="unstyled inline record_actions">
+            <li>
+                <a href="{{ path('report') }}" class="btn btn-mini">
+                    Back
+                </a>
+            </li>
+        </ul>
+    </div>
+ 
+    <h3>New report</h3>
+
+
+    {% include 'DanPluginDiaryBundle:Report:_form.html.twig' %}
+{% endblock %}
