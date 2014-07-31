@@ -67,7 +67,7 @@ class RegexpController extends Controller
      * @Method("PUT")
      * @Template("DanPluginDiaryBundle:Regexp:edit.html.twig")
      */
-    public function updateAction()
+    public function updateAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -92,56 +92,5 @@ class RegexpController extends Controller
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
-    }
-    /**
-     * Deletes a Report entity.
-     *
-     * @Route("/{id}", name="report_delete")
-     * @Method("DELETE")
-     */
-    public function deleteAction(Request $request, $id)
-    {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('DanPluginDiaryBundle:Report')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Report entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('report'));
-    }
-
-    /**
-     * Creates a form to delete a Report entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm($id, $options = array())
-    {
-        $defaults = array(
-            'label' => 'Delete',
-            'class' => '',
-        );
-        $options = array_merge($defaults, $options);
-
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('report_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array(
-                'attr' => array('class' =>$options['class']),
-                'label' => $options['label']
-            ))
-            ->getForm()
-        ;
     }
 }

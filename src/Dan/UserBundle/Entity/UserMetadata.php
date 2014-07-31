@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * UserMetadata
  *
- * @ORM\Table()
- * @ORM\Entity(repositoryClass="Dan\UserBundle\Entity\UserMetadataRepository")
+ * @ORM\Table(name="dan_user_metadata")
+ * @ORM\Entity(repositoryClass="Dan\UserBundle\Entity\Repository\UserMetadataRepository")
  */
 class UserMetadata
 {
@@ -22,9 +22,8 @@ class UserMetadata
     private $id;
 
     /**
-     * @var \stdClass
-     *
-     * @ORM\Column(name="user", type="object")
+     * @ORM\ManyToOne(targetEntity="\Dan\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $user;
 
@@ -38,14 +37,7 @@ class UserMetadata
     /**
      * @var string
      *
-     * @ORM\Column(name="path", type="string", length=255)
-     */
-    private $path;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="content", type="text")
+     * @ORM\Column(name="content", type="json_array", nullable=true)
      */
     private $content;
 
@@ -63,23 +55,26 @@ class UserMetadata
     /**
      * Set user
      *
-     * @param \stdClass $user
+     * @param User $user
      * @return UserMetadata
      */
-    public function setUser($user)
+    public function setUser(User $user)
     {
         $this->user = $user;
-
+    
         return $this;
     }
 
     /**
      * Get user
      *
-     * @return \stdClass 
+     * @return User
      */
     public function getUser()
     {
+        if (!$this->user) {
+            $this->user = new User();
+        }
         return $this->user;
     }
 
@@ -104,29 +99,6 @@ class UserMetadata
     public function getContext()
     {
         return $this->context;
-    }
-
-    /**
-     * Set path
-     *
-     * @param string $path
-     * @return UserMetadata
-     */
-    public function setPath($path)
-    {
-        $this->path = $path;
-
-        return $this;
-    }
-
-    /**
-     * Get path
-     *
-     * @return string 
-     */
-    public function getPath()
-    {
-        return $this->path;
     }
 
     /**
