@@ -7363,9 +7363,12 @@ body {
   margin-left: -10px;
   padding-top: 10px;
   padding-bottom: 10px;
+  font-size: 2.5em;
+  vertical-align: bottom;
 }
 .navbar .logo img {
   height: 40px;
+  margin-right: 10px;
 }
 .navbar .login {
   padding: 17px 0px 17px 20px;
@@ -7430,6 +7433,13 @@ form ul.errors li {
   height: 16px;
   line-height: 16px;
   text-align: right;
+}
+form textarea {
+  width: 100%;
+  min-height: 400px;
+}
+.clear {
+  clear: both;
 }
 .clearfix {
   *zoom: 1;

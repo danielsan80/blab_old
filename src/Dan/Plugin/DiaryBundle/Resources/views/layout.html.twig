@@ -1,0 +1,9 @@
+{% extends 'DanMainBundle::layout.html.twig' %}
+
+    
+{% block foot_script %}
+    {{ parent() }}
+    {% include 'DanPluginDiaryBundle::_main.js.html.twig' %}
+{% endblock %}
+
+    

@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ReportType extends AbstractType
+class RegexpDataType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -15,7 +15,7 @@ class ReportType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('content')
+            ->add('data', 'yaml')
         ;
     }
     
@@ -25,7 +25,7 @@ class ReportType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Dan\Plugin\DiaryBundle\Entity\Report'
+            'data_class' => 'Dan\Plugin\DiaryBundle\Model\RegexpData'
         ));
     }
 
@@ -34,6 +34,6 @@ class ReportType extends AbstractType
      */
     public function getName()
     {
-        return 'dan_plugin_diary_report';
+        return 'dan_plugin_diary_regexp_data';
     }
 }

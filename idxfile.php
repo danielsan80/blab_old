@@ -76,10 +76,10 @@ $idx->
             $idx->local("setfacl -Rn -m u:www-data:rwX -m u:`whoami`:rwX app/cache app/logs  app/files app/sessions web/media");
             $idx->local("setfacl -dRn -m u:www-data:rwX -m u:`whoami`:rwX app/cache app/logs  app/files app/sessions web/media");
         })->
-    add('asset:install',
+    add('assets:install',
         function () use ($idx)
         {
-            $idx->local("app/console assets:install");
+            $idx->local("app/console assets:install --symlink --relative");
             $idx->local("app/console assetic:dump");
         })->
     /**

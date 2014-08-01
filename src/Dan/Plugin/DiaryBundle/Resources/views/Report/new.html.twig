@@ -1,4 +1,4 @@
-{% extends 'DanMainBundle::layout.html.twig' %}
+{% extends 'DanPluginDiaryBundle::layout.html.twig' %}
 
 {% block title %}blab{% endblock %}
 {% block content %}
@@ -14,6 +14,11 @@
  
     <h3>New report</h3>
 
-
-    {% include 'DanPluginDiaryBundle:Report:_form.html.twig' %}
+    <div class="row">
+        <div class="span6">
+            {% include 'DanPluginDiaryBundle:Report:_form.html.twig' %}
+        </div>
+        <div class="span6">
+        </div>
+    </div>
 {% endblock %}
