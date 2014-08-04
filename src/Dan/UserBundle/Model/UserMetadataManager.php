@@ -4,7 +4,7 @@ namespace Dan\UserBundle\Model;
 use Dan\UserBundle\Entity\User;
 use Dan\UserBundle\Entity\UserMetadata;
 
-class UserMetadataRetriever
+class UserMetadataManager
 {
     private $objectManager;
 
@@ -15,7 +15,7 @@ class UserMetadataRetriever
 
     public function getMetadata(User $user, $context, $path = null, $default = null, $params = array())
     {
-        $repo = $this->objectManager->getRepository('DanUserBundle:UserManager');
+        $repo = $this->objectManager->getRepository('DanUserBundle:UserMetadata');
 
         $userMetadata = $repo->findOneBy(array(
             'user' => $user,
