@@ -1,13 +1,30 @@
 <?php
 namespace Dan\Plugin\DiaryBundle\Regexp;
 
+use Symfony\Component\Yaml\Yaml;
+
 class Helper
 {
     private $transformer;
+    private $defaultRegexpFilename;
 
     public function __construct(Transformer $transformer)
     {
         $this->transformer = $transformer;
+    }
+
+    public function setDefaultRegexpFilename($filename)
+    {
+        $this->defaultRegexpFilename = $filename;
+    }
+
+    public function getDefaultRegexp() {
+        if (!$this->defaultRegexpFilename) {
+            return array('regexp' => array());
+        }
+        $yaml = file_get_contents($this->defaultRegexpFilename);
+
+        return Yaml::parse($yaml);
     }
 
     public function decompose($content, $regexps)

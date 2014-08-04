@@ -32,8 +32,7 @@ class RegexpController extends Controller
         $user = $this->getUser();
         $userManager = $this->get('model.manager.user');
 
-        $yaml = file_get_contents($this->get('kernel')->getRootDir().'/data/diary_regexp.yml');
-        $defaults = Yaml::parse($yaml);
+        $defaults = $this->get('dan_diary.regexp.helper')->getDefaultRegexp();
 
         $data = $userManager->getMetadata($user, 'diary', null, $defaults);
         $regexpData = new RegexpData($data);

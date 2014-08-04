@@ -49,18 +49,36 @@ dan.diary.onTextChange = function(e) {
 
 dan.diary.initReportForm = function() {
 
-    $('#dan_plugin_diary_report_content').on('keyup', function(e) {
+    $el = $('#dan_plugin_diary_report_content').on('keyup', function(e) {
         dan.diary.onKeyUp(e, dan.diary.onTextChange);
     })
 
+    dan.diary.onTextChange({target: $el.get()});
+}
+
+dan.diary.initAutoresizableTextarea = function() {
+
+    $('textarea').on('keyup', function(e) {
+        $el = $(e.target);
+        $el.css('height', 'auto');
+        var height = e.target.scrollHeight;
+        var minHeight = $el.css('min-height').replace(/[^-\d\.]/g, '');
+        if (height < minHeight) {
+            height = minHeight;
+        }
+        $el.css('height', height + 'px');
+
+    })
 
 }
+
 
 
 dan.diary.init = function (args) {
     $.extend(dan.diary, args);
 
     dan.diary.initReportForm();
+    dan.diary.initAutoresizableTextarea();
 }
 
 dan.diary.init(config);

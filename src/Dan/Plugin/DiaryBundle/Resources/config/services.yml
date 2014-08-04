@@ -1,16 +1,23 @@
+parameters:
+
 services:
-    regexp.transformer:
+    dan_diary.regexp.transformer:
         class: Dan\Plugin\DiaryBundle\Regexp\Transformer
 
-    regexp.helper:
+    dan_diary.regexp.helper:
         class: Dan\Plugin\DiaryBundle\Regexp\Helper
         arguments:
-            - @regexp.transformer
+            - @dan_diary.regexp.transformer
+        calls:
+            - [setDefaultRegexpFilename, [%diary_default_regexp_filename%]]
+
+    dan_diary.analysis.helper:
+        class: Dan\Plugin\DiaryBundle\Analysis\Helper
 
     dan_diary.event_listener.report:
         class: Dan\Plugin\DiaryBundle\EventListener\ReportListener
         arguments:
-            - @regexp.helper
+            - @dan_diary.regexp.helper
         calls:
             - [setLogger, [@logger]]
             - [setContainer, [@service_container]]

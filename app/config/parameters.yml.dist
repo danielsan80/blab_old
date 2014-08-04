@@ -24,3 +24,5 @@ parameters:
 
     facebook_client_id: 123456789
     facebook_client_secret: s3cr3t
+
+    diary_default_regexp_filename: %kernel.root_dir%/../src/Dan/Plugin/DiaryBundle/Resources/data/default_regexp.yml

@@ -29,12 +29,14 @@ class ReportController extends Controller
     {
         $user = $this->getUser();
         $userManager = $this->get('model.manager.user');
-        $helper = $this->get('regexp.helper');
+        $helper = $this->get('dan_diary.regexp.helper');
+
 
         $data = json_decode($request->getContent(), true);
 
         $content = $data['content'];
-        $regexps = $userManager->getMetadata($user, 'diary', 'regexp');
+        $regexps = $userManager->getMetadata($user, 'diary', null, $helper->getDefaultRegexp());
+        $regexps = $regexps['regexp'];
 
         $data = $helper->decompose($content, $regexps);
         $data['html'] = $helper->getAsHtml($data['content'], $data['placeholders']);
@@ -60,6 +62,7 @@ class ReportController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('DanPluginDiaryBundle:Report')->findAll();
+        $entities = array_reverse($entities);
 
         $deleteForms = array();
         foreach ($entities as $entity) {
