@@ -38,7 +38,8 @@ dan.diary.onTextChange = function(e) {
         contentType: 'application/json; charset=UTF-8',
         type: 'POST',
         success: function(data) {
-            console.log(data);
+            $('.report-parsed').html(data.html);
+            $('.report-properties').html(data.properties_yaml);
         },
         error: function() {
             console.log('error');
@@ -62,4 +63,4 @@ dan.diary.init = function (args) {
     dan.diary.initReportForm();
 }
 
-dan.diary.init();
+dan.diary.init(config);

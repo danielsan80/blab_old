@@ -104,7 +104,7 @@ class UserMetadata
     /**
      * Set content
      *
-     * @param string $content
+     * @param array $content
      * @return UserMetadata
      */
     public function setContent($content)
@@ -117,7 +117,7 @@ class UserMetadata
     /**
      * Get content
      *
-     * @return string 
+     * @return array 
      */
     public function getContent()
     {

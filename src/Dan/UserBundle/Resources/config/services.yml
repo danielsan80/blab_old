@@ -6,7 +6,7 @@ parameters:
 #    dan_user.example.class: Dan\UserBundle\Example
     oauth.user_provider.class: Dan\UserBundle\Security\FOSUBUserProvider
     dan_user.images_dir: /files/images/users
- 
+
 services:
     oauth.user_provider:
         class: "%oauth.user_provider.class%"
@@ -36,7 +36,20 @@ services:
         calls:
             - [setKernel,[@kernel]]
             - [setImageDir,[%dan_user.images_dir%]]
-            
+            - [setUserMetadataManager,[@model.manager.user_metadata]]
+
+    model.manager.user_metadata:
+        class: Dan\UserBundle\Model\UserMetadataManager
+        arguments:
+            - @doctrine.orm.entity_manager
+
+    repository.user_metadata:
+        class: Dan\UserBundle\Entity\Repository\UserMetadataRepository
+        factory_service: doctrine.orm.default_entity_manager
+        factory_method: getRepository
+        arguments: [DanUserBundle:UserMetadata]
+
+
     dan_user.twig.image_extension:
         class: Dan\UserBundle\Twig\ImageExtension
         tags:

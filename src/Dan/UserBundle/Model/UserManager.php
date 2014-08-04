@@ -11,6 +11,7 @@ class UserManager extends BaseUserManager
 {
     private $kernel;
     private $imagesDir;
+    private $userMetadataManager;
 
     public function setKernel(KernelInterface $kernel)
     {
@@ -34,83 +35,20 @@ class UserManager extends BaseUserManager
         $user->setImage($filename);
     }
 
+    public function setUserMetadataManager(UserMetadataManager $userMetadataManager)
+    {
+        $this->userMetadataManager = $userMetadataManager;
+    }
+
 
     public function getMetadata(User $user, $context, $path = null, $default = null, $params = array())
     {
-        $repo = $this->objectManager->getRepository('DanUserBundle:UserMetadata');
-
-        $userMetadata = $repo->findOneBy(array(
-            'user' => $user,
-            'context' => $context,
-        ));
-
-        if (!$userMetadata) {
-            $userMetadata = new UserMetadata();
-        }
-
-        if (!is_null($default)) {
-            if (is_null($userMetadata->getContent()) && is_null($path)) {
-                $userMetadata->setContent($default);
-            }
-        }
-
-        if ($path) {
-            $result = $userMetadata->getContent();
-            $path = explode('.', $path);
-            foreach($path as $i => $part) {
-                if (!isset($result[$part])) {
-                    $result = null;
-                    break;
-                }
-                $result = $result[$part];
-            }
-
-            if (is_null($result)) {
-                $result = $default;
-            }
-
-            $result = $this->replaceParams($result, $params);
-
-            return $result;
-        }
-
-        $result = $userMetadata->getContent();
-        $result = $this->replaceParams($result, $params);
-        return $result;
+        return $this->userMetadataManager->getMetadata($user, $context, $path, $default, $params);
     }
 
     public function setMetadata(User $user, $context, $content)
     {
-        $repo = $this->objectManager->getRepository('DanUserBundle:UserMetadata');
-
-        $userMetadata = $repo->findOneBy(array(
-            'user' => $user,
-            'context' => $context,
-        ));
-
-        if (!$userMetadata) {
-            $userMetadata = new UserMetadata();
-            $userMetadata->setUser($user);
-            $userMetadata->setContext($context);
-        }
-        $userMetadata->setContent($content);
-        $this->objectManager->persist($userMetadata);
-        $this->objectManager->flush($userMetadata);
-
+        return $this->userMetadataManager->setMetadata($user, $context, $content);
     }
 
-
-    private function replaceParams($data, $params) {
-        if (!$params) {
-            return $data;
-        }
-        if (!is_array($data)) {
-            return strtr($data, $params);            
-        }
-        foreach($data as $key => $value) {
-            $data[$key] = $this->replaceParams($value, $params);
-        }
-        return $data;
-    }
-    
 }

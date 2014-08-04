@@ -6,7 +6,7 @@
         <ul class="unstyled inline record_actions">
             <li>
                 <a href="{{ path('report') }}" class="btn btn-mini">
-                    Back
+                    List
                 </a>
             </li>
         </ul>
@@ -19,6 +19,12 @@
             {% include 'DanPluginDiaryBundle:Report:_form.html.twig' %}
         </div>
         <div class="span6">
+            <div class="report-parsed">
+            </div>
+            <hr/>
+            <h4>Properties</h4>
+            <pre class="report-properties">
+            </pre>
         </div>
     </div>
 {% endblock %}

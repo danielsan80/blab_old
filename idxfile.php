@@ -82,6 +82,13 @@ $idx->
             $idx->local("app/console assets:install --symlink --relative");
             $idx->local("app/console assetic:dump");
         })->
+
+    add('touch',
+        function () use ($idx)
+        {
+            $idx->local('echo " " >> src/Dan/MainBundle/Resources/public/less/index.less');
+        })->
+
     /**
      * run phpunit tests
      */

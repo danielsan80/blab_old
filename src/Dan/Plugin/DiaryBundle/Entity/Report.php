@@ -5,6 +5,8 @@ namespace Dan\Plugin\DiaryBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
+use Dan\UserBundle\Entity\User;
+
 /**
  * Report
  *
@@ -23,11 +25,24 @@ class Report
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="\Dan\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $user;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="content", type="text")
      */
     private $content;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="properties", type="json_array", nullable=true)
+     */
+    private $properties;
 
     /**
      * @var datetime $cratedAt
@@ -57,6 +72,33 @@ class Report
     }
 
     /**
+     * Set user
+     *
+     * @param User $user
+     * @return Report
+     */
+    public function setUser(User $user)
+    {
+        $this->user = $user;
+    
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return User
+     */
+    public function getUser()
+    {
+        if (!$this->user) {
+            $this->user = new User();
+        }
+        return $this->user;
+    }
+
+
+    /**
      * Set content
      *
      * @param string $content
@@ -77,6 +119,30 @@ class Report
     public function getContent()
     {
         return $this->content;
+    }
+
+
+    /**
+     * Set properties
+     *
+     * @param array $properties
+     * @return Report
+     */
+    public function setProperties($properties)
+    {
+        $this->properties = $properties;
+
+        return $this;
+    }
+
+    /**
+     * Get properties
+     *
+     * @return array
+     */
+    public function getProperties()
+    {
+        return $this->properties;
     }
 
     /**

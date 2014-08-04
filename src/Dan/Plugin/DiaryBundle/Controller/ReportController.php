@@ -3,12 +3,15 @@
 namespace Dan\Plugin\DiaryBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Dan\Plugin\DiaryBundle\Entity\Report;
 use Dan\Plugin\DiaryBundle\Form\ReportType;
+
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Report controller.
@@ -17,6 +20,33 @@ use Dan\Plugin\DiaryBundle\Form\ReportType;
  */
 class ReportController extends Controller
 {
+
+    /**
+     * @Route("/parse", name="report_parse")
+     * @Method("POST")
+     */
+    public function parseReportAction(Request $request)
+    {
+        $user = $this->getUser();
+        $userManager = $this->get('model.manager.user');
+        $helper = $this->get('regexp.helper');
+
+        $data = json_decode($request->getContent(), true);
+
+        $content = $data['content'];
+        $regexps = $userManager->getMetadata($user, 'diary', 'regexp');
+
+        $data = $helper->decompose($content, $regexps);
+        $data['html'] = $helper->getAsHtml($data['content'], $data['placeholders']);
+        $data['properties_yaml'] = Yaml::dump($data['properties']);
+
+        $content = json_encode($data);
+
+        $response = new Response($content, 200, array('Content-Type' => 'application/json; charset=utf-8'));
+
+        return $response;
+    }
+
 
     /**
      * Lists all Report entities.
@@ -44,6 +74,7 @@ class ReportController extends Controller
             'forms_delete' => $deleteForms,
         );
     }
+
     /**
      * Creates a new Report entity.
      *

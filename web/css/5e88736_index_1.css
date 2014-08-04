@@ -7441,6 +7441,9 @@ form textarea {
 .clear {
   clear: both;
 }
+.report-parsed .highligh {
+  background-color: yellow;
+}
 .clearfix {
   *zoom: 1;
 }

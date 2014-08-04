@@ -15,38 +15,43 @@
 
     <h3>Reports</h3>
 
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Content</th>
-                <th>Created At</th>
-                <th>Updated At</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('report_edit', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.content|truncate() }}</td>
-                <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if entity.updatedAt %}{{ entity.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>
-                <ul class="unstyled inline">
-                    <li>
-                        <a href="{{ path('report_edit', { 'id': entity.id }) }}" class="btn btn-mini">edit</a>
-                    </li>
-                    <li>
-                        {{form_start(forms_delete[entity.id])}}
-                            {{form_widget(forms_delete[entity.id].submit, {attr: {class: "btn btn-mini btn-danger"}})}}
-                        {{form_end(forms_delete[entity.id])}}
-                    </li>
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    {% if not entities %}
+        <p>You have no reports here</p>
+
+    {% else %}
+        <table class="table table-bordered table-list">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Content</th>
+                    <th>Created At</th>
+                    <th>Updated At</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td><a href="{{ path('report_edit', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                    <td>{{ entity.content|truncate() }}</td>
+                    <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>{% if entity.updatedAt %}{{ entity.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>
+                    <ul class="unstyled inline">
+                        <li>
+                            <a href="{{ path('report_edit', { 'id': entity.id }) }}" class="btn btn-mini">edit</a>
+                        </li>
+                        <li>
+                            {{form_start(forms_delete[entity.id])}}
+                                {{form_widget(forms_delete[entity.id].submit, {attr: {class: "btn btn-mini btn-danger"}})}}
+                            {{form_end(forms_delete[entity.id])}}
+                        </li>
+                    </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
     
 {% endblock %}

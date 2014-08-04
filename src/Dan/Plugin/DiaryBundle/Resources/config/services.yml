@@ -1,0 +1,19 @@
+services:
+    regexp.transformer:
+        class: Dan\Plugin\DiaryBundle\Regexp\Transformer
+
+    regexp.helper:
+        class: Dan\Plugin\DiaryBundle\Regexp\Helper
+        arguments:
+            - @regexp.transformer
+
+    dan_diary.event_listener.report:
+        class: Dan\Plugin\DiaryBundle\EventListener\ReportListener
+        arguments:
+            - @regexp.helper
+            - @model.manager.user_metadata
+        calls:
+            - [setLogger, [@logger]]
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
