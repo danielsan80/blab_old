@@ -10,7 +10,7 @@ use Dan\UserBundle\Entity\User;
 /**
  * Report
  *
- * @ORM\Table()
+ * @ORM\Table(name="dan_report")
  * @ORM\Entity(repositoryClass="Dan\Plugin\DiaryBundle\Entity\Repository\ReportRepository")
  */
 class Report

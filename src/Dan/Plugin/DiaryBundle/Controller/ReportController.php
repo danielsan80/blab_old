@@ -85,6 +85,7 @@ class ReportController extends Controller
     public function createAction(Request $request)
     {
         $entity = new Report();
+        $entity->setUser($this->getUser());
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -131,6 +132,7 @@ class ReportController extends Controller
     public function newAction()
     {
         $entity = new Report();
+        $entity->setUser($this->getUser());
         $form   = $this->createCreateForm($entity);
 
         return array(

@@ -8,11 +8,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Dan\Plugin\DiaryBundle\Regexp\Helper as RegexpHelper;
 use Symfony\Component\DependencyInjection\ContainerAware;
 
-class ReportListener extends ContainerAware
+class ReportListener
 {
     
     private $logger;
     private $regexpHelper;
+    private $container;
 
     public function __construct(RegexpHelper $regexpHelper)
     {
@@ -22,6 +23,11 @@ class ReportListener extends ContainerAware
     public function setLogger($logger)
     {
         $this->logger = $logger;
+    }
+
+    public function setContainer($container)
+    {
+        $this->container = $container;
     }
 
     
@@ -41,6 +47,7 @@ class ReportListener extends ContainerAware
         }
         $content = $entity->getContent();
         $user = $entity->getUser();
+
         $regexps = $this->container->get('model.manager.user_metadata')->getMetadata($user, 'diary', 'regexp');
 
         $data = $this->regexpHelper->decompose($content, $regexps);

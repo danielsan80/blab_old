@@ -13,6 +13,7 @@ services:
             - @regexp.helper
         calls:
             - [setLogger, [@logger]]
+            - [setContainer, [@service_container]]
         tags:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }

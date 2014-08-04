@@ -12,6 +12,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Dan\Plugin\DiaryBundle\Form\RegexpDataType;
 use Dan\Plugin\DiaryBundle\Model\RegexpData;
 
+use Symfony\Component\Yaml\Yaml;
+
 /**
  * Report controller.
  *
@@ -30,9 +32,8 @@ class RegexpController extends Controller
         $user = $this->getUser();
         $userManager = $this->get('model.manager.user');
 
-        $defaults = array(
-            'regexp' => array(),
-        );
+        $yaml = file_get_contents($this->get('kernel')->getRootDir().'/data/diary_regexp.yml');
+        $defaults = Yaml::parse($yaml);
 
         $data = $userManager->getMetadata($user, 'diary', null, $defaults);
         $regexpData = new RegexpData($data);
