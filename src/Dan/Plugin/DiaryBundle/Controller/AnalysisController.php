@@ -32,11 +32,13 @@ class AnalysisController extends Controller
 
         $helper = $this->get('dan_diary.analysis.helper');
 
-        $reports = $em->getRepository('DanPluginDiaryBundle:Report')->findAll();
+        $reports = $em->getRepository('DanPluginDiaryBundle:Report')->findByUser($user);
 
         $project = $request->query->get('project');
         $month = $request->query->get('month');
-        $seconds = 0;
+        $monthlySeconds = 0;
+
+        $_reports = array();
         foreach($reports as $report) {
             $reportProject = $helper->getProject($report);
             if ($project != $reportProject) {
@@ -48,16 +50,59 @@ class AnalysisController extends Controller
                 continue;
             }
 
-            $seconds += $helper->getTotalTime($report);
+            $dailySeconds = $helper->getTotalTime($report);
+
+            $date = $helper->getDate($report);
+            
+            $weekNumber = (int)$date->format('W');
+            $dow = (int)$date->format('w');
+
+            if (!isset($_reports[$weekNumber])) {
+                $_reports[$weekNumber] = array(
+                    'seconds' => 0,
+                    'reports' => array(),
+                );
+            }
+            if (!isset($_reports[$weekNumber]['reports'][$dow])) {
+                $_reports[$weekNumber]['reports'][$dow] = array(
+                    'seconds' => 0,
+                    'hours' => '0.00',
+                    'date' => $date,
+                    'reports' => array(),
+                );
+            }
+
+            $monthlySeconds += $dailySeconds;
+            $_reports[$weekNumber]['seconds'] += $dailySeconds;
+            $_reports[$weekNumber]['reports'][$dow]['seconds'] += $dailySeconds;
+            $_reports[$weekNumber]['reports'][$dow]['hours'] = $helper->getAsHours($_reports[$weekNumber]['reports'][$dow]['seconds']);
+
+            $_reports[$weekNumber]['reports'][$dow]['reports'][] = $report;
+
         }
 
-        $hours = $helper->getHours($seconds);
+        $reports = $_reports;
 
-
+        ksort($reports);
+        foreach($reports as $weekNumber => $week) {
+            ksort($week['reports']);
+            $reports[$weekNumber] = $week;
+        }
+        
         return array(
             'project' => $project,
             'month' => $month,
-            'hours' => $hours,
+            'monthlyHours' => $helper->getAsHours($monthlySeconds),
+            'monthlySeconds' => $monthlySeconds,
+            'reports' => $reports,
+
+            'user' => $user,
+            'route' => 'analysis_project_month',
+            'params' => array(
+                    'month' => $month,
+                    'project' => $project,
+                )
+
         );
     }
 }

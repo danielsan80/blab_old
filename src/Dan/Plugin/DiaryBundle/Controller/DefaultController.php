@@ -2,18 +2,20 @@
 
 namespace Dan\Plugin\DiaryBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Dan\CoreBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class DefaultController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/", name="diary_index")
      * @Template()
      */
     public function indexAction()
     {
+        $this->givenUserIsLoggedIn();
+
         return array();
     }
 }

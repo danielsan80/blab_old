@@ -2,11 +2,19 @@
 
 {% block title %}blab{% endblock %}
 {% block content %}
-    <p>
-        <a href="{{path('report')}}" >Reports</a>
-    </p>
-    <p>
-        <a href="{{path('regexp_edit')}}" >Report Regexps</a>
-    </p>
+    <h3>Diary</h3>
+    <ul>
+        {% if is_granted('ROLE_SUPER_ADMIN') %}
+            <li>
+                <a href="{{path('regexp_edit')}}" >Report Regexps</a>
+            </li>
+        {% endif %}
+        <li>
+            <a href="{{path('report')}}" >Reports</a>
+        </li>
+        <li>
+            <a href="{{path('analysis_project_month')}}" >Analysis</a>
+        </li>
+    </ul>
 
 {% endblock %}

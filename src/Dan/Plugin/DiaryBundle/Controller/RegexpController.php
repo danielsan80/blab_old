@@ -53,9 +53,7 @@ class RegexpController extends Controller
         $user = $this->getUser();
         $userManager = $this->get('model.manager.user');
 
-        $defaults = array(
-            'regexp' => array(),
-        );
+        $defaults = $this->get('dan_diary.regexp.helper')->getDefaultRegexp();
 
         $data = $userManager->getMetadata($user, 'diary', null, $defaults);
         $regexpData = new RegexpData($data);

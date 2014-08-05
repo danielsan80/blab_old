@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
 class Controller extends BaseController
 {
 
@@ -76,6 +78,24 @@ class Controller extends BaseController
     
     protected function addFlash($type, $message) {
         $this->get('session')->getFlashBag()->add( $type, $message );
+    }
+
+    protected function givenUserIsSuperAdmin()
+    {
+        if (!$this->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
+            throw new AccessDeniedException();
+        }
+
+        return true;
+    }
+
+    protected function givenUserIsLoggedIn()
+    {
+        if (!$this->get('security.context')->isGranted('ROLE_USER')) {
+            throw new AccessDeniedException();
+        }
+
+        return true;
     }
     
 }

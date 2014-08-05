@@ -1,0 +1,8 @@
+{% for year, months in yearMonths %}
+    <h5>{{year}}</h5>
+    {% for month, monthName in months %}
+        {% set yearMonth = year ~ '-' ~ month %}
+        {% set params = params|merge({month:yearMonth}) %}
+        <a href="{{path(route, params)}}" class="{{ yearMonth == current?'active':''}}" >{{monthName}}</a> 
+    {% endfor %}
+{% endfor %}

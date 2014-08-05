@@ -1,0 +1,4 @@
+{% for project in projects %}
+    {% set params = params|merge({project:project}) %}
+    <a href="{{path(route, params)}}" class="{{project == current?'active':''}}" >{{project}}</a> 
+{% endfor %}

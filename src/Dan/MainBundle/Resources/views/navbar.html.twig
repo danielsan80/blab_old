@@ -7,10 +7,14 @@
                 <span class="icon-bar"></span>
             </a>#}
 
-            {% image '@DanMainBundle/Resources/public/img/logo.png'
-                output='/img/logo.png' %}
-                <a class="brand logo" href="{{ path('home') }}"><img src="{{ asset_url }}" alt="Blab"/> Blab </a>
-            {% endimage %}
+            {% block logo %}
+                {% image '@DanMainBundle/Resources/public/img/logo.png'
+                    output='/img/logo.png' %}
+                    <a class="brand logo" href="{{ path('home') }}"><img src="{{ asset_url }}" alt="Blab"/> Blab </a>
+                {% endimage %}
+            {% endblock %}
+
+            {% block logo_right %}{% endblock %}
 
             {#<a class="brand" href="{{ path('home') }}">Home</a>#}
 

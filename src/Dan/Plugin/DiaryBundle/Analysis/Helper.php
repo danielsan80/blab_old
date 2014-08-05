@@ -18,11 +18,20 @@ class Helper
 
     public function getMonth(Report $report)
     {
+        $date = $this->getDate($report);
+        if (!$date) {
+            return null;
+        }
+        return $date->format('Y-m');
+    }
+
+    public function getDate(Report $report)
+    {
         $properties = $report->getProperties();
         if (!isset($properties['date'])) {
             return null;
         }
-        return substr($properties['date'],0,7);
+        return new \DateTime($properties['date']);
     }
 
     public function getTotalTime(Report $report)
@@ -55,10 +64,11 @@ class Helper
         return $seconds;
     }
 
-    public function getHours($seconds)
+    public function getAsHours($seconds)
     {
-        $date = new \DateTime('today + '.$seconds.' seconds');
+        $hours = floor($seconds / (60*60));
+        $minutes = str_pad(($seconds % (60*60))*60,2,'0',STR_PAD_LEFT);
 
-        return $date->format('H.i');
+        return $hours.'.'.$minutes;
     }
 }

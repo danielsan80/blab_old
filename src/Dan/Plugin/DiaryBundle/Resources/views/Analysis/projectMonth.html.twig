@@ -2,9 +2,46 @@
 
 {% block title %}blab{% endblock %}
 {% block content %}
-
-    {{project}}<br/>
-    {{month}}<br/>
-    {{hours}}<br/>
+    
+    <div class="row">
+        <div class="span2">
+            <strong>Hours:</strong> {{monthlyHours}}<br/>
+        </div>
+        <div class="span5">
+            <table class="table table-bordered" >
+                <tr>
+                    <th>day</th><th>hours</th><th></th>
+                </tr>
+                {% for weeklyReports in reports %}
+                    {% for dow, dailyReports in weeklyReports.reports %}
+                        {% for report in dailyReports.reports %}
+                            <tr>
+                                <td>
+                                    {{dailyReports.date|date('l')|slice(0,3)}} {{dailyReports.date|date('d')}}
+                                </td>
+                                <td>
+                                    {{dailyReports.hours}}
+                                </td>
+                                <td>
+                                    {% for report in dailyReports.reports %}
+                                        <a href="{{path('report_edit', {id:report.id})}}" target="_blank" class="icon icon-edit"></a>
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                    <tr>
+                        <td colspan="3"></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="span5">
+            <h4>Project</h4>
+            {{ render(controller('DanPluginDiaryBundle:Widget:selectProject', {user: user, route: route, params:params, project:project})) }}
+            <h4>Month</h4>
+            {{ render(controller('DanPluginDiaryBundle:Widget:selectMonth', {user: user, route: route, params:params, month:month})) }}
+        </div>
+    </div>
 
 {% endblock %}

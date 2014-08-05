@@ -194,5 +194,4 @@ class Report
     {
         return $this->updatedAt;
     }
-
 }

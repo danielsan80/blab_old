@@ -15,7 +15,7 @@ class RegexpDataType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('data', 'yaml')
+            ->add('data', 'yaml', array('required' => false))
         ;
     }
     
