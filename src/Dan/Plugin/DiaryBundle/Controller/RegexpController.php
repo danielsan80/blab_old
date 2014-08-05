@@ -3,7 +3,7 @@
 namespace Dan\Plugin\DiaryBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Dan\CoreBundle\Controller\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -29,6 +29,8 @@ class RegexpController extends Controller
      */
     public function editAction()
     {
+        $this->givenUserIsSuperAdmin();
+
         $user = $this->getUser();
         $userManager = $this->get('model.manager.user');
 
@@ -37,9 +39,11 @@ class RegexpController extends Controller
         $data = $userManager->getMetadata($user, 'diary', null, $defaults);
         $regexpData = new RegexpData($data);
         $form = $this->createDataForm($regexpData);
+        $formReset = $this->createResetForm();
 
         return array(
             'form'   => $form->createView(),
+            'form_reset'  => $formReset->createView(),
         );
     }
 
@@ -50,6 +54,8 @@ class RegexpController extends Controller
      */
     public function updateAction(Request $request)
     {
+        $this->givenUserIsSuperAdmin();
+
         $user = $this->getUser();
         $userManager = $this->get('model.manager.user');
 
@@ -71,6 +77,23 @@ class RegexpController extends Controller
             'form'   => $form->createView(),
         );
     }
+    /**
+     * @Route("/reset", name="regexp_reset")
+     * @Method("POST")
+     */
+    public function resetAction(Request $request)
+    {
+        $this->givenUserIsSuperAdmin();
+
+        $user = $this->getUser();
+        $userManager = $this->get('model.manager.user');
+
+        $defaults = $this->get('dan_diary.regexp.helper')->getDefaultRegexp();
+
+        $userManager->setMetadata($user, 'diary', $defaults);
+
+        return $this->redirect($this->generateUrl('regexp_edit'));
+    }
 
     private function createDataForm(RegexpData $regexpData)
     {
@@ -82,6 +105,18 @@ class RegexpController extends Controller
         $form->add('submit', 'submit', array('label' => 'Update'));
 
         return $form;
+    }
+
+    private function createResetForm()
+    {
+        $form = $this->createFormBuilder()
+            ->setAction($this->generateUrl('regexp_reset'))
+            ->setMethod('POST')
+        ;
+
+        $form->add('submit', 'submit', array('label' => 'Reset'));
+
+        return $form->getForm();
     }
 
 }

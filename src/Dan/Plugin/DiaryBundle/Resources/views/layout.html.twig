@@ -2,8 +2,9 @@
 
 
 {% block logo %}
-    {{ parent() }}
-    :: Diary
+    {{parent()}}
+    <a href="{{path('diary_index')}}" class="logo-text diary-logo" > :: Diary</a>
+    
 {% endblock %}
 
     

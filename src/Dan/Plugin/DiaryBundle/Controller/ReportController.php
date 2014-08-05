@@ -27,6 +27,8 @@ class ReportController extends Controller
      */
     public function parseReportAction(Request $request)
     {
+        $this->givenUserIsLoggedIn();
+
         $user = $this->getUser();
         $userManager = $this->get('model.manager.user');
         $helper = $this->get('dan_diary.regexp.helper');
@@ -59,9 +61,12 @@ class ReportController extends Controller
      */
     public function indexAction()
     {
+        $this->givenUserIsLoggedIn();
+
+        $user = $this->getUser();
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('DanPluginDiaryBundle:Report')->findAll();
+        $entities = $em->getRepository('DanPluginDiaryBundle:Report')->findByUser($user);
         $entities = array_reverse($entities);
 
         $deleteForms = array();
@@ -87,8 +92,12 @@ class ReportController extends Controller
      */
     public function createAction(Request $request)
     {
+        $this->givenUserIsLoggedIn();
+
+        $user = $this->getUser();
+
         $entity = new Report();
-        $entity->setUser($this->getUser());
+        $entity->setUser($user);
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -134,8 +143,12 @@ class ReportController extends Controller
      */
     public function newAction()
     {
+        $this->givenUserIsLoggedIn();
+
+        $user = $this->getUser();
+
         $entity = new Report();
-        $entity->setUser($this->getUser());
+        $entity->setUser($user);
         $form   = $this->createCreateForm($entity);
 
         return array(
@@ -154,11 +167,15 @@ class ReportController extends Controller
      */
     public function editAction($id)
     {
+        $this->givenUserIsLoggedIn();
+
+        $user = $this->getUser();
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('DanPluginDiaryBundle:Report')->find($id);
 
-        if (!$entity) {
+        if (!$entity || !$this->isOwnedByUser($entity, $user) ) {
             throw $this->createNotFoundException('Unable to find Report entity.');
         }
 
@@ -199,11 +216,15 @@ class ReportController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
+        $this->givenUserIsLoggedIn();
+
+        $user = $this->getUser();
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('DanPluginDiaryBundle:Report')->find($id);
 
-        if (!$entity) {
+        if (!$entity || !$this->isOwnedByUser($entity, $user) ) {
             throw $this->createNotFoundException('Unable to find Report entity.');
         }
 
@@ -231,6 +252,10 @@ class ReportController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
+        $this->givenUserIsLoggedIn();
+
+        $user = $this->getUser();
+
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
@@ -238,7 +263,7 @@ class ReportController extends Controller
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('DanPluginDiaryBundle:Report')->find($id);
 
-            if (!$entity) {
+            if (!$entity || !$this->isOwnedByUser($entity, $user)) {
                 throw $this->createNotFoundException('Unable to find Report entity.');
             }
 
@@ -273,5 +298,10 @@ class ReportController extends Controller
             ))
             ->getForm()
         ;
+    }
+
+    private function isOwnedByUser($entity, $user)
+    {
+        return $entity->getUser()->getId() == $user->getId();
     }
 }

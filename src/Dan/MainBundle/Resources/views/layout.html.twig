@@ -1,5 +1,6 @@
 {% extends 'DanCoreBundle::base.html.twig' %}
 {% from 'DanCoreBundle::flash.html.twig' import session_flashes, flash %}
+{% use 'DanMainBundle::navbar.html.twig' with navbar as base_navbar %}
 
 {% block title %}My Title{% endblock %}
 
@@ -34,9 +35,7 @@
 {% block body %}
 
     {% block container %}
-        {% block navbar %}
-            {% include 'DanMainBundle::navbar.html.twig' %}
-        {% endblock navbar %}
+        {% block navbar %}{{ block('base_navbar') }}{% endblock navbar %}
         <div class="container">
             <div class="content">
                 {% block content %}

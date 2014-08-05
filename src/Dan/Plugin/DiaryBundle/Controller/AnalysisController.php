@@ -4,7 +4,7 @@ namespace Dan\Plugin\DiaryBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Dan\CoreBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -27,7 +27,10 @@ class AnalysisController extends Controller
      */
     public function projectMonthAction(Request $request)
     {
+        $this->givenUserIsLoggedIn();
+
         $user = $this->getUser();
+        
         $em = $this->getDoctrine()->getManager();
 
         $helper = $this->get('dan_diary.analysis.helper');
