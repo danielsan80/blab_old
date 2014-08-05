@@ -33,6 +33,11 @@ class Helper
         $placeholders = array();
         $data = array();
 
+        if (!$regexps) {
+            $regexps = $this->getDefaultRegexp();
+            $regexps = $regexps['regexp'];
+        }
+
         foreach($regexps as $property => $info) {
             $info = array_merge(array(
                     'how_many' => '?',

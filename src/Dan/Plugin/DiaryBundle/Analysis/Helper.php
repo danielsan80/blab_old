@@ -67,7 +67,7 @@ class Helper
     public function getAsHours($seconds)
     {
         $hours = floor($seconds / (60*60));
-        $minutes = str_pad(($seconds % (60*60))*60,2,'0',STR_PAD_LEFT);
+        $minutes = str_pad(($seconds % (60*60))/60,2,'0',STR_PAD_LEFT);
 
         return $hours.'.'.$minutes;
     }

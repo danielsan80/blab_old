@@ -1,6 +1,6 @@
 regexp:
     date:
-        pattern: '/(?P<dow>\w{3})? (?P<day>\d{2}) (?P<month>\w+) (?P<year>\d{4})/'
+        pattern: '/(?P<dow>\w{3} )?(?P<day>\d{2}) (?P<month>\w+) (?P<year>\d{4})/'
         output: '%year%-%month%-%day%'
         transformers:
             month: month
