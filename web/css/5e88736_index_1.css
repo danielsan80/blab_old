@@ -7359,16 +7359,21 @@ div.subnav-fixed {
 body {
   padding-top: 100px;
 }
-.navbar .logo {
+.navbar .logo-image {
   margin-left: -10px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  font-size: 2.5em;
-  vertical-align: bottom;
+  padding: 10px 0 10px;
 }
-.navbar .logo img {
+.navbar .logo-image img {
   height: 40px;
   margin-right: 10px;
+}
+.navbar .logo-text {
+  text-decoration: none;
+  color: #333;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 2.3em;
+  line-height: 60px;
 }
 .navbar .login {
   padding: 17px 0px 17px 20px;
@@ -7441,8 +7446,20 @@ form textarea {
 .clear {
   clear: both;
 }
-.report-parsed .highligh {
+.table-list ul {
+  margin: 0;
+}
+.table-list ul form {
+  margin: 0;
+}
+a.active {
+  font-weight: bold;
+}
+.report-parsed .highlight {
   background-color: yellow;
+}
+.navbar .diary-logo {
+  font-size: 1.5em;
 }
 .clearfix {
   *zoom: 1;

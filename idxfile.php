@@ -10,11 +10,12 @@ $sshParams = array(
 
 $targets = array(
     'prod' => array(
-        'hosts' => array('pp'),
+        'hosts' => array('ocean'),
         'ssh_params' => $sshParams,
         'deploy' => array(
             'local_base_dir' => $localBaseDir,
-            'remote_base_dir' => "/var/www/blab/",
+            'remote_base_dir' => "/var/www/blab",
+            // 'rsync_include_file' => 'rsync_include.txt'
             'rsync_exclude_file' => 'rsync_exclude.txt',
             'shared_folders' => array(
                 'app/config',
@@ -22,20 +23,18 @@ $targets = array(
                 'app/sessions',
                 'app/spool',
                 'app/files/images/users',
-                'app/files/uploads/media',
-                'web/media'
+                'web/media/cache'
             ),
             'shared_symlinks' => array(
                 'app/config/parameters.yml',
                 'app/logs',
-//                'app/sessions',
-//                'app/spool',
-//                'app/files/images/users',
-//                'app/files/uploads/media',
-//                'web/media'
-            )
-            // 'rsync_include_file' => 'rsync_include.txt'
-            // 'migrations' => true
+                'app/sessions',
+                'app/spool',
+                'app/files/images/users',
+                'web/media'
+            ),
+            'migrations' => true,
+            'assetic' => false
             // 'strategy' => 'Copy'
         ),
     ),
@@ -44,6 +43,16 @@ $targets = array(
 $idx = new Idephix($targets);
 
 $idx->
+    add('build',
+        function() use ($idx)
+        {
+            try{
+                $idx->local('app/console doctrine:database:create');
+            } catch (\Exception $e) {}
+            $idx->runTask('dbreset');
+            $idx->runTask('assets:install');
+        })->
+
     add('deploy',
         function($go = false) use ($idx)
         {
@@ -51,6 +60,9 @@ $idx->
                 echo "\nDry Run...\n";
             }
             $idx->deploySF2Copy($go);
+            if ($go) {
+                $idx->runTask('chmod:remote');
+            }
         })->
                 
     add('dbreset',
@@ -76,6 +88,39 @@ $idx->
             $idx->local("setfacl -Rn -m u:www-data:rwX -m u:`whoami`:rwX app/cache app/logs  app/files app/sessions web/media");
             $idx->local("setfacl -dRn -m u:www-data:rwX -m u:`whoami`:rwX app/cache app/logs  app/files app/sessions web/media");
         })->
+
+    add('chmod:remote',
+        function() use ($idx)
+        {
+            if (null === $idx->getCurrentTargetName()) {
+                throw new \Exception("You must specify an environment [--env]");
+            }
+
+            $target = $idx->getCurrentTarget();
+
+            if (!$target->get('deploy.remote_base_dir', false)) {
+                throw new \Exception("No deploy parameters found. Check you configuration.");
+            }
+
+            $remoteBaseDir = $target->get('deploy.remote_base_dir');
+            $dirs = array(
+                '/current/app/cache',
+                '/shared/app/logs',
+                '/shared/app/files',
+                '/shared/app/sessions',
+                '/shared/web/media',
+            );
+
+            $remoteDirs = '';
+            foreach($dirs as $dir) {
+                $remoteDirs .= ' '.$remoteBaseDir.$dir;
+            }
+
+            $idx->remote("chmod -R 777 ".$remoteDirs);
+            $idx->remote("setfacl -Rn -m u:www-data:rwX -m u:`whoami`:rwX ".$remoteDirs);
+            $idx->remote("setfacl -dRn -m u:www-data:rwX -m u:`whoami`:rwX ".$remoteDirs);
+        })->
+
     add('assets:install',
         function () use ($idx)
         {
