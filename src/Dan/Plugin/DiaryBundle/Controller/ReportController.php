@@ -106,6 +106,7 @@ class ReportController extends Controller
             $em->persist($entity);
             $em->flush();
 
+            return $this->redirect($this->generateUrl('report'));
             return $this->redirect($this->generateUrl('report_edit', array('id' => $entity->getId())));
         }
 
@@ -235,6 +236,7 @@ class ReportController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
+            return $this->redirect($this->generateUrl('report'));
             return $this->redirect($this->generateUrl('report_edit', array('id' => $id)));
         }
 

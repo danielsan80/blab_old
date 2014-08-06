@@ -59,10 +59,10 @@ $idx->
             if (!$go) {
                 echo "\nDry Run...\n";
             }
-            $idx->deploySF2Copy($go);
             if ($go) {
                 $idx->runTask('chmod:remote');
             }
+            $idx->deploySF2Copy($go);
         })->
                 
     add('dbreset',
@@ -146,5 +146,7 @@ $idx->
 
 $idx->addLibrary('deploy', new Deploy());
 $idx->addLibrary('phpunit', new PHPUnit());
+
+require 'idx_dan.php';
 
 $idx->run();
