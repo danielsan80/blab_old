@@ -24,3 +24,8 @@ services:
         tags:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }
+
+    dan_diary.plugin:
+        class: Dan\Plugin\DiaryBundle\Plugin
+        tags:
+            - {name: dan.plugin}

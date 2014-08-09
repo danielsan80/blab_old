@@ -14,6 +14,10 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return array();
+        $pluginManager = $this->get('dan_main.plugin_manager');
+
+        return array(
+            'plugins' => $pluginManager->getPlugins()
+        );
     }
 }

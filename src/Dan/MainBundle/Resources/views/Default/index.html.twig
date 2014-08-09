@@ -4,8 +4,10 @@
 {% block content %}
     <h3>Plugins</h3>
     <ul>
-        <li>
-            <a href="{{path('diary_index')}}" >Diary</a>
-        </li>
+        {% for plugin in plugins %}
+            <li>
+                <a href="{{path(plugin.rootRoute)}}" >{{plugin.name}}</a>
+            </li>
+        {% endfor %}
     </ul>
 {% endblock %}
