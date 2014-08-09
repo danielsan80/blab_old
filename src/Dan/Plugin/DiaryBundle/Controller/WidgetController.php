@@ -71,7 +71,7 @@ class WidgetController extends Controller
             }
 
             $year = $date->format('Y');
-            if (!isset($months[$year])) {
+            if (!isset($yearMonths[$year])) {
                 $yearMonths[$year] = array();
             }
             $yearMonths[$year][$date->format('m')] = $date->format('F');

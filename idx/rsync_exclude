@@ -1,0 +1,7 @@
+.git
+nbproject
+app/cache
+app/logs
+app/sessions
+app/files/images/users
+web/media/cache

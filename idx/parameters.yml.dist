@@ -1,0 +1,8 @@
+targets:
+    prod:
+        database:
+            host: localhost
+            name: ~
+            username: ~
+            password: ~
+    

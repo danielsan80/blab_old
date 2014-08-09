@@ -1,0 +1,7 @@
+targets:
+    prod:
+        database:
+            host: localhost
+            name: blab
+            username: root
+            password: g4ndalf

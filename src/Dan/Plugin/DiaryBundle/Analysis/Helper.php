@@ -60,6 +60,23 @@ class Helper
 
             }
         }
+        if (isset($properties['times_mods'])) {
+            $timesMods = $properties['times_mods'];
+            foreach($timesMods as $mod) {
+                if (preg_match('/^(?P<sign>[\+\-])(?P<num>\d{1,2})(?P<unit>[m])$/', $mod, $matches)) {
+                    $seconds += ($matches['sign'].$matches['num']) * 60;
+                    continue;
+                }
+                if (preg_match('/^(?P<sign>[\+\-])(?P<num>\d{1,2})(?P<unit>[h])$/', $mod, $matches)) {
+                    $seconds += ($matches['sign'].$matches['num']) * 60 * 60;
+                    continue;
+                }
+                if (preg_match('/^(?P<sign>[\+\-])(?P<hours>\d{1,2})[\.](?P<minutes>\d{2})/', $mod, $matches)) {
+                    $seconds += ($matches['sign'].'1')*(($matches['hours'] * 60 * 60) + ($matches['minutes'] * 60));
+                    continue;
+                }
+            }
+        }
 
         return $seconds;
     }

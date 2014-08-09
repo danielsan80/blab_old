@@ -2,21 +2,30 @@
 use Idephix\Idephix;
 use Idephix\Extension\Deploy\Deploy;
 use Idephix\Extension\PHPUnit\PHPUnit;
+use Symfony\Component\Yaml\Yaml;
+
+$parameters = Yaml::parse(file_get_contents('idx/parameters.yml'));
+
+if (!$parameters) {
+    $parameters = array();
+}
+if (!isset($parameters['targets'])) {
+    $parameters['targets'] = array();
+}
 
 $localBaseDir = __DIR__;
-$sshParams = array(
-    'user' => 'root',
-);
 
-$targets = array(
+$targets = array_merge_recursive($parameters['targets'], array(
     'prod' => array(
         'hosts' => array('ocean'),
-        'ssh_params' => $sshParams,
+        'ssh_params' => array(
+            'user' => 'root',
+        ),
         'deploy' => array(
             'local_base_dir' => $localBaseDir,
             'remote_base_dir' => "/var/www/blab",
             // 'rsync_include_file' => 'rsync_include.txt'
-            'rsync_exclude_file' => 'rsync_exclude.txt',
+            'rsync_exclude_file' => 'idx/rsync_exclude',
             'shared_folders' => array(
                 'app/config',
                 'app/logs',
@@ -38,7 +47,7 @@ $targets = array(
             // 'strategy' => 'Copy'
         ),
     ),
-);
+));
 
 $idx = new Idephix($targets);
 
@@ -147,6 +156,6 @@ $idx->
 $idx->addLibrary('deploy', new Deploy());
 $idx->addLibrary('phpunit', new PHPUnit());
 
-require 'idx_dan.php';
+require 'idx/dan.php';
 
 $idx->run();
