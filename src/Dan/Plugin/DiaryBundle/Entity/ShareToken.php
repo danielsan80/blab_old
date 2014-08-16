@@ -8,19 +8,19 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Dan\UserBundle\Entity\User;
 
 /**
- * Report
+ * ShareToken
  *
- * @ORM\Table(name="dan_report")
- * @ORM\Entity(repositoryClass="Dan\Plugin\DiaryBundle\Entity\Repository\ReportRepository")
+ * @ORM\Table(name="dan_share_token")
+ * @ORM\Entity(repositoryClass="Dan\Plugin\DiaryBundle\Entity\Repository\ShareTokenRepository")
  */
-class Report
+class ShareToken
 {
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="id", type="guid")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="UUID")
      */
     private $id;
 
@@ -33,16 +33,16 @@ class Report
     /**
      * @var string
      *
-     * @ORM\Column(name="content", type="text")
+     * @ORM\Column(name="route", type="string", length=255)
      */
-    private $content;
+    private $route;
 
     /**
-     * @var string
+     * @var array
      *
-     * @ORM\Column(name="properties", type="json_array", nullable=true)
+     * @ORM\Column(name="params", type="json_array")
      */
-    private $properties;
+    private $params;
 
     /**
      * @var datetime $cratedAt
@@ -71,7 +71,7 @@ class Report
         return $this->id;
     }
 
-    /**
+     /**
      * Set user
      *
      * @param User $user
@@ -97,59 +97,57 @@ class Report
         return $this->user;
     }
 
-
     /**
-     * Set content
+     * Set route
      *
-     * @param string $content
-     * @return Report
+     * @param string $route
+     * @return ShareToken
      */
-    public function setContent($content)
+    public function setRoute($route)
     {
-        $this->content = $content;
+        $this->route = $route;
 
         return $this;
     }
 
     /**
-     * Get content
+     * Get route
      *
      * @return string 
      */
-    public function getContent()
+    public function getRoute()
     {
-        return $this->content;
+        return $this->route;
     }
 
-
     /**
-     * Set properties
+     * Set params
      *
-     * @param array $properties
-     * @return Report
+     * @param array $params
+     * @return ShareToken
      */
-    public function setProperties($properties)
+    public function setParams($params)
     {
-        $this->properties = $properties;
+        $this->params = $params;
 
         return $this;
     }
 
     /**
-     * Get properties
+     * Get params
      *
-     * @return array
+     * @return array 
      */
-    public function getProperties()
+    public function getParams()
     {
-        return $this->properties;
+        return $this->params;
     }
 
-    /**
+        /**
      * Set createdAt
      *
      * @param datetime $createdAt
-     * @return Report
+     * @return ShareToken
      */
     public function setCreatedAt($createdAt)
     {
@@ -172,7 +170,7 @@ class Report
      * Set updatedAt
      *
      * @param datetime $updatedAt
-     * @return Report
+     * @return ShareToken
      */
     public function setUpdatedAt($updatedAt=null)
     {

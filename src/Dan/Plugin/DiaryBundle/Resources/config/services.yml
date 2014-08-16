@@ -29,3 +29,11 @@ services:
         class: Dan\Plugin\DiaryBundle\Plugin
         tags:
             - {name: dan.plugin}
+
+    dan_diary.smanager.share_token:
+        class: Dan\Plugin\DiaryBundle\Model\ShareTokenManager
+        arguments:
+            - @doctrine.orm.entity_manager
+
+    sharer:
+        alias: dan_diary.smanager.share_token

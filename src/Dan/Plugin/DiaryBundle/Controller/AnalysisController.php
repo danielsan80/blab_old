@@ -27,9 +27,21 @@ class AnalysisController extends Controller
      */
     public function projectMonthAction(Request $request)
     {
-        $this->givenUserIsLoggedIn();
+        $sharer = $this->get('sharer');
 
-        $user = $this->getUser();
+        if (!($user = $sharer->getUserFromRequest($request))) {
+            $this->givenUserIsLoggedIn();
+            $user = $this->getUser();
+        }
+
+
+        $project = $request->get('project');
+        $month = $request->get('month');
+
+        $sharer->createShareToken($user, 'analysis_project_month', array(
+                'project' => $project,
+                'month' => $month,
+            ));
         
         $em = $this->getDoctrine()->getManager();
 
@@ -37,8 +49,6 @@ class AnalysisController extends Controller
 
         $reports = $em->getRepository('DanPluginDiaryBundle:Report')->findByUser($user);
 
-        $project = $request->query->get('project');
-        $month = $request->query->get('month');
         $monthlySeconds = 0;
 
         $_reports = array();
