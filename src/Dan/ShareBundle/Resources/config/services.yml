@@ -1,0 +1,11 @@
+parameters:
+#    dan_share.example.class: Dan\ShareBundle\Example
+
+services:
+    dan_share.manager.share_token:
+        class: Dan\ShareBundle\Model\ShareTokenManager
+        arguments:
+            - @doctrine.orm.entity_manager
+
+    sharer:
+        alias: dan_share.manager.share_token

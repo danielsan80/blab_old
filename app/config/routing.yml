@@ -10,6 +10,10 @@ dan_user:
     resource: "@DanUserBundle/Resources/config/routing.yml"
     prefix:   /
 
+dan_share:
+    resource: "@DanShareBundle/Resources/config/routing.yml"
+    prefix:   /
+
 dan_plugin_diary:
     resource: "@DanPluginDiaryBundle/Resources/config/routing.yml"
     prefix:   /
