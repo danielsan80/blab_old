@@ -10,6 +10,8 @@
             <hr/>
             <h4>Month</h4>
             {{ render(controller('DanPluginDiaryBundle:Widget:selectMonth', {user: user, route: route, params:params, month:month})) }}
+            <hr/>
+            {{ render(controller('DanShareBundle:Widget:shareLink', {shareData: shareData})) }}
         </div>
         {% if project and month %}
             

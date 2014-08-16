@@ -1,0 +1,23 @@
+{% if owner %}
+    {% if token %}
+        <input type="text" value="{{ url('share', {share_token: token}) }}" />
+        <ul class="unstyled inline">
+            <li>
+                {{form_start(form_reset)}}
+                    {{form_widget(form_reset.submit, {attr: {class: "btn btn-mini btn-danger"}})}}
+                {{form_end(form_reset)}}
+            </li>
+            <li>
+                {{form_start(form_delete)}}
+                    {{form_widget(form_delete.submit, {attr: {class: "btn btn-mini btn-danger"}})}}
+                {{form_end(form_delete)}}
+            </li>
+        </ul>
+    {% else %}
+
+        {{form_start(form_create)}}
+            {{form_widget(form_create.submit, {attr: {class: "btn btn-mini"}})}}
+        {{form_end(form_create)}}
+
+    {% endif %}
+{% endif %}

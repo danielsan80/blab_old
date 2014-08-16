@@ -38,10 +38,10 @@ class AnalysisController extends Controller
         $project = $request->get('project');
         $month = $request->get('month');
 
-        $sharer->createShareToken($user, 'analysis_project_month', array(
-                'project' => $project,
-                'month' => $month,
-            ));
+//        $sharer->createShareToken($user, 'analysis_project_month', array(
+//                'project' => $project,
+//                'month' => $month,
+//            ));
         
         $em = $this->getDoctrine()->getManager();
 
@@ -108,6 +108,15 @@ class AnalysisController extends Controller
             'monthlyHours' => $helper->getAsHours($monthlySeconds),
             'monthlySeconds' => $monthlySeconds,
             'reports' => $reports,
+
+            'shareData' => $sharer->createShareData(
+                    $user,
+                    'analysis_project_month',
+                    array(
+                        'month' => $month,
+                        'project' => $project,
+                    )
+                ),
 
             'user' => $user,
             'route' => 'analysis_project_month',

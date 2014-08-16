@@ -14,6 +14,13 @@ class ShareTokenManager
         $this->em = $em;
     }
 
+    public function getShareTokenById($id)
+    {
+        $shareToken = $this->em->getRepository('DanShareBundle:ShareToken')->find($id);
+
+        return $shareToken;
+    }
+
     public function getUserFromRequest(Request $request)
     {
         if (!($shareToken = $this->getShareTokenFromRequest($request))){
@@ -25,17 +32,58 @@ class ShareTokenManager
 
     public function getShareTokenFromRequest(Request $request)
     {
-        if (!($token = $request->get('share_token'))){
+        if (!($id = $request->get('share_token'))){
             return null;
         }
 
-        $shareToken = $this->em->getRepository('DanPluginDiaryBundle:ShareToken')->find($token);
+        $shareToken = $this->getShareTokenById($id);
 
         return $shareToken;
     }
 
+    public function getShareTokenFromRoute(User $user, $route, $params=array())
+    {
+        ksort($params);
+
+        $shareTokens = $this->em->getRepository('DanShareBundle:ShareToken')->findBy(array(
+                'user' => $user,
+                'route' => $route,
+            ));
+
+        foreach($shareTokens as $shareToken) {
+            $storedParams = $shareToken->getParams();
+            ksort($storedParams);
+            if ($params==$storedParams) {
+                return $shareToken;
+            }
+        }
+
+        return null;
+    }
+
+    public function removeShareToken(ShareToken $shareToken)
+    {
+        $this->em->remove($shareToken);
+        $this->em->flush($shareToken);
+    }
+
+    public function resetShareToken(ShareToken $shareToken)
+    {
+        $newShareToken = $this->createShareToken(
+            $shareToken->getUser(),
+            $shareToken->getRoute(),
+            $shareToken->getParams()
+        );
+        $this->em->remove($shareToken);
+        $this->em->flush($shareToken);
+
+        return $newShareToken;
+    }
+
     public function createShareToken(User $user, $route, $params=array())
     {
+        ksort($params);
+
         $shareToken = new ShareToken();
         $shareToken->setUser($user);
         $shareToken->setRoute($route);
@@ -43,6 +91,24 @@ class ShareTokenManager
 
         $this->em->persist($shareToken);
         $this->em->flush($shareToken);
+
+        return $shareToken;
+    }
+
+    public function createShareData(User $user, $route, $params=array())
+    {
+        ksort($params);
+
+        $shareData = new ShareData();
+        $shareData->setUser($user);
+        $shareData->setRoute($route);
+        $shareData->setParams($params);
+
+        if ($shareToken = $this->getShareTokenFromRoute($user, $route, $params)) {
+            $shareData->setShareToken($shareToken);
+        }
+
+        return $shareData;
     }
     
 }
