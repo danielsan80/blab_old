@@ -57,7 +57,7 @@ class UserMetadataManager
         return $result;
     }
 
-    public function setMetadata(User $user, $context, $content)
+    public function setMetadata(User $user, $context, $path = null, $content)
     {
         $repo = $this->objectManager->getRepository('DanUserBundle:UserMetadata');
 
@@ -71,6 +71,23 @@ class UserMetadataManager
             $userMetadata->setUser($user);
             $userMetadata->setContext($context);
         }
+
+        if ($path) {
+            $value = $content;
+            $path = explode('.', $path);
+            $path = array_reverse($path);
+            foreach($path as $i => $part) {
+                $value = array(
+                    $part => $value,
+                );
+            }
+            $content = $userMetadata->getContent();
+            if (!is_array($content)) {
+                $content = array();
+            }
+            $content = array_merge_recursive($content, $value);
+        }
+
         $userMetadata->setContent($content);
         $this->objectManager->persist($userMetadata);
         $this->objectManager->flush($userMetadata);

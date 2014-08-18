@@ -49,7 +49,7 @@ class UserManagerTest extends WebTestCase
 
         $user = $this->getReference('mario');
 
-        $userManager->setMetadata($user, 'test', 'aValue');
+        $userManager->setMetadata($user, 'test', null, 'aValue');
         
         $data = $userManager->getMetadata($user, 'test');
         $this->assertEquals('aValue', $data);
@@ -57,7 +57,7 @@ class UserManagerTest extends WebTestCase
         $data = $userManager->getMetadata($user, 'test', null, 'aDefaultValue');
         $this->assertEquals('aValue', $data);
 
-        $userManager->setMetadata($user, 'test', array(
+        $userManager->setMetadata($user, 'test', null, array(
             'A' => array(
                 'AA' => 1,
                 'AB' => 2,

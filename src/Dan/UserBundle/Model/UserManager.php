@@ -46,9 +46,9 @@ class UserManager extends BaseUserManager
         return $this->userMetadataManager->getMetadata($user, $context, $path, $default, $params);
     }
 
-    public function setMetadata(User $user, $context, $content)
+    public function setMetadata(User $user, $context, $path, $content)
     {
-        return $this->userMetadataManager->setMetadata($user, $context, $content);
+        return $this->userMetadataManager->setMetadata($user, $context, $path, $content);
     }
 
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Iabadabadu\UserBundle\Form\Handler;
+namespace Dan\UserBundle\Form\Handler;
 
 use FOS\UserBundle\Model\UserInterface;
 use FOS\UserBundle\Form\Handler\ProfileFormHandler as BaseProfileFormHandler;
@@ -49,7 +49,7 @@ class ProfileFormHandler extends BaseProfileFormHandler
         
         if ($confirmation) {
             $user->setEnabled(false);
-            $user->setMetadata('email_edit',true);
+            //$user->setMetadata('email_edit',true);
             if (null === $user->getConfirmationToken()) {
                 $user->setConfirmationToken($this->tokenGenerator->generateToken());
             }
