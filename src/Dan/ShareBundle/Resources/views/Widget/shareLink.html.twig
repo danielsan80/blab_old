@@ -1,6 +1,7 @@
 {% if owner %}
+    <div class="share-title">Sharing link</div>
     {% if token %}
-        <input type="text" value="{{ url('share', {share_token: token}) }}" />
+        <input type="text" style="width:100%;" value="{{ url('share', {share_token: token}) }}" />
         <ul class="unstyled inline">
             <li>
                 {{form_start(form_reset)}}
