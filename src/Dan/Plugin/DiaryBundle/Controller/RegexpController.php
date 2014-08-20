@@ -36,7 +36,7 @@ class RegexpController extends Controller
 
         $defaults = $this->get('dan_diary.regexp.helper')->getDefaultRegexp();
 
-        $data = $userManager->getMetadata($user, 'diary', null, $defaults);
+        $data = $userManager->getMetadata($user, 'diary', 'regexp', $defaults);
         $regexpData = new RegexpData($data);
         $form = $this->createDataForm($regexpData);
         $formReset = $this->createResetForm();
@@ -61,7 +61,7 @@ class RegexpController extends Controller
 
         $defaults = $this->get('dan_diary.regexp.helper')->getDefaultRegexp();
 
-        $data = $userManager->getMetadata($user, 'diary', null, $defaults);
+        $data = $userManager->getMetadata($user, 'diary', 'regexp', $defaults);
         $regexpData = new RegexpData($data);
         $form = $this->createDataForm($regexpData);
 
@@ -69,7 +69,7 @@ class RegexpController extends Controller
 
         if ($form->isValid()) {
 
-            $userManager->setMetadata($user, 'diary', null, $regexpData->getData());
+            $userManager->setMetadata($user, 'diary', 'regexp', $regexpData->getData());
             return $this->redirect($this->generateUrl('regexp_edit'));
         }
 
@@ -90,7 +90,7 @@ class RegexpController extends Controller
 
         $defaults = $this->get('dan_diary.regexp.helper')->getDefaultRegexp();
 
-        $userManager->setMetadata($user, 'diary', null, $defaults);
+        $userManager->setMetadata($user, 'diary', 'regexp', $defaults);
 
         return $this->redirect($this->generateUrl('regexp_edit'));
     }

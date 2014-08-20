@@ -6,7 +6,6 @@ use Dan\Plugin\DiaryBundle\Entity\Report;
 use Doctrine\Common\Collections\ArrayCollection;
 
 use Dan\Plugin\DiaryBundle\Regexp\Helper as RegexpHelper;
-use Symfony\Component\DependencyInjection\ContainerAware;
 
 class ReportListener
 {
@@ -48,7 +47,12 @@ class ReportListener
         $content = $entity->getContent();
         $user = $entity->getUser();
 
-        $regexps = $this->container->get('model.manager.user_metadata')->getMetadata($user, 'diary', 'regexp');
+        $regexps = $this->container->get('model.manager.user_metadata')->getMetadata(
+            $user,
+            'diary',
+            'regexp',
+            $this->regexpHelper->getDefaultRegexp()
+        );
 
         $data = $this->regexpHelper->decompose($content, $regexps);
         $entity->setProperties($data['properties']);

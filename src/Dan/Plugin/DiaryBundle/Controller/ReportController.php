@@ -37,8 +37,7 @@ class ReportController extends Controller
         $data = json_decode($request->getContent(), true);
 
         $content = $data['content'];
-        $regexps = $userManager->getMetadata($user, 'diary', null, $helper->getDefaultRegexp());
-        $regexps = $regexps['regexp'];
+        $regexps = $userManager->getMetadata($user, 'diary', 'regexp', $helper->getDefaultRegexp());
 
         $data = $helper->decompose($content, $regexps);
         $data['html'] = $helper->getAsHtml($data['content'], $data['placeholders']);

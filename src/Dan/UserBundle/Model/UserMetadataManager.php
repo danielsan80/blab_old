@@ -73,25 +73,47 @@ class UserMetadataManager
         }
 
         if ($path) {
-            $value = $content;
-            $path = explode('.', $path);
-            $path = array_reverse($path);
-            foreach($path as $i => $part) {
-                $value = array(
-                    $part => $value,
-                );
-            }
-            $content = $userMetadata->getContent();
-            if (!is_array($content)) {
-                $content = array();
-            }
-            $content = array_merge_recursive($content, $value);
+            $content = $this->appendContent($userMetadata->getContent(), $content, $path);
         }
 
         $userMetadata->setContent($content);
         $this->objectManager->persist($userMetadata);
         $this->objectManager->flush($userMetadata);
 
+    }
+
+    private function appendContent($content, $value, $path)
+    {
+        if (!$path) {
+            return $value;
+        }
+
+        $path = explode('.', $path);
+        $part = array_shift($path);
+
+        if (!isset($content[$part])) {
+            $content[$part] = array();
+        }
+
+        $content[$part] = $this->appendContent($content[$part], $value, implode('.',$path));
+        return $content;
+    }
+
+    private function mergeContent($content, $_content)
+    {
+
+        foreach($_content as $key => $value) {
+            if (!is_array($value)) {
+                $content[$key] = $value;
+                continue;
+            }
+            if (isset($content[$key])) {
+                $content = $this->mergeContent($content[$key], $value);
+            } else {
+                $content[$key] = $value;
+            }
+        }
+        return $content;
     }
 
     private function replaceParams($data, $params) {

@@ -20,7 +20,7 @@ class Helper
 
     public function getDefaultRegexp() {
         if (!$this->defaultRegexpFilename) {
-            return array('regexp' => array());
+            return array();
         }
         $yaml = file_get_contents($this->defaultRegexpFilename);
 
@@ -35,7 +35,6 @@ class Helper
 
         if (!$regexps) {
             $regexps = $this->getDefaultRegexp();
-            $regexps = $regexps['regexp'];
         }
 
         foreach($regexps as $property => $info) {
