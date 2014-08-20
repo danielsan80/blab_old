@@ -37,41 +37,46 @@ class Helper
             $regexps = $this->getDefaultRegexp();
         }
 
-        foreach($regexps as $property => $info) {
-            $info = array_merge(array(
-                    'how_many' => '?',
-                    'transformers' => array(),
-                    'output' => null,
-                ), $info);
+        foreach($regexps as $property => $infos) {
+            if ($this->isAssociativeArray($infos)){
+                $infos = array($infos);
+            }
+            foreach($infos as $info) {
+                $info = array_merge(array(
+                        'how_many' => '?',
+                        'transformers' => array(),
+                        'output' => null,
+                    ), $info);
 
-            while(preg_match($info['pattern'], $content, $matches)) {
+                while(preg_match($info['pattern'], $content, $matches)) {
 
-                $placeholder = array(
-                    'value' => $matches[0],
-                    'title' => $property
-                );
-                $placeholders[] = $placeholder; 
+                    $placeholder = array(
+                        'value' => $matches[0],
+                        'title' => $property
+                    );
+                    $placeholders[] = $placeholder; 
 
-                $content = preg_replace('/'.preg_quote($placeholder['value']).'/', '{{'.(count($placeholders)-1).'}}', $content, 1);
+                    $content = preg_replace('/'.preg_quote($placeholder['value']).'/', '{{'.(count($placeholders)-1).'}}', $content, 1);
 
 
-                foreach($info['transformers'] as $key => $method) {
-                    $matches[$key] = $this->transformer->$method($matches[$key]);
-                }
-
-                $output = $info['output'];
-                if ($output) {
-                    while (preg_match('/(%(\w+)%)/',$output, $params )) {
-                        $output = strtr($output,array($params[1] => $matches[$params[2]]));
+                    foreach($info['transformers'] as $key => $method) {
+                        $matches[$key] = $this->transformer->$method($matches[$key]);
                     }
-                } else {
-                    $output = $placeholder['value'];
-                }
-                
-                $properties[$property][] = $output;
-                if ($info['how_many']=='?' || $info['how_many']=='1') {
-                    $properties[$property] = $properties[$property][0];
-                    break;
+
+                    $output = $info['output'];
+                    if ($output) {
+                        while (preg_match('/(%(\w+)%)/',$output, $params )) {
+                            $output = strtr($output,array($params[1] => $matches[$params[2]]));
+                        }
+                    } else {
+                        $output = $placeholder['value'];
+                    }
+                    
+                    $properties[$property][] = $output;
+                    if ($info['how_many']=='?' || $info['how_many']=='1') {
+                        $properties[$property] = $properties[$property][0];
+                        break;
+                    }
                 }
             }
         }
@@ -100,5 +105,13 @@ class Helper
         return $html;
     }
 
+    private function isAssociativeArray($data)
+    {
+        if (!is_array($data)) {
+            return false;
+        }
+
+        return array_keys($data) !== range(0, count($data) - 1);
+    }
 
 }
