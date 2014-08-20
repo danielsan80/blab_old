@@ -9,8 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-use Dan\Plugin\DiaryBundle\Form\RegexpDataType;
-use Dan\Plugin\DiaryBundle\Model\RegexpData;
+use Dan\Plugin\DiaryBundle\Form\GenericDataType;
+use Dan\Plugin\DiaryBundle\Model\GenericData;
 
 use Symfony\Component\Yaml\Yaml;
 
@@ -37,7 +37,7 @@ class RegexpController extends Controller
         $defaults = $this->get('dan_diary.regexp.helper')->getDefaultRegexp();
 
         $data = $userManager->getMetadata($user, 'diary', 'regexp', $defaults);
-        $regexpData = new RegexpData($data);
+        $regexpData = new GenericData($data);
         $form = $this->createDataForm($regexpData);
         $formReset = $this->createResetForm();
 
@@ -62,7 +62,7 @@ class RegexpController extends Controller
         $defaults = $this->get('dan_diary.regexp.helper')->getDefaultRegexp();
 
         $data = $userManager->getMetadata($user, 'diary', 'regexp', $defaults);
-        $regexpData = new RegexpData($data);
+        $regexpData = new GenericData($data);
         $form = $this->createDataForm($regexpData);
 
         $form->handleRequest($request);
@@ -95,9 +95,9 @@ class RegexpController extends Controller
         return $this->redirect($this->generateUrl('regexp_edit'));
     }
 
-    private function createDataForm(RegexpData $regexpData)
+    private function createDataForm(GenericData $regexpData)
     {
-        $form = $this->createForm(new RegexpDataType(), $regexpData, array(
+        $form = $this->createForm(new GenericDataType(), $regexpData, array(
             'action' => $this->generateUrl('regexp_update'),
             'method' => 'PUT',
         ));
