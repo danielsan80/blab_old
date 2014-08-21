@@ -9,15 +9,7 @@
 
     <div class="row">
         <div class="span5">
-            {% if shareData.isOwner(app.user) %}
-                {{ render(controller('DanShareBundle:Widget:shareLink', {shareData: shareData})) }}
-                <hr/>
-            {% endif %}
-            <h4>Project</h4>
-            {{ render(controller('DanPluginDiaryBundle:Widget:selectProject', {user: user, route: route, params:params, project:project})) }}
-            <hr/>
-            <h4>Month</h4>
-            {{ render(controller('DanPluginDiaryBundle:Widget:selectMonth', {user: user, route: route, params:params, month:month})) }}
+            {{ include('DanPluginDiaryBundle:Analysis:_widgets.html.twig') }}
         </div>
         {% if project and month %}
             

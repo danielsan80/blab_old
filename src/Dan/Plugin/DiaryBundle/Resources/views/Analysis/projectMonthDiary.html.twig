@@ -1,0 +1,55 @@
+{% extends 'DanPluginDiaryBundle::layout.html.twig' %}
+
+{% set user = shareData.user %}
+{% set route = shareData.route %}
+{% set params = shareData.params %}
+
+{% block title %}blab{% endblock %}
+{% block content %}
+
+    <div class="row">
+        <div class="span5">
+            {{ include('DanPluginDiaryBundle:Analysis:_widgets.html.twig') }}
+            <hr/>
+            <strong>Hours:</strong> {{monthlyHours}}<br/>
+            {% if monthlyEuro %}
+                <hr/>
+                <div style="text-align:right; font-size: 26px;" >
+                    <strong>€ </strong> {{monthlyEuro|number_format(0)}}<br/>
+                </div>
+            {% endif %}
+        </div>
+        {% if project and month %}
+            
+            <div class="span7">
+                <table class="table table-bordered" >
+                    {% for weeklyReports in reports %}
+                        {% for dow, dailyReports in weeklyReports.reports %}
+                            <tr>
+                                <td>
+                                    {% for report in dailyReports.reports %}
+                                        {% if shareData.isOwner(app.user) %}
+                                            <div class="pull-right">
+                                                <a href="{{path('report_edit', {id:report.id})}}" target="_blank" class="icon icon-edit"></a>
+                                            </div>
+                                        {% endif %}
+
+                                        {{report.content|trans|nl2br}}
+                                        <hr/>
+                                    {% endfor %}
+                                    <div class="pull-right">
+                                        <strong>{{dailyReports.hours}}</strong>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        <tr>
+                            <td></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

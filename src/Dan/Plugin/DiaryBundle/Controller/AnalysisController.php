@@ -21,11 +21,11 @@ class AnalysisController extends Controller
 {
 
     /**
-     * @Route("/project_month", name="analysis_project_month")
+     * @Route("/project_month_resume", name="analysis_project_month_resume")
      * @Method("GET")
      * @Template
      */
-    public function projectMonthAction(Request $request)
+    public function projectMonthResumeAction(Request $request)
     {
         $sharer = $this->get('sharer');
 
@@ -38,11 +38,58 @@ class AnalysisController extends Controller
         $project = $request->get('project');
         $month = $request->get('month');
 
-//        $sharer->createShareToken($user, 'analysis_project_month', array(
-//                'project' => $project,
-//                'month' => $month,
-//            ));
+        $data = $this->getProjectMonthData($user, $project, $month);
         
+        return array_merge( $data, array(
+            'shareData' => $sharer->createShareData(
+                    $user,
+                    'analysis_project_month_resume',
+                    array(
+                        'month' => $month,
+                        'project' => $project,
+                    )
+                ),
+            )
+        );
+    }
+
+
+    /**
+     * @Route("/project_month_diary", name="analysis_project_month_diary")
+     * @Method("GET")
+     * @Template
+     */
+    public function projectMonthDiaryAction(Request $request)
+    {
+        $sharer = $this->get('sharer');
+
+        if (!($user = $sharer->getUserFromRequest($request))) {
+            $this->givenUserIsLoggedIn();
+            $user = $this->getUser();
+        }
+
+
+        $project = $request->get('project');
+        $month = $request->get('month');
+
+        $data = $this->getProjectMonthData($user, $project, $month);
+
+        
+        return array_merge( $data, array(
+            'shareData' => $sharer->createShareData(
+                    $user,
+                    'analysis_project_month_diary',
+                    array(
+                        'month' => $month,
+                        'project' => $project,
+                    )
+                ),
+            )
+        );
+    }
+
+    private function getProjectMonthData($user, $project, $month)
+    {
         $em = $this->getDoctrine()->getManager();
 
         $helper = $this->get('dan_diary.analysis.helper');
@@ -121,23 +168,6 @@ class AnalysisController extends Controller
             'monthlySeconds' => $monthlySeconds,
             'monthlyEuro' => $monthlyEuro,
             'reports' => $reports,
-
-            'shareData' => $sharer->createShareData(
-                    $user,
-                    'analysis_project_month',
-                    array(
-                        'month' => $month,
-                        'project' => $project,
-                    )
-                ),
-
-//            'user' => $user,
-//            'route' => 'analysis_project_month',
-//            'params' => array(
-//                    'month' => $month,
-//                    'project' => $project,
-//                ),
-
         );
     }
 }
