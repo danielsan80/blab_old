@@ -7461,6 +7461,10 @@ a.active {
 .navbar .diary-logo {
   font-size: 1.5em;
 }
+ul.tasks {
+  font-size: 0.6em;
+  margin-bottom: 0;
+}
 .clearfix {
   *zoom: 1;
 }

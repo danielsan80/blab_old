@@ -6,7 +6,7 @@
 
 {% block title %}blab{% endblock %}
 {% block content %}
-    
+
     <div class="row">
         <div class="span5">
             {% if shareData.isOwner(app.user) %}
@@ -28,30 +28,28 @@
                     </tr>
                     {% for weeklyReports in reports %}
                         {% for dow, dailyReports in weeklyReports.reports %}
-                            {% for report in dailyReports.reports %}
-                                <tr>
-                                    <td>
-                                        {{dailyReports.date|date('l')|slice(0,3)}} {{dailyReports.date|date('d')}}
-                                    </td>
-                                    <td>
-                                        {{dailyReports.hours}}
-                                    </td>
-                                    <td>
-                                        {% if shareData.isOwner(app.user) %}
-                                            {% for report in dailyReports.reports %}
-                                                <a href="{{path('report_edit', {id:report.id})}}" target="_blank" class="icon icon-edit"></a>
+                            <tr>
+                                <td>
+                                    {{dailyReports.date|date('l')|slice(0,3)}} {{dailyReports.date|date('d')}}
+                                </td>
+                                <td>
+                                    {{dailyReports.hours}}
+                                </td>
+                                <td>
+                                    {% if shareData.isOwner(app.user) %}
+                                        {% for report in dailyReports.reports %}
+                                            <a href="{{path('report_edit', {id:report.id})}}" target="_blank" class="icon icon-edit"></a>
+                                        {% endfor %}
+                                    {% endif %}
+                                    {% if dailyReports.tasks %}
+                                        <ul class="tasks">
+                                            {% for task in dailyReports.tasks %}
+                                                <li>{{task}}</li>
                                             {% endfor %}
-                                        {% endif %}
-                                        {% if dailyReports.tasks %}
-                                            <ul class="tasks">
-                                                {% for task in dailyReports.tasks %}
-                                                    <li>{{task}}</li>
-                                                {% endfor %}
-                                            </ul>
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </td>
+                            </tr>
                         {% endfor %}
                         <tr>
                             <td colspan="3"></td>

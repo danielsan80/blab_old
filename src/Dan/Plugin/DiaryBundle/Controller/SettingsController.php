@@ -27,7 +27,7 @@ class SettingsController extends Controller
      */
     public function editAction()
     {
-        $this->givenUserIsSuperAdmin();
+        $this->givenUserIsLoggedIn();
 
         $user = $this->getUser();
         $userManager = $this->get('model.manager.user');
@@ -57,7 +57,7 @@ class SettingsController extends Controller
      */
     public function updateAction(Request $request)
     {
-        $this->givenUserIsSuperAdmin();
+        $this->givenUserIsLoggedIn();
 
         $user = $this->getUser();
         $userManager = $this->get('model.manager.user');

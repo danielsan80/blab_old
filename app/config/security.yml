@@ -77,6 +77,7 @@ security:
                 failure_path:      /login
                 oauth_user_provider:
                     service: oauth.user_provider
+            switch_user: true
             remember_me:
                 key:      "%secret%"
                 lifetime: 31536000 # 365 giorni in secondi

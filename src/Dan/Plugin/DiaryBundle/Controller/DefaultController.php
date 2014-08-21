@@ -8,6 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use Dan\Plugin\DiaryBundle\Entity\Report;
 
+use Symfony\Component\Yaml\Yaml;
+
 class DefaultController extends Controller
 {
     /**
@@ -49,6 +51,15 @@ class DefaultController extends Controller
         $em->persist($entity);
         $em->flush($entity);
 
+        $userManager->setMetadata($user, 'diary', 'settings', $this->getDefaultSettings());
+
         $userManager->setMetadata($user, 'diary', 'user_status.example_report_created', true);
+    }
+
+    private function getDefaultSettings() {
+        $kernel = $this->get('kernel');
+        $yaml = file_get_contents($kernel->locateResource('@DanPluginDiaryBundle/Resources/data/default_settings.yml'));
+
+        return Yaml::parse($yaml);
     }
 }
