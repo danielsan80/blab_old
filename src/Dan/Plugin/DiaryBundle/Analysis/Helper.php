@@ -34,6 +34,15 @@ class Helper
         return new \DateTime($properties['date']);
     }
 
+    public function getTasks(Report $report)
+    {
+        $properties = $report->getProperties();
+        if (!isset($properties['tasks'])) {
+            return array();
+        }
+        return $properties['tasks'];
+    }
+
     public function getTotalTime(Report $report)
     {
         $today = new \DateTime('today');

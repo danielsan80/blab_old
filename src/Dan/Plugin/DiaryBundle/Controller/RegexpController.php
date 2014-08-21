@@ -79,7 +79,7 @@ class RegexpController extends Controller
         if ($form->isValid()) {
 
             $userManager->setMetadata($user, 'diary', 'regexp', $regexpData->getData());
-            return $this->redirect($this->generateUrl('regexp_edit'));
+            return $this->redirect($this->generateUrl('diary_regexp_edit'));
         }
 
         return array(
@@ -102,7 +102,7 @@ class RegexpController extends Controller
 
         $userManager->setMetadata($user, 'diary', 'regexp', $defaults);
 
-        return $this->redirect($this->generateUrl('regexp_edit'));
+        return $this->redirect($this->generateUrl('diary_regexp_edit'));
     }
 
     private function createDataForm(GenericData $regexpData)

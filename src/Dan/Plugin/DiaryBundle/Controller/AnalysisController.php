@@ -82,6 +82,7 @@ class AnalysisController extends Controller
                     'hours' => '0.00',
                     'date' => $date,
                     'reports' => array(),
+                    'tasks' => array(),
                 );
             }
 
@@ -91,6 +92,11 @@ class AnalysisController extends Controller
             $_reports[$weekNumber]['reports'][$dow]['hours'] = $helper->getAsHours($_reports[$weekNumber]['reports'][$dow]['seconds']);
 
             $_reports[$weekNumber]['reports'][$dow]['reports'][] = $report;
+
+            $_reports[$weekNumber]['reports'][$dow]['tasks'] = array_merge(
+                $_reports[$weekNumber]['reports'][$dow]['tasks'],
+                $helper->getTasks($report)
+            );
 
         }
 

@@ -42,6 +42,13 @@
                                                 <a href="{{path('report_edit', {id:report.id})}}" target="_blank" class="icon icon-edit"></a>
                                             {% endfor %}
                                         {% endif %}
+                                        {% if dailyReports.tasks %}
+                                            <ul class="tasks">
+                                                {% for task in dailyReports.tasks %}
+                                                    <li>{{task}}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% endif %}
                                     </td>
                                 </tr>
                             {% endfor %}
