@@ -7464,6 +7464,11 @@ a.active {
 ul.tasks {
   font-size: 0.6em;
   margin-bottom: 0;
+  margin-left: 3px;
+  list-style-position: inside;
+}
+ul.tasks li {
+  line-height: 0.9em;
 }
 .clearfix {
   *zoom: 1;
