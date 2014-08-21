@@ -101,12 +101,19 @@ class AnalysisController extends Controller
             ksort($week['reports']);
             $reports[$weekNumber] = $week;
         }
+
+        $userManager = $this->get('model.manager.user');
+
+        $monthlyHours = $helper->getAsHours($monthlySeconds);
+        $euroPerHour = $userManager->getMetadata($user, 'diary', 'settings.projects.'.$project.'.euro_per_hour', null);
+        $monthlyEuro = $monthlyHours * $euroPerHour;
         
         return array(
             'project' => $project,
             'month' => $month,
-            'monthlyHours' => $helper->getAsHours($monthlySeconds),
+            'monthlyHours' => $monthlyHours,
             'monthlySeconds' => $monthlySeconds,
+            'monthlyEuro' => $monthlyEuro,
             'reports' => $reports,
 
             'shareData' => $sharer->createShareData(
@@ -118,12 +125,12 @@ class AnalysisController extends Controller
                     )
                 ),
 
-            'user' => $user,
-            'route' => 'analysis_project_month',
-            'params' => array(
-                    'month' => $month,
-                    'project' => $project,
-                )
+//            'user' => $user,
+//            'route' => 'analysis_project_month',
+//            'params' => array(
+//                    'month' => $month,
+//                    'project' => $project,
+//                ),
 
         );
     }

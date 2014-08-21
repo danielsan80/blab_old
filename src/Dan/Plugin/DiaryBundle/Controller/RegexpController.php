@@ -23,7 +23,7 @@ class RegexpController extends Controller
 {
 
     /**
-     * @Route("/edit", name="regexp_edit")
+     * @Route("/edit", name="diary_regexp_edit")
      * @Method("GET")
      * @Template()
      */
@@ -48,7 +48,16 @@ class RegexpController extends Controller
     }
 
     /**
-     * @Route("", name="regexp_update")
+     * @Route("")
+     * @Method("GET")
+     */
+    public function redirectAction(Request $request)
+    {
+        return $this->redirect($this->generateUrl('diary_regexp_edit'));
+    }
+
+    /**
+     * @Route("", name="diary_regexp_update")
      * @Method("PUT")
      * @Template("DanPluginDiaryBundle:Regexp:edit.html.twig")
      */
@@ -77,8 +86,9 @@ class RegexpController extends Controller
             'form'   => $form->createView(),
         );
     }
+    
     /**
-     * @Route("/reset", name="regexp_reset")
+     * @Route("/reset", name="diary_regexp_reset")
      * @Method("POST")
      */
     public function resetAction(Request $request)
@@ -98,7 +108,7 @@ class RegexpController extends Controller
     private function createDataForm(GenericData $regexpData)
     {
         $form = $this->createForm(new GenericDataType(), $regexpData, array(
-            'action' => $this->generateUrl('regexp_update'),
+            'action' => $this->generateUrl('diary_regexp_update'),
             'method' => 'PUT',
         ));
 
@@ -110,7 +120,7 @@ class RegexpController extends Controller
     private function createResetForm()
     {
         $form = $this->createFormBuilder()
-            ->setAction($this->generateUrl('regexp_reset'))
+            ->setAction($this->generateUrl('diary_regexp_reset'))
             ->setMethod('POST')
         ;
 

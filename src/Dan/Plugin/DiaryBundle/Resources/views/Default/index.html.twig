@@ -6,9 +6,12 @@
     <ul>
         {% if is_granted('ROLE_SUPER_ADMIN') %}
             <li>
-                <a href="{{path('regexp_edit')}}" >Report Regexps</a>
+                <a href="{{path('diary_regexp_edit')}}" >Report Regexps</a>
             </li>
         {% endif %}
+        <li>
+            <a href="{{path('diary_settings_edit')}}" >Settings</a>
+        </li>
         <li>
             <a href="{{path('report')}}" >Reports</a>
         </li>
