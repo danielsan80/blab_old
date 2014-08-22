@@ -56,7 +56,8 @@ class Helper
                     );
                     $placeholders[] = $placeholder; 
 
-                    $content = preg_replace('/'.preg_quote($placeholder['value']).'/', '{{'.(count($placeholders)-1).'}}', $content, 1);
+                    $value = strtr(preg_quote($placeholder['value']), array('/' => '\\/'));
+                    $content = preg_replace('/'.$value.'/', '{{'.(count($placeholders)-1).'}}', $content, 1);
 
 
                     foreach($info['transformers'] as $key => $method) {
