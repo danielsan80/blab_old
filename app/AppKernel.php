@@ -39,6 +39,7 @@ class AppKernel extends Kernel
             new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
             
             new Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(),
+            new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
             new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
             
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),

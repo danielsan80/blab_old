@@ -47,7 +47,7 @@ class ReportListener
         $content = $entity->getContent();
         $user = $entity->getUser();
 
-        $regexps = $this->container->get('model.manager.user_metadata')->getMetadata(
+        $regexps = $this->container->get('model.manager.user')->getMetadata(
             $user,
             'diary',
             'regexp',
