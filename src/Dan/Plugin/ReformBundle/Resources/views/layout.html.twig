@@ -1,0 +1,15 @@
+{% extends 'DanMainBundle::layout.html.twig' %}
+
+
+{% block logo %}
+    {{parent()}}
+    <a href="{{path('reform_index')}}" class="logo-text diary-logo" > :: ReForm</a>
+    
+{% endblock %}
+
+    
+{% block foot_script %}
+    {{ parent() }}
+{% endblock %}
+
+    
