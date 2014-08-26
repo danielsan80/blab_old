@@ -6,14 +6,6 @@ date:
 project:
     pattern: '/\[(?P<project>\w+)\]/'
     output: '%project%'
-times:
-    pattern: '/(?P<from>\d{2}\.\d{2})[ ]?-[ ]?(?P<to>\d{2}\.\d{2})/'
-    output: '%from% - %to%'
-    how_many: '*'
-times_mods:
-    pattern: '/(?P<sign>[\+\-]{1})[ ]?(?P<num>\d{1,2}(\.\d{2})?)[ ]?(?P<unit>[hm]?)/'
-    how_many: '*'
-    output: '%sign%%num%%unit%'
 tasks:
     -
         pattern: '/(task|TASK|Task): (?P<task>[^\n]+)\n/'
@@ -23,3 +15,16 @@ tasks:
         pattern: '/(task|TASK|Task): (?P<task>[^\n]+)$/'
         output: '%task%'
         how_many: '*'
+times:
+    pattern: '/(?P<from>\d{2}\.\d{2})[ ]?-[ ]?(?P<to>\d{2}\.\d{2})/'
+    output: '%from% - %to%'
+    how_many: '*'
+times_mods:
+    -
+        pattern: '/(?P<sign>[\+\-]{1})[ ]?(?P<num>\d{1,2})[ ]?(?P<unit>[hm])/'
+        how_many: '*'
+        output: '%sign%%num%%unit%'
+    -
+        pattern: '/(?P<sign>[\+\-]{1})[ ]?(?P<num>\d{1,2}\.\d{2})[ ]?(?P<unit>[h]?)/'
+        how_many: '*'
+        output: '%sign%%num%%unit%'

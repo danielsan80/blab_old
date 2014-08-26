@@ -46,6 +46,7 @@
         
         "knplabs/knp-gaufrette-bundle" : "dev-master",
         "knplabs/gaufrette" : "0.2.*@dev",
+        "knplabs/knp-markdown-bundle": "*",
         "avalanche123/imagine-bundle": "v2.1.2",
 
         "leafo/lessphp": "0.3.*",
