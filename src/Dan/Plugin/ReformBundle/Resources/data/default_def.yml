@@ -1,0 +1,12 @@
+anagrafica:
+    label: Anagrafica
+    properties:
+        title:
+            label: Titolo
+            type: text
+        description:
+            label: Descrizione
+            type: textarea
+        enabled:
+            label: Abilitato
+            type: 'choice[si:Si, no:No]'

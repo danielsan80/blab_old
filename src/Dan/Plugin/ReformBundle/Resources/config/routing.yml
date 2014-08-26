@@ -1,0 +1,4 @@
+main:
+    resource: "@DanPluginReformBundle/Controller"
+    type: annotation
+    prefix: /reform

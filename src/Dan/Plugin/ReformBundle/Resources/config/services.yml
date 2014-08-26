@@ -1,0 +1,8 @@
+parameters:
+#    dan_plugin_reform.example.class: Dan\Plugin\ReformBundle\Example
+
+services:
+    dan_reform.plugin:
+        class: Dan\Plugin\ReformBundle\Plugin
+        tags:
+            - {name: dan.plugin}
