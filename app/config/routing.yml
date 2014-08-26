@@ -18,7 +18,9 @@ dan_plugin_diary:
     resource: "@DanPluginDiaryBundle/Resources/config/routing.yml"
     prefix:   /
 
-
+dan_plugin_reform:
+    resource: "@DanPluginReformBundle/Resources/config/routing.yml"
+    prefix:   /
 
 
 
