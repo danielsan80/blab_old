@@ -105,8 +105,12 @@ class ReportController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('report'));
-            return $this->redirect($this->generateUrl('report_edit', array('id' => $entity->getId())));
+            if ($form->get('submit')->isClicked()) {
+                return $this->redirect($this->generateUrl('report'));
+            }
+            if ($form->get('submitAndContinue')->isClicked()) {
+                return $this->redirect($this->generateUrl('report_edit', array('id' => $entity->getId())));
+            }
         }
 
         return array(
@@ -129,7 +133,9 @@ class ReportController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form
+            ->add('submit', 'submit', array('label' => 'Create'))
+            ->add('submitAndContinue', 'submit', array('label' => 'Create and Continue'));
 
         return $form;
     }
@@ -203,7 +209,9 @@ class ReportController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form
+            ->add('submit', 'submit', array('label' => 'Update'))
+            ->add('submitAndContinue', 'submit', array('label' => 'Update and Continue'));
 
         return $form;
     }
@@ -234,9 +242,12 @@ class ReportController extends Controller
 
         if ($editForm->isValid()) {
             $em->flush();
-
-            return $this->redirect($this->generateUrl('report'));
-            return $this->redirect($this->generateUrl('report_edit', array('id' => $id)));
+            if ($editForm->get('submit')->isClicked()) {
+                return $this->redirect($this->generateUrl('report'));
+            }
+            if ($editForm->get('submitAndContinue')->isClicked()) {
+                return $this->redirect($this->generateUrl('report_edit', array('id' => $id)));
+            }
         }
 
         return array(

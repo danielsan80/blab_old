@@ -3,7 +3,10 @@
     {{ form_errors(form.content) }}
     {{ form_widget(form.content) }}
 </div>
-{{ form_row(form.submit, {attr:{class:"btn btn-mini"}}) }}
+<div>
+    {{ form_widget(form.submit, {attr:{class:"btn btn-mini"}}) }}
+    {{ form_widget(form.submitAndContinue, {attr:{class:"btn btn-mini"}}) }}
+</div>
 
 
 {{ form_end(form) }}
