@@ -9,7 +9,9 @@
 
     <div class="row">
         <div class="span5">
-            {{ include('DanPluginDiaryBundle:Analysis:_widgets.html.twig') }}
+            {% if shareData.isOwner(app.user) %}
+                {{ include('DanPluginDiaryBundle:Analysis:_widgets.html.twig') }}
+            {% endif %}
         </div>
         {% if project and month %}
             
@@ -50,12 +52,24 @@
                 </table>
             </div>
             <div class="span2">
-                <strong>Hours:</strong> {{monthlyHours}}<br/>
-                {% if monthlyEuro %}
+                {% if project %}
+                    <strong>project: </strong> {{project}}<br/>
+                {% endif %}
+                {% if month %}
+                    <strong>month: </strong> {{month|date('F Y')|lower}}<br/>
+                {% endif %}
+                {% if project and month %}
                     <hr/>
-                    <div style="text-align:right; font-size: 26px;" >
-                        <strong>€ </strong> {{monthlyEuro|number_format(0)}}<br/>
-                    </div>
+                    <strong>hours:</strong> {{monthlyHours}}<br/>
+                    {% if monthlyDays %}
+                        <strong>days: </strong> {{monthlyDays|number_format(2)}}<br/>
+                    {% endif %}
+                    {% if monthlyEuro %}
+                        <hr/>
+                        <div style="text-align:right; font-size: 26px;" >
+                            <strong>€ </strong> {{monthlyEuro|number_format(0)}}<br/>
+                        </div>
+                    {% endif %}
                 {% endif %}
             </div>
         {% endif %}

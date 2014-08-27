@@ -109,10 +109,13 @@ class AnalysisController extends Controller
             if ($month != $reportMonth) {
                 continue;
             }
+            $date = $helper->getDate($report);
+            if (!$date) {
+                continue;
+            }
 
             $dailySeconds = $helper->getTotalTime($report);
 
-            $date = $helper->getDate($report);
             
             $weekNumber = (int)$date->format('W');
             $dow = (int)$date->format('w');
@@ -159,7 +162,17 @@ class AnalysisController extends Controller
 
         $monthlyHours = $helper->getAsHours($monthlySeconds);
         $euroPerHour = $userManager->getMetadata($user, 'diary', 'settings.projects.'.$project.'.euro_per_hour', null);
-        $monthlyEuro = $monthlyHours * $euroPerHour;
+        $euroPerDay = $userManager->getMetadata($user, 'diary', 'settings.projects.'.$project.'.euro_per_day', null);
+        $hoursPerDay = $userManager->getMetadata($user, 'diary', 'settings.projects.'.$project.'.hours_per_day', null);
+        $monthlyDays = $hoursPerDay ? $monthlyHours / $hoursPerDay : null;
+
+        $monthlyEuro = null;
+        if ($euroPerDay && $monthlyDays) {
+            $monthlyEuro = $monthlyDays * $euroPerDay;
+        }
+        if ($euroPerHour && $monthlyHours) {
+            $monthlyEuro = $monthlyHours * $euroPerHour;
+        }
         
         return array(
             'project' => $project,
@@ -167,6 +180,7 @@ class AnalysisController extends Controller
             'monthlyHours' => $monthlyHours,
             'monthlySeconds' => $monthlySeconds,
             'monthlyEuro' => $monthlyEuro,
+            'monthlyDays' => $monthlyDays,
             'reports' => $reports,
         );
     }
