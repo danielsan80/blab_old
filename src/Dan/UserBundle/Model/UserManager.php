@@ -29,9 +29,9 @@ class UserManager extends BaseUserManager
     }
     
     public function setUserImage(User $user, $image) {
-        $pi = pathinfo($image);
-        $filename = 'user_'.md5($user->getEmail()).'.'.$pi['extension'];
-        file_put_contents($this->getImagesDir().'/'.$filename, file_get_contents($image));
+        $content = file_get_contents($image);
+        $filename = 'user_'.md5($user->getEmail()).'.jpg';
+        file_put_contents($this->getImagesDir().'/'.$filename, $content );
         $user->setImage($filename);
     }
 
