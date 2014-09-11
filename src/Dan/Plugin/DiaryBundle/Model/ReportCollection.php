@@ -4,48 +4,12 @@ namespace Dan\Plugin\DiaryBundle\Model;
 
 use Dan\Plugin\DiaryBundle\Analysis\Helper;
 
-class ReportCollection
+class ReportCollection extends BaseReportCollection
 {
-    private $reports;
     private $moneyPerHour;
     private $moneyPerDay;
     private $hoursPerDay = 7;
     private $currency = 'EUR';
-
-    private $helper;
-
-    public function __construct()
-    {
-        $this->reports = array();
-    }
-    public function setHelper(Helper $helper)
-    {
-        $this->helper = $helper;
-        return $this;
-    }
-    public function getHelper()
-    {
-        if (!$this->helper) {
-            $this->helper = new Helper();
-        }
-        return $this->helper;
-    }
-
-    public function setReports($reports)
-    {
-        $this->reports = $report;
-        return $this;
-    }
-    public function getReports()
-    {
-        return $this->reports;
-    }
-    public function addReport($report)
-    {
-        $this->reports[] = $report;
-        return $this;
-    }
-    
 
     public function setMoneyPerHour($moneyPerHour)
     {
@@ -54,6 +18,9 @@ class ReportCollection
     }
     public function getMoneyPerHour()
     {
+        if ($this->parent) {
+            return $this->parent->getMoneyPerHour();
+        }
         return $this->moneyPerHour;
     }
 
@@ -64,6 +31,9 @@ class ReportCollection
     }
     public function getMoneyPerDay()
     {
+        if ($this->parent) {
+            return $this->parent->getMoneyPerDay();
+        }
         return $this->moneyPerDay;
     }
 
@@ -74,6 +44,9 @@ class ReportCollection
     }
     public function getCurrency()
     {
+        if ($this->parent) {
+            return $this->parent->getCurrency();
+        }
         return $this->Currency;
     }
 
@@ -84,19 +57,24 @@ class ReportCollection
     }
     public function getHoursPerDay()
     {
+        if ($this->parent) {
+            return $this->parent->getHoursPerDay();
+        }
         return $this->hoursPerDay;
     }
 
     public function getSeconds()
     {
-        try {
-            return $this->reports->getSeconds();
-        } catch (\Exception $e) {}
 
+        $class = get_class($this);
         $helper = $this->getHelper();
         $seconds = 0;
         foreach($this->reports as $report) {
-            $seconds += $helper->getTotalTime($report);
+            if ($report instanceof $class ) {
+                $seconds += $report->getSeconds();
+            } else {
+                $seconds += $helper->getTotalTime($report);
+            }
         }
         return $seconds;
     }
@@ -114,19 +92,80 @@ class ReportCollection
     public function getMoney()
     {
         $hours = $this->getHours();
-        $days = $this->getDay();
+        $days = $this->getDays();
 
         $moneyPerHour = $this->getMoneyPerHour();
         $moneyPerDay = $this->getMoneyPerDay();
 
         $money = null;
         if ($moneyPerDay && $days) {
-            $money = $days * $euroPerDay;
+            $money = $days * $moneyPerDay;
         }
         if ($moneyPerHour && $hours) {
             $money = $hours * $moneyPerHour;
         }
 
         return $money;
+    }
+
+    public function getTasks()
+    {
+        $class = get_class($this);
+
+        $helper = $this->getHelper();
+
+        $tasks = array();
+        foreach($this->reports as $report) {
+            if ($report instanceof $class ) {
+                $tasks = array_merge($tasks, $report->getTasks());
+            } else {
+                $tasks = array_merge($tasks, $helper->getTasks($report));
+            }
+        }
+
+        return $tasks;
+    }
+
+    public function getDate()
+    {
+        $dates = $this->getDates();
+        if (!$dates) {
+            return null;
+        }
+        if (count($dates)>1) {
+            return $dates;
+        }
+        foreach($dates as $date) {
+            return $date;
+        }
+    }
+    
+    public function getDates()
+    {
+        $class = get_class($this);
+
+        $helper = $this->getHelper();
+
+        $dates = array();
+        foreach($this->reports as $report) {
+            if ($report instanceof $class ) {
+                $dates = array_merge($dates, $report->getDates());
+            } else {
+                $date = $helper->getDate($report);
+                $dates = array_merge($dates, array($date->format('Y-m-d') => $date) );
+            }
+        }
+
+        return $dates;
+    }
+
+    public function getTasksAsHtml()
+    {
+        $tasks = $this->getTasks();
+        foreach($tasks as $i => $task) {
+            $tasks[$i] = $helper->getAsHtml($task);
+        }
+
+        return $tasks;
     }
 }

@@ -97,4 +97,41 @@ class Helper
 
         return $hours.'.'.$minutes;
     }
+
+    public function getAsHtml($text)
+    {
+        if (is_array($text)) {
+            foreach($text as $key => $value) {
+                $text[$key] = $this->getAsHtml($value);
+            }
+            return $text;
+        }
+
+        $placeholders = array();
+        $pattern = '/(?P<ref>http[s]?:\/\/[^\s]+)/';
+        while(preg_match($pattern, $text, $matches)) {
+
+            $placeholder = $matches['ref'];
+            $placeholders[] = $placeholder; 
+
+            $value = strtr(preg_quote($placeholder), array('/' => '\\/'));
+            $text = preg_replace('/'.$value.'/', '{{'.(count($placeholders)-1).'}}', $text, 1);
+        }
+
+        $html = $text;
+        $pattern = '/{{(?P<i>\d+)}}/';
+
+        while (preg_match($pattern, $html, $matches)) {
+            if (!isset($placeholders[(int)$matches['i']])) {
+                break;
+            }
+            $placeholder = $placeholders[(int)$matches['i']];
+            $replacement = '<a href="'.$placeholder.'" >'.$placeholder.'</a>';
+            $html = preg_replace($pattern, $replacement, $html, 1);
+        }
+
+        return $html;
+    }
+
+
 }

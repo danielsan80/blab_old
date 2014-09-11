@@ -8,7 +8,7 @@ class DefaultControllerTest extends WebTestCase
 {
     public function testIndex()
     {
-        $this->markTestAsIncompleted();
+        $this->markTestIncomplete();
  
     }
 }

@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Dan\Plugin\DiaryBundle\Entity\Report;
+use Dan\Plugin\DiaryBundle\Model\ReportCollection;
 
 use Symfony\Component\Yaml\Yaml;
 
@@ -121,98 +122,44 @@ class AnalysisController extends Controller
 
     private function getProjectMonthData($user, $project, $month)
     {
+        $userManager = $this->get('model.manager.user');
+        $euroPerHour = $userManager->getMetadata($user, 'diary', 'settings.projects.'.$project.'.euro_per_hour', null);
+        $euroPerDay = $userManager->getMetadata($user, 'diary', 'settings.projects.'.$project.'.euro_per_day', null);
+        $hoursPerDay = $userManager->getMetadata($user, 'diary', 'settings.projects.'.$project.'.hours_per_day', null);
+
+        $collection = new ReportCollection();
+        $collection->setMoneyPerHour($euroPerHour);
+        $collection->setMoneyPerDay($euroPerDay);
+        $collection->setHoursPerDay($hoursPerDay);
+
         $em = $this->getDoctrine()->getManager();
-
         $helper = $this->get('dan_diary.analysis.helper');
-
         $reports = $em->getRepository('DanPluginDiaryBundle:Report')->findByUser($user);
 
-        $monthlySeconds = 0;
 
-        $_reports = array();
         foreach($reports as $report) {
-            $reportProject = $helper->getProject($report);
-            if ($project != $reportProject) {
+            if ($project != $helper->getProject($report)) {
                 continue;
             }
 
-            $reportMonth = $helper->getMonth($report);
-            if ($month != $reportMonth) {
+            if ($month != $helper->getMonth($report)) {
                 continue;
             }
+
             $date = $helper->getDate($report);
             if (!$date) {
                 continue;
             }
 
-            $dailySeconds = $helper->getTotalTime($report);
-
-            
             $weekNumber = (int)$date->format('W');
             $dow = (int)$date->format('w');
-
-            if (!isset($_reports[$weekNumber])) {
-                $_reports[$weekNumber] = array(
-                    'seconds' => 0,
-                    'reports' => array(),
-                );
-            }
-            if (!isset($_reports[$weekNumber]['reports'][$dow])) {
-                $_reports[$weekNumber]['reports'][$dow] = array(
-                    'seconds' => 0,
-                    'hours' => '0.00',
-                    'date' => $date,
-                    'reports' => array(),
-                    'tasks' => array(),
-                );
-            }
-
-            $monthlySeconds += $dailySeconds;
-            $_reports[$weekNumber]['seconds'] += $dailySeconds;
-            $_reports[$weekNumber]['reports'][$dow]['seconds'] += $dailySeconds;
-            $_reports[$weekNumber]['reports'][$dow]['hours'] = $helper->getAsHours($_reports[$weekNumber]['reports'][$dow]['seconds']);
-
-            $_reports[$weekNumber]['reports'][$dow]['reports'][] = $report;
-
-            $_reports[$weekNumber]['reports'][$dow]['tasks'] = array_merge(
-                $_reports[$weekNumber]['reports'][$dow]['tasks'],
-                $this->getAsHtml($helper->getTasks($report))
-            );
-
-        }
-
-        $reports = $_reports;
-
-        ksort($reports);
-        foreach($reports as $weekNumber => $week) {
-            ksort($week['reports']);
-            $reports[$weekNumber] = $week;
-        }
-
-        $userManager = $this->get('model.manager.user');
-
-        $monthlyHours = $helper->getAsHours($monthlySeconds);
-        $euroPerHour = $userManager->getMetadata($user, 'diary', 'settings.projects.'.$project.'.euro_per_hour', null);
-        $euroPerDay = $userManager->getMetadata($user, 'diary', 'settings.projects.'.$project.'.euro_per_day', null);
-        $hoursPerDay = $userManager->getMetadata($user, 'diary', 'settings.projects.'.$project.'.hours_per_day', null);
-        $monthlyDays = $hoursPerDay ? $monthlyHours / $hoursPerDay : null;
-
-        $monthlyEuro = null;
-        if ($euroPerDay && $monthlyDays) {
-            $monthlyEuro = $monthlyDays * $euroPerDay;
-        }
-        if ($euroPerHour && $monthlyHours) {
-            $monthlyEuro = $monthlyHours * $euroPerHour;
+            $collection->addReport($report, $weekNumber.'.'.$dow);
         }
         
         return array(
             'project' => $project,
             'month' => $month,
-            'monthlyHours' => $monthlyHours,
-            'monthlySeconds' => $monthlySeconds,
-            'monthlyEuro' => $monthlyEuro,
-            'monthlyDays' => $monthlyDays,
-            'reports' => $reports,
+            'monthlyReports' => $collection,
         );
     }
 
@@ -341,39 +288,5 @@ class AnalysisController extends Controller
         );
     }
 
-    private function getAsHtml($text)
-    {
-        if (is_array($text)) {
-            foreach($text as $key => $value) {
-                $text[$key] = $this->getAsHtml($value);
-            }
-            return $text;
-        }
-
-        $placeholders = array();
-        $pattern = '/(?P<ref>http[s]?:\/\/[^\s]+)/';
-        while(preg_match($pattern, $text, $matches)) {
-
-            $placeholder = $matches['ref'];
-            $placeholders[] = $placeholder; 
-
-            $value = strtr(preg_quote($placeholder), array('/' => '\\/'));
-            $text = preg_replace('/'.$value.'/', '{{'.(count($placeholders)-1).'}}', $text, 1);
-        }
-
-        $html = $text;
-        $pattern = '/{{(?P<i>\d+)}}/';
-
-        while (preg_match($pattern, $html, $matches)) {
-            if (!isset($placeholders[(int)$matches['i']])) {
-                break;
-            }
-            $placeholder = $placeholders[(int)$matches['i']];
-            $replacement = '<a href="'.$placeholder.'" >'.$placeholder.'</a>';
-            $html = preg_replace($pattern, $replacement, $html, 1);
-        }
-
-        return $html;
-    }
-
+    
 }

@@ -20,7 +20,7 @@
                     <tr>
                         <th>day</th><th>hours</th><th></th>
                     </tr>
-                    {% for weeklyReports in reports %}
+                    {% for weeklyReports in monthlyReports.reports %}
                         {% for dow, dailyReports in weeklyReports.reports %}
                             <tr>
                                 <td>
@@ -60,14 +60,14 @@
                 {% endif %}
                 {% if project and month %}
                     <hr/>
-                    <strong>hours:</strong> {{monthlyHours}}<br/>
-                    {% if monthlyDays %}
-                        <strong>days: </strong> {{monthlyDays|number_format(2)}}<br/>
+                    <strong>hours:</strong> {{monthlyReports.hours}}<br/>
+                    {% if monthlyReports.days %}
+                        <strong>days: </strong> {{monthlyReports.days|number_format(2)}}<br/>
                     {% endif %}
-                    {% if monthlyEuro %}
+                    {% if monthlyReports.money %}
                         <hr/>
                         <div style="text-align:right; font-size: 26px;" >
-                            <strong>€ </strong> {{monthlyEuro|number_format(0)}}<br/>
+                            <strong>€ </strong> {{monthlyReports.money|number_format(0,'.','')}}<br/>
                         </div>
                     {% endif %}
                 {% endif %}
