@@ -1,0 +1,65 @@
+{% extends 'DanPluginDiaryBundle::layout.html.twig' %}
+
+{% set user = shareData.user %}
+{% set route = shareData.route %}
+{% set params = shareData.params %}
+
+{% block title %}blab{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="span5">
+            {% if shareData.isOwner(app.user) %}
+                {% if shareData.isOwner(app.user) %}
+                    {{ render(controller('DanShareBundle:Widget:shareLink', {shareData: shareData})) }}
+                    <hr/>
+                {% endif %}
+                <h4>Project</h4>
+                {{ render(controller('DanPluginDiaryBundle:Widget:selectProject', {user: user, route: route, params:params, project:project})) }}
+            {% endif %}
+        </div>
+        {% if project %}
+
+            
+            <div class="span5">
+                <table class="table table-bordered" >
+                    <tr>
+                        <th>month</th><th>hours</th>
+                    </tr>
+                    {% for month, monthlyReports in reports %}
+                        <tr>
+                            <td>
+                                {% if shareData.isOwner(app.user) %}
+                                    <a href="{{path('analysis_project_month_resume', {project:project, month: month})}}" >
+                                        {{month|date('M Y')}}
+                                    </a>
+                                {% else %}    
+                                    {{month|date('M Y')}}
+                                {% endif %}    
+                            </td>
+                            <td>
+                                {{monthlyReports.hours}}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="span2">
+                {% if project %}
+                    <strong>project: </strong> {{project}}<br/>
+                    <hr/>
+                    <strong>hours:</strong> {{totalHours}}<br/>
+                    {% if totalDays %}
+                        <strong>days: </strong> {{totalDays|number_format(2)}}<br/>
+                    {% endif %}
+                    {% if totalEuro %}
+                        <hr/>
+                        <div style="text-align:right; font-size: 26px;" >
+                            <strong>€ </strong> {{totalEuro|number_format(0)}}<br/>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}
