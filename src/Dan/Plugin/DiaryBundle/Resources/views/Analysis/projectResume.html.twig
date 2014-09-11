@@ -23,9 +23,9 @@
             <div class="span5">
                 <table class="table table-bordered" >
                     <tr>
-                        <th>month</th><th>hours</th>
+                        <th>month</th><th>hours</th><th></th>
                     </tr>
-                    {% for month, monthlyReports in reports %}
+                    {% for month, monthlyReports in projectReports.reports %}
                         <tr>
                             <td>
                                 {% if shareData.isOwner(app.user) %}
@@ -38,6 +38,14 @@
                             </td>
                             <td>
                                 {{monthlyReports.hours}}
+                                {% if monthlyReports.days %}
+                                    ({{ monthlyReports.days|number_format(2)}} days )
+                                {% endif %}    
+                            </td>
+                            <td>
+                                {% if monthlyReports.money %}
+                                    € {{monthlyReports.money|number_format(0,'.','')}}
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}
@@ -47,14 +55,14 @@
                 {% if project %}
                     <strong>project: </strong> {{project}}<br/>
                     <hr/>
-                    <strong>hours:</strong> {{totalHours}}<br/>
-                    {% if totalDays %}
-                        <strong>days: </strong> {{totalDays|number_format(2)}}<br/>
+                    <strong>hours:</strong> {{projectReports.hours}}<br/>
+                    {% if projectReports.days %}
+                        <strong>days: </strong> {{projectReports.days|number_format(2)}}<br/>
                     {% endif %}
-                    {% if totalEuro %}
+                    {% if projectReports.money %}
                         <hr/>
                         <div style="text-align:right; font-size: 26px;" >
-                            <strong>€ </strong> {{totalEuro|number_format(0)}}<br/>
+                            <strong>€ </strong> {{projectReports.money|number_format(0,'.','')}}<br/>
                         </div>
                     {% endif %}
                 {% endif %}

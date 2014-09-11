@@ -77,10 +77,26 @@ $idx->
     add('dbreset',
         function() use ($idx)
         {
+            try{
+                $idx->local('app/console doctrine:database:create');
+            } catch (\Exception $e) {}
              $idx->local('app/console doctrine:database:drop --force');
              $idx->local('app/console doctrine:database:create');
              $idx->local('app/console doctrine:migrations:migrate --no-interaction');
              $idx->local('app/console doctrine:fixtures:load --no-interaction');
+             $idx->runTask('cc');
+        })->
+
+    add('dbreset-test',
+        function() use ($idx)
+        {
+            try{
+                $idx->local('app/console doctrine:database:create --env=test');
+            } catch (\Exception $e) {}
+             $idx->local('app/console doctrine:database:drop --force --env=test');
+             $idx->local('app/console doctrine:database:create --env=test');
+             $idx->local('app/console doctrine:migrations:migrate --no-interaction --env=test');
+             $idx->local('app/console doctrine:fixtures:load --no-interaction --env=test');
              $idx->runTask('cc');
         })->
                 

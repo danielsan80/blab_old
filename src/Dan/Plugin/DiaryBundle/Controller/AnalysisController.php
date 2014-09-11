@@ -122,15 +122,7 @@ class AnalysisController extends Controller
 
     private function getProjectMonthData($user, $project, $month)
     {
-        $userManager = $this->get('model.manager.user');
-        $euroPerHour = $userManager->getMetadata($user, 'diary', 'settings.projects.'.$project.'.euro_per_hour', null);
-        $euroPerDay = $userManager->getMetadata($user, 'diary', 'settings.projects.'.$project.'.euro_per_day', null);
-        $hoursPerDay = $userManager->getMetadata($user, 'diary', 'settings.projects.'.$project.'.hours_per_day', null);
-
-        $collection = new ReportCollection();
-        $collection->setMoneyPerHour($euroPerHour);
-        $collection->setMoneyPerDay($euroPerDay);
-        $collection->setHoursPerDay($hoursPerDay);
+        $collection = $this->createReportCollection($user, $project);
 
         $em = $this->getDoctrine()->getManager();
         $helper = $this->get('dan_diary.analysis.helper');
@@ -164,6 +156,52 @@ class AnalysisController extends Controller
     }
 
     private function getProjectData($user, $project)
+    {
+        $collection = $this->createReportCollection($user, $project);
+
+        $em = $this->getDoctrine()->getManager();
+        $helper = $this->get('dan_diary.analysis.helper');
+        $reports = $em->getRepository('DanPluginDiaryBundle:Report')->findByUser($user);
+
+
+        foreach($reports as $report) {
+            if ($project != $helper->getProject($report)) {
+                continue;
+            }
+
+            $date = $helper->getDate($report);
+            if (!$date) {
+                continue;
+            }
+
+            $month = $date->format('Y-m');
+            $weekNumber = (int)$date->format('W');
+            $dow = (int)$date->format('w');
+            $collection->addReport($report, $month.'.'.$weekNumber.'.'.$dow);
+        }
+        
+        return array(
+            'project' => $project,
+            'projectReports' => $collection,
+        );
+    }
+
+    private function createReportCollection($user, $project)
+    {
+        $userManager = $this->get('model.manager.user');
+        $euroPerHour = $userManager->getMetadata($user, 'diary', 'settings.projects.'.$project.'.euro_per_hour', null);
+        $euroPerDay = $userManager->getMetadata($user, 'diary', 'settings.projects.'.$project.'.euro_per_day', null);
+        $hoursPerDay = $userManager->getMetadata($user, 'diary', 'settings.projects.'.$project.'.hours_per_day', null);
+
+        $collection = new ReportCollection();
+        $collection->setMoneyPerHour($euroPerHour);
+        $collection->setMoneyPerDay($euroPerDay);
+        $collection->setHoursPerDay($hoursPerDay);
+
+        return $collection;
+    }
+
+    private function _getProjectData($user, $project)
     {
         $em = $this->getDoctrine()->getManager();
 

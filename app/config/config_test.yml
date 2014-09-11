@@ -1,3 +1,7 @@
+parameters:
+    locale: en
+    base_url: 'http://blab.local.com/app_test.php'
+
 imports:
     - { resource: config_dev.yml }
 
@@ -14,3 +18,12 @@ web_profiler:
 
 swiftmailer:
     disable_delivery: true
+
+doctrine:
+    dbal:
+        dbname: %database_name%_test
+#        default_connection: default
+#        connections:
+#            default:
+#                driver:   pdo_sqlite
+#                path:     %kernel.cache_dir%/test.db
