@@ -161,6 +161,7 @@ class ReportCollection extends BaseReportCollection
 
     public function getTasksAsHtml()
     {
+        $helper = $this->getHelper();
         $tasks = $this->getTasks();
         foreach($tasks as $i => $task) {
             $tasks[$i] = $helper->getAsHtml($task);

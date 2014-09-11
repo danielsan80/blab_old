@@ -37,7 +37,7 @@
                                     {% endif %}
                                     {% if dailyReports.tasks %}
                                         <ul class="tasks">
-                                            {% for task in dailyReports.tasks %}
+                                            {% for task in dailyReports.tasksAsHtml %}
                                                 <li>{% autoescape false %}{{task}}{%endautoescape%}</li>
                                             {% endfor %}
                                         </ul>

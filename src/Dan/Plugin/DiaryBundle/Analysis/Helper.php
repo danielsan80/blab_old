@@ -126,7 +126,7 @@ class Helper
                 break;
             }
             $placeholder = $placeholders[(int)$matches['i']];
-            $replacement = '<a href="'.$placeholder.'" >'.$placeholder.'</a>';
+            $replacement = '<a href="'.$placeholder.'" target="_blank">'.$placeholder.'</a>';
             $html = preg_replace($pattern, $replacement, $html, 1);
         }
 
