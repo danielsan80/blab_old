@@ -43,6 +43,8 @@ class AppKernel extends Kernel
             new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
             
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
+
+            new Trt\AsyncTasksBundle\TrtAsyncTasksBundle(),
             
             new Dan\CoreBundle\DanCoreBundle(),
             new Dan\MainBundle\DanMainBundle(),
@@ -50,6 +52,7 @@ class AppKernel extends Kernel
             new Dan\ShareBundle\DanShareBundle(),
             new Dan\Plugin\DiaryBundle\DanPluginDiaryBundle(),
             new Dan\Plugin\ReformBundle\DanPluginReformBundle(),
+            new Dan\Plugin\TryBundle\DanPluginTryBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

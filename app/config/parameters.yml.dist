@@ -19,6 +19,9 @@ parameters:
     debug_redirects:        false
     use_assetic_controller: true
 
+    mq_host: 127.0.0.1
+    mq_port: 5672
+
     google_client_id: 123456789
     google_client_secret: s3cr3t
 

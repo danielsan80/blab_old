@@ -21,6 +21,8 @@
 /.rsync_cache
 phantomjsdriver.log
 
+/src/**/scripts/supervisor/*
+
 !app/cache/.gitkeep
 !app/logs/.gitkeep
 

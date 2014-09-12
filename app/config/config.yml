@@ -228,3 +228,18 @@ hwi_oauth:
                 email: email
                 profilepicture: picture.data.url
             scope:              "email"
+
+
+trt_async_tasks:
+    # This prefix allows the dispatcher to detect async event,
+    # if you want use another prefix put here
+    event:
+        prefix: async_
+    mq:
+        # The rabbitMq host / port
+        connection_params:
+            host: %mq_host%
+            port: %mq_port%
+        # Define the exchange name for rabbitmq
+        exchange:
+            exchange: 'exchange_symfony_events'

@@ -1,0 +1,20 @@
+parameters:
+#    dan_plugin_try.example.class: Dan\Plugin\TryBundle\Example
+
+services:
+    dan_try.plugin:
+        class: Dan\Plugin\TryBundle\Plugin
+        tags:
+            - {name: dan.plugin}
+
+    dan_try.listener.try:
+        class: Dan\Plugin\TryBundle\Listener\TryListener
+        calls:
+            - [setContainer, [@service_container]]
+        tags:
+            - { name: trt_async.listener.listen, event: async_try }
+
+    dan_try.queue_list:
+        class: Dan\Plugin\TryBundle\Service\QueueList
+        calls:
+            - [setLogger, [@logger]]

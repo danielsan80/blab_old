@@ -52,7 +52,9 @@
         "leafo/lessphp": "0.3.*",
         "guzzle/guzzle": "~3.1",
         
-        "hwi/oauth-bundle": "0.3.*@dev"
+        "hwi/oauth-bundle": "0.3.*@dev",
+
+        "trt/async-tasks-bundle": "dev-master"
     },
     
     "scripts": {

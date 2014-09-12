@@ -1,0 +1,13 @@
+{% set _command = '[' ~ command[:1] ~ ']' ~ command[1:] %}
+case "$(ps aux | grep -c "{{_command}}")" in
+
+0)  echo "stopped"
+    php {{console}} {{command}} &
+    ;;
+1)  echo "running $(ps aux | grep '{{_command}}' | awk '{print $2}' | head -n 1)"
+    # all ok
+    ;;
+*)  echo "too many processes"
+    kill $(ps aux | grep '{{_command}}' | awk '{print $2}' | head -n 1)
+    ;;
+esac
