@@ -26,4 +26,9 @@ class Plugin extends AbstractPlugin
         return 'try_index';
     }
 
+    public function getUserRole()
+    {
+        return 'ROLE_SUPER_ADMIN';
+    }
+
 }

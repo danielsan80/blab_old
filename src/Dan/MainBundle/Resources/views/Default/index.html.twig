@@ -5,9 +5,11 @@
     <h3>Plugins</h3>
     <ul>
         {% for plugin in plugins %}
-            <li>
-                <a href="{{path(plugin.rootRoute)}}" >{{plugin.name}}</a>
-            </li>
+            {% if not plugin.userRole or is_granted(plugin.userRole) %}
+                <li>
+                    <a href="{{path(plugin.rootRoute)}}" >{{plugin.name}}</a>
+                </li>
+            {% endif %}
         {% endfor %}
     </ul>
 {% endblock %}
