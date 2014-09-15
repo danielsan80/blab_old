@@ -1,0 +1,16 @@
+{% extends 'DanMainBundle::layout.html.twig' %}
+
+
+{% block logo %}
+    {{parent()}}
+    <a href="{{path('ventoonirico_index')}}" class="logo-text ventoonirico-logo" > :: Ventoonirico</a>
+    
+{% endblock %}
+
+    
+{% block foot_script %}
+    {{ parent() }}
+    {% include 'DanPluginVentooniricoBundle::_main.js.html.twig' %}
+{% endblock %}
+
+    
