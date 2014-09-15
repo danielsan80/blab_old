@@ -7,12 +7,6 @@ use Dan\CoreBundle\Test\WebTestCase;
 class MetadataManagerTest extends WebTestCase
 {
 
-    public function getFixturesToLoad()
-    {
-        return array(
-        );
-    }
-
     public function test_getMetadataWhenMetadataDoNotExist()
     {
         $container = $this->getContainer();

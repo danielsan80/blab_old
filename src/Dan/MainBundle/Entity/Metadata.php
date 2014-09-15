@@ -3,6 +3,7 @@
 namespace Dan\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Dan\MainBundle\Model\MetadataInterface;
 
 /**
  * Metadata
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="dan_metadata")
  * @ORM\Entity(repositoryClass="Dan\MainBundle\Entity\Repository\MetadataRepository")
  */
-class Metadata
+class Metadata implements MetadataInterface
 {
     /**
      * @var integer
