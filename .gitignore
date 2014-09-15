@@ -22,6 +22,8 @@
 phantomjsdriver.log
 
 /src/**/scripts/supervisor/*
+/src/**/plugin.less
+/src/**/Resources/public/less/plugin/*
 
 !app/cache/.gitkeep
 !app/logs/.gitkeep
