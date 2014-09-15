@@ -1,5 +1,5 @@
 <?php
-namespace Dan\MainBundle\Plugin;
+namespace Dan\PluginBundle\Plugin;
 
 abstract class AbstractPlugin
 {

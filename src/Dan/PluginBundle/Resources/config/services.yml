@@ -1,0 +1,8 @@
+parameters:
+#    dan_plugin.example.class: Dan\PluginBundle\Example
+
+services:
+    dan.plugin_manager:
+        class: Dan\PluginBundle\Plugin\PluginManager
+        calls:
+            - [setLogger, [@logger]]

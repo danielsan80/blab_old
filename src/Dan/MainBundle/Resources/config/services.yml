@@ -1,8 +1,4 @@
 services:
-    dan_main.plugin_manager:
-        class: Dan\MainBundle\Plugin\PluginManager
-        calls:
-            - [setLogger, [@logger]]
 
     model.manager.metadata:
         class: Dan\MainBundle\Model\MetadataManager
