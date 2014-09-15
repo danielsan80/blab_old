@@ -59,6 +59,7 @@ $idx->
                 $idx->local('app/console doctrine:database:create');
             } catch (\Exception $e) {}
             $idx->runTask('dbreset');
+            $idx->local('app/console dan_main:plugins:install');
             $idx->runTask('assets:install');
         })->
 
