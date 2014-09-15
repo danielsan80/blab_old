@@ -1,0 +1,4 @@
+main:
+    resource: "@DanPluginVentooniricoBundle/Controller"
+    type: annotation
+    prefix: /ventoonirico

@@ -1,0 +1,8 @@
+parameters:
+#    dan_plugin_ventoonirico.example.class: Dan\Plugin\VentooniricoBundle\Example
+
+services:
+    dan_ventoonirico.plugin:
+        class: Dan\Plugin\VentooniricoBundle\Plugin
+        tags:
+            - {name: dan.plugin}

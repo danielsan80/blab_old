@@ -1,5 +1,7 @@
 
 
+
+
 dan_core:
     resource: "@DanCoreBundle/Resources/config/routing.yml"
     prefix:   /
@@ -29,6 +31,10 @@ dan_plugin_reform:
 
 dan_plugin_try:
     resource: "@DanPluginTryBundle/Resources/config/routing.yml"
+    prefix:   /
+
+dan_plugin_ventoonirico:
+    resource: "@DanPluginVentooniricoBundle/Resources/config/routing.yml"
     prefix:   /
 
 
