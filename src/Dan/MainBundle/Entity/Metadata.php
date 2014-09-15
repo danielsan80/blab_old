@@ -1,17 +1,17 @@
 <?php
 
-namespace Dan\UserBundle\Entity;
+namespace Dan\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Dan\MainBundle\Model\MetadataInterface;
 
 /**
- * UserMetadata
+ * Metadata
  *
- * @ORM\Table(name="dan_user_metadata")
- * @ORM\Entity(repositoryClass="Dan\UserBundle\Entity\Repository\UserMetadataRepository")
+ * @ORM\Table(name="dan_metadata")
+ * @ORM\Entity(repositoryClass="Dan\MainBundle\Entity\Repository\MetadataRepository")
  */
-class UserMetadata implements MetadataInterface
+class Metadata implements MetadataInterface
 {
     /**
      * @var integer
@@ -21,12 +21,6 @@ class UserMetadata implements MetadataInterface
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="\Dan\UserBundle\Entity\User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
-     */
-    private $user;
 
     /**
      * @var string
@@ -51,32 +45,6 @@ class UserMetadata implements MetadataInterface
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set user
-     *
-     * @param User $user
-     * @return UserMetadata
-     */
-    public function setUser(User $user)
-    {
-        $this->user = $user;
-    
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return User
-     */
-    public function getUser()
-    {
-        if (!$this->user) {
-            $this->user = new User();
-        }
-        return $this->user;
     }
 
     /**

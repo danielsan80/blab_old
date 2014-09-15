@@ -1,7 +1,7 @@
 <?php
 namespace Dan\Plugin\TryBundle;
 
-use Dan\MainBundle\Plugin\AbstractPlugin;
+use Dan\PluginBundle\Plugin\AbstractPlugin;
 
 class Plugin extends AbstractPlugin
 {

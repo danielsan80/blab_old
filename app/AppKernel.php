@@ -49,6 +49,7 @@ class AppKernel extends Kernel
             new Dan\CoreBundle\DanCoreBundle(),
             new Dan\MainBundle\DanMainBundle(),
             new Dan\UserBundle\DanUserBundle(),
+            new Dan\PluginBundle\DanPluginBundle(),
             new Dan\ShareBundle\DanShareBundle(),
             
             new Dan\Plugin\DiaryBundle\DanPluginDiaryBundle(),

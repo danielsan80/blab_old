@@ -1,6 +1,6 @@
 <?php
 
-namespace Dan\MainBundle\Command;
+namespace Dan\PluginBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -13,7 +13,7 @@ class InstallPluginsCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('dan_main:plugins:install')
+            ->setName('dan:plugins:install')
             ->setDescription('Install plugin less for all plugins')
         ;
     }
@@ -22,7 +22,7 @@ class InstallPluginsCommand extends ContainerAwareCommand
     {
         $container = $this->getContainer();
 
-        $pluginManager = $container->get('dan_main.plugin_manager');
+        $pluginManager = $container->get('dan.plugin_manager');
         $plugins = $pluginManager->getPlugins();
 
         $kernel = $container->get('kernel');

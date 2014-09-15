@@ -1,5 +1,5 @@
 <?php
-namespace Dan\MainBundle\DependencyInjection\Compiler;
+namespace Dan\PluginBundle\DependencyInjection\Compiler;
 
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -11,12 +11,12 @@ class PluginCompilerPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
 
-        if (!$container->hasDefinition('dan_main.plugin_manager')) {
+        if (!$container->hasDefinition('dan.plugin_manager')) {
             return;
         }
 
         $definition = $container->getDefinition(
-            'dan_main.plugin_manager'
+            'dan.plugin_manager'
         );
 
         $taggedServices = $container->findTaggedServiceIds(

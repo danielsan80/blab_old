@@ -1,7 +1,3 @@
-
-
-
-
 dan_core:
     resource: "@DanCoreBundle/Resources/config/routing.yml"
     prefix:   /
@@ -12,6 +8,10 @@ dan_main:
 
 dan_user:
     resource: "@DanUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
+dan_plugin:
+    resource: "@DanPluginBundle/Resources/config/routing.yml"
     prefix:   /
 
 dan_share:
