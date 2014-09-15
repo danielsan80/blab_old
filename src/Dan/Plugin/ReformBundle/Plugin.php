@@ -16,6 +16,11 @@ class Plugin extends AbstractPlugin
         return 'ReForm';
     }
 
+    public function getBundleName()
+    {
+        return 'PluginReformBundle';
+    }
+
     public function getRootRoute()
     {
         return 'reform_index';

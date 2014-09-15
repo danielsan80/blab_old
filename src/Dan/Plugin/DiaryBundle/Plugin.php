@@ -16,6 +16,11 @@ class Plugin extends AbstractPlugin
         return 'Diary';
     }
 
+    public function getBundleName()
+    {
+        return 'DanPluginDiaryBundle';
+    }
+
     public function getRootRoute()
     {
         return 'diary_index';

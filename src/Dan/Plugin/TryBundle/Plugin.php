@@ -16,6 +16,11 @@ class Plugin extends AbstractPlugin
         return 'Try';
     }
 
+    public function getBundleName()
+    {
+        return 'DanPluginTryBundle';
+    }
+
     public function getRootRoute()
     {
         return 'try_index';
