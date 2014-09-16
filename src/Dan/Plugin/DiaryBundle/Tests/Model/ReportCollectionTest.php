@@ -45,6 +45,20 @@ class ReportCollectionTest extends WebTestCase
 
     }
 
+    public function test_falseCharts()
+    {
+        $report = new Report();
+        $collection = new ReportCollection();
+        $collection->addReport($report,'a.0');
+
+        $this->assertCount(1, $collection->getReports());
+        $this->assertCount(1, $collection['a']->getReports());
+        $this->assertCount(1, $collection['a']['0']->getReports());
+
+        $this->assertEquals(array($report), $collection['a']['0']->getReports());
+
+    }
+
     public function test_configAvailability()
     {
         $report = new Report();

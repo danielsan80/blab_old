@@ -7,7 +7,6 @@ use Dan\Plugin\DiaryBundle\Analysis\Helper;
 class BaseReportCollection implements \ArrayAccess
 {
     protected $parent;
-    protected $date;
     protected $reports;
     protected $pathSeparator = '.';
 
@@ -48,7 +47,7 @@ class BaseReportCollection implements \ArrayAccess
     public function addReport($report, $path=null)
     {
         
-        if (!$path) {
+        if (is_null($path)) {
             $this->reports[] = $report;
             return $this;
         }
