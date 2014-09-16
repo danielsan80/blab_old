@@ -145,6 +145,7 @@ class AnalysisController extends Controller
 
             $weekNumber = (int)$date->format('W');
             $dow = (int)$date->format('w');
+            $dow = $dow==0?7:$dow;
             $collection->addReport($report, $weekNumber.'.'.$dow);
         }
         
