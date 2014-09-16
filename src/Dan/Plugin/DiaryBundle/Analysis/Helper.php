@@ -92,10 +92,15 @@ class Helper
 
     public function getAsHours($seconds)
     {
+        $sign = '';
+        if ($seconds<0) {
+            $sign = '-';
+            $seconds = abs($seconds);
+        }
         $hours = floor($seconds / (60*60));
         $minutes = str_pad(($seconds % (60*60))/60,2,'0',STR_PAD_LEFT);
 
-        return $hours.'.'.$minutes;
+        return $sign.$hours.'.'.$minutes;
     }
 
     public function getAsHtml($text)
