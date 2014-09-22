@@ -25,13 +25,17 @@ class UserManager extends BaseUserManager
     
     public function getImagesDir()
     {
-        return $this->kernel->getRootDir().$this->imagesDir;
+        return $this->imagesDir;
     }
     
     public function setUserImage(User $user, $image) {
         $content = file_get_contents($image);
         $filename = 'user_'.md5($user->getEmail()).'.jpg';
-        file_put_contents($this->getImagesDir().'/'.$filename, $content );
+        $imagesDir = $this->getImagesDir();
+        if (!file_exists($imagesDir)) {
+            passthru("mkdir -p $imagesDir");
+        }
+        file_put_contents($imagesDir.'/'.$filename, $content );
         $user->setImage($filename);
     }
 

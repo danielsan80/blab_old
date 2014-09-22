@@ -1,6 +1,12 @@
 {% extends 'DanPluginVentooniricoBundle::layout.html.twig' %}
 
 {% block title %}Blab :: Ventoonirico{% endblock %}
-{% block content %}
 
+{% block content %}
+    <div id="app"></div>
 {% endblock %}
+    
+{% block templates %}
+    {{parent()}}
+    {% include 'DanPluginVentooniricoBundle:Default:index/templates.html.twig' %}
+{% endblock%}

@@ -18,7 +18,25 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-
+        if ($response = $this->checkUrl('home')) {
+            return $response;
+        }
+        
         return array();
     }
+    
+    private function checkUrl($route, $args = array())
+    {
+//        if ($this->getRequest()->getHost() == 'ventoonirico') {
+//            return $this->redirect('http://ventoonirico.local.com' . $this->generateUrl());
+//        }
+        $uri = explode('#', $this->getRequest()->getRequestUri());
+        $uri = explode('?', $uri[0]);
+        $uri = $uri[0];        
+        if (substr($uri, -1, 0) == '/') {
+            return $this->redirect(substr($this->generateUrl($route, $args), 0, -1));
+        }
+        return null;
+    }
+    
 }

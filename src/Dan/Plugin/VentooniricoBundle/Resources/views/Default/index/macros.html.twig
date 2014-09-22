@@ -1,0 +1,11 @@
+{% macro player_user_image(user, filter) %}
+    {% autoescape false %}
+        <img class="img-polaroid"
+             src="<%= String('{{path('user_image', {username: '_username_', filter: filter})}}').replace('_username_', {{user}}.get('username')) %>"
+             title="<%= {{user}}.get('username') %>"
+             alt="<%= {{user}}.get('username') %>"
+        />
+    {% endautoescape %}
+{% endmacro %}
+        
+{% macro is_super_admin() %}{{ is_granted('ROLE_SUPER_ADMIN')?'true':'false' }}{% endmacro %}

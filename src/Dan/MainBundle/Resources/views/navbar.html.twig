@@ -30,7 +30,7 @@
                     </div>
                     <div class="image pull-right">
                         <a href="{{ path('fos_user_profile_edit') }}" >
-                            <img class="img-polaroid" src="{{user_image(app.user) | apply_filter('mini', true)}}" />
+                            <img class="img-polaroid" src="{{user_image(app.user) | imagine_filter('mini', true)}}" />
                         </a>
                     </div>
                 {% else %}

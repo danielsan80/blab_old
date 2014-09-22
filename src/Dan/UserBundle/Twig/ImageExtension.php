@@ -26,9 +26,9 @@ class ImageExtension extends \Twig_Extension
     public function user_image($user)
     {
         if (!$user->getImage()){
-            return 'icons/user-noimage.png';
+            return 'bundles/danmain/img/icons/user-noimage.png';
         }
         
-        return 'users/'.$user->getImage();
+        return 'media/files/users/'.$user->getImage();
     }
 }

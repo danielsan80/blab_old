@@ -6,3 +6,21 @@ services:
         class: Dan\Plugin\VentooniricoBundle\Plugin
         tags:
             - {name: dan.plugin}
+            
+    bgg:
+        class: Dan\Plugin\VentooniricoBundle\Service\BGGService
+        arguments:
+            - @model.manager.metadata
+            - @liip_doctrine_cache.ns.bgg
+            
+    model.manager.game:
+        class: Dan\Plugin\VentooniricoBundle\Model\GameManager
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @bgg
+            - @liip_doctrine_cache.ns.bgg
+            
+    model.manager.desire:
+        class: Dan\Plugin\VentooniricoBundle\Model\DesireManager
+        arguments:
+            - @doctrine.orm.entity_manager

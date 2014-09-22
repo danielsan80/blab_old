@@ -92,9 +92,9 @@ facebook_login:
 _security_check:
     pattern:  (/admin)?/login_check
 
-_imagine:
+_liip_imagine:
     resource: .
-    type:     imagine
+    type: imagine
 
 logout:
     pattern: /logout

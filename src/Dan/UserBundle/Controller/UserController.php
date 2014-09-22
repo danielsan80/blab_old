@@ -30,8 +30,8 @@ class UserController extends Controller
 
         $user = $userManager->findUserBy(array('username' => $username));
 
-        $controller = $this->get('imagine.controller');
-        return $controller->filter($imageExtension->user_image($user), $filter);
+        $controller = $this->get('liip_imagine.controller');
+        return $controller->filterAction($this->getRequest(), $imageExtension->user_image($user), $filter);
         
     }
 }

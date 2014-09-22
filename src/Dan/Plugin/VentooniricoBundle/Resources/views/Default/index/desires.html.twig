@@ -1,0 +1,19 @@
+
+<script type="text/template" id="desired-game-list">
+    <p>
+        Qualcuno ha voglia di giocare a...
+    </p>
+    <div class="desired-game-list masonry" >
+    </div>
+    <div class="clearfix"></div>
+</script>
+
+<script type="text/template" id="desired-game">
+    <div id="desired-game_<%= game.id %>" class="well game item" >
+        <h5><%= game.name %></h5>
+        <div class="image" >
+            <a href="http://boardgamegeek.com/boardgame/<%= game.bgg_id %>" target="_blank" ><img class="img-polaroid" src="<%= game.thumbnail %>" /></a>
+        </div>
+        <div class="game-status" ></div>
+    </div>
+</script>

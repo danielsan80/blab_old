@@ -5,7 +5,7 @@ imports:
 parameters:
 #    dan_user.example.class: Dan\UserBundle\Example
     oauth.user_provider.class: Dan\UserBundle\Security\FOSUBUserProvider
-    dan_user.images_dir: /files/images/users
+    dan_user.images_dir: %liip_imagine.data_root%/media/files/users
 
 services:
     oauth.user_provider:

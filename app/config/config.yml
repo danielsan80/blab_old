@@ -165,22 +165,21 @@ liip_doctrine_cache:
         bgg:
             type: file_system
             
-
-avalanche_imagine:
-    source_root: %kernel.root_dir%/files/images
-    filters:
+liip_imagine:
+    filter_sets:
+        cache: ~
         mini:
-            type:    thumbnail
-            options: { size: [30, 30], mode: outbound, absolute: true }
+            filters:
+               thumbnail: { size: [30, 30], mode: outbound } 
         player_main:
-            type:    thumbnail
-            options: { size: [30, 30], mode: outbound, absolute: true }
+            filters:
+               thumbnail: { size: [30, 30], mode: outbound } 
         player_joined:
-            type:    thumbnail
-            options: { size: [25, 25], mode: outbound, absolute: true }
+            filters:
+               thumbnail: { size: [25, 25], mode: outbound } 
         player_guest:
-            type:    thumbnail
-            options: { size: [20, 20], mode: outbound, absolute: true }
+            filters:
+               thumbnail: { size: [20, 20], mode: outbound } 
             
 stof_doctrine_extensions:
     default_locale: en_US

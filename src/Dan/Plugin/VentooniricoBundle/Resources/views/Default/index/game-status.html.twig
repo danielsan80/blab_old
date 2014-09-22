@@ -1,0 +1,83 @@
+{% from 'DanPluginVentooniricoBundle:Default:index/macros.html.twig' import player_user_image, is_super_admin %}
+
+<script type="text/template" id="game-status-nouser-nodesire">
+</script>
+
+<script type="text/template" id="game-status-user-nodesire">
+    <div class="well" ><a class="desire-create icon icon-plus" href="#"></a></div>
+</script>
+
+<script type="text/template" id="game-status-user-nodesire-limited">
+    <div class="well" ><i class="icon icon-ban-circle" ></i></div>
+</script>
+
+<script type="text/template" id="game-status-desire">
+    <div class="well" >
+    </div>
+</script>
+
+<script type="text/template" id="game-status-desire-owner-player_main">
+    <div class="player player-main">
+        <% if ((user.id && user.id==owner.id) || {{is_super_admin()}}) { %>
+            <a class="desire-leave" href="#">
+                {{player_user_image("owner", 'player_main')}}
+            </a>
+        <% } else { %>
+            {{player_user_image("owner", 'player_main')}}
+        <% } %>
+    </div>
+</script>
+
+<script type="text/template" id="game-status-desire-noowner-player_main">
+    <div class="player player-main">
+        <% if (user.id) { %>
+            <a class="desire-take" href="#">
+                <img class="img-polaroid" src="{{ '/bundles/danpluginventoonirico/img/icons/player-nobody.png' | imagine_filter('player_main') }}" alt="Posto libero" />
+            </a>
+        <% } else { %>
+            <img class="img-polaroid" src="{{ '/bundles/danpluginventoonirico/img/icons/player-nobody.png' | imagine_filter('player_main') }}" alt="Posto libero" />
+        <% } %>
+    </div>
+</script>
+
+<script type="text/template" id="game-status-desire-noowner-player_main-limited">
+    <div class="player player-main">
+        <% if (user.id) { %>
+            <img class="img-polaroid" src="{{ '/bundles/danpluginventoonirico/img/icons/player-limited.png' | imagine_filter('player_main') }}" alt="Posto libero" />
+        <% } else { %>
+            <img class="img-polaroid" src="{{ '/bundles/danpluginventoonirico/img/icons/player-nobody.png' | imagine_filter('player_main') }}" alt="Posto libero" />
+        <% } %>
+    </div>
+</script>
+
+<script type="text/template" id="game-status-desire-player_joined">
+    <div class="player player-joined" >
+        <% if ((user.id && user.id==join.get('user').id) || {{is_super_admin()}}) { %>
+            <a class="join-remove" href="#" data-join-id="<%= join.id %>" >
+                <% if (!guest) { %>
+                    {{player_user_image("join.get('user')", 'player_joined')}}
+                <% } else { %>
+                    <img class="img-polaroid" src="{{ '/bundles/danpluginventoonirico/img/icons/player-guest.png' | imagine_filter('player_guest') }}" />
+                <% } %>
+            </a>
+        <% } else { %>
+            <% if (!guest) { %>
+                {{player_user_image("join.get('user')", 'player_joined')}}
+            <% } else { %>
+                <img class="img-polaroid" src="{{ '/bundles/danpluginventoonirico/img/icons/player-guest.png' | imagine_filter('player_guest') }}" />
+            <% } %>
+        <% } %>
+    </div>
+</script>
+
+<script type="text/template" id="game-status-desire-player_nobody">
+    <div class="player player-nobody">
+        <% if (user.id) { %>
+            <a class="join-add" href="#">
+                <img class="img-polaroid" src="{{ '/bundles/danpluginventoonirico/img/icons/player-nobody.png' | imagine_filter('player_joined') }}" alt="Posto libero" />
+            </a>
+        <% } else { %>
+            <img class="img-polaroid" src="{{ '/bundles/danpluginventoonirico/img/icons/player-nobody.png' | imagine_filter('player_joined') }}" alt="Posto libero" />
+        <% } %>
+    </div>
+</script>

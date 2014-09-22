@@ -1,0 +1,30 @@
+<script type="text/template" id="games">
+    <div id="desired-game-list"></div>
+    <hr/>
+    <div id="game-count"></div>
+    <div id="game-list"><div class="loading"></div></div>
+</script>
+
+<script type="text/template" id="game-count">
+    Ventoonirico dispone di <strong><% if (!count) { %>...<% } else { %><%= count %><% } %></strong> giochi
+</script>
+
+
+<script type="text/template" id="game-list">
+    <table class="game-list table table-bordered">
+    </table>
+</script>
+
+<script type="text/template" id="game">
+    <tr id="game_<%= game.id %>" >
+        <td class="game-image">
+            <a href="http://boardgamegeek.com/boardgame/<%= game.bgg_id %>" target="_blank" ><img class="img-polaroid" src="<%= game.thumbnail %>" /></a>
+        </td>
+        <td>
+            <div class="pull-right game-status" ></div>
+            <h4><%= game.name %></h4>
+            <em><%= game.owners.join(', ') %></em><br/>
+            <%= game.minPlayers %> - <%= game.maxPlayers %> giocatori<br/>
+        </td>
+    </tr>
+</script>

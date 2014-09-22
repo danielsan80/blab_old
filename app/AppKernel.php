@@ -40,7 +40,7 @@ class AppKernel extends Kernel
             
             new Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(),
             new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
-            new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
+            new Liip\ImagineBundle\LiipImagineBundle(),
             
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
 

@@ -1,8 +1,47 @@
-{#<script>
-var config = {
-    'parseReportUrl': '{{path('report_parse')}}'
-
-}
+<script type="text/javascript">
+    var require = {
+        config: {
+            'app/util/current-user': {
+                'url': '{{ path('user')}}'
+            },
+            'app/collections/desired-games': {
+                'url': '{{ path('get_games', {'filter':'desired'})}}'
+            },
+            'app/collections/desires': {
+                'url': '{{ path('get_desires')}}'
+            },
+            'app/collections/games': {
+                'url': '{{ path('get_games')}}'
+            },
+            'app/models/desire': {
+                'urlRoot': '{{ path('get_desires')}}'
+            },
+            'app/models/game': {
+                'urlRoot': '{{ path('get_games')}}'
+            },
+            'app/models/join': {
+                'urlRoot': '{{ path('post_join')}}'
+            },
+            'app/models/user': {
+                'urlRoot': '/api/users',
+                'desiresLimit': 3
+            }
+        }
+    };
 </script>
-<script src="{{ asset('/bundles/danplugindiary/js/lib/jquery.autosize.min.js') }}"></script>
-<script src="{{ asset('/bundles/danplugindiary/js/main.js') }}"></script>#}
+
+{% if app.environment=='prod' %}
+    <script data-main="{{ asset('/bundles/danpluginventoonirico/js/main-built') }}" src="{{ asset('/bundles/danmain/js/libs/require/require.js') }}"></script>
+{% else %}
+    <script data-main="{{ asset('/bundles/danpluginventoonirico/js/main') }}" src="{{ asset('/bundles/danpluginventoonirico/js/libs/require/require.js') }}"></script>
+{% endif %}
+
+{# To only use a subset or add more js overwrite and copy paste this block #}
+<script type="text/javascript">
+    if (window.location.hash == '#_=_'){
+        window.location.hash = '';
+    }
+    if (window.location.pathname == '/_=_'){
+        window.location.pathname = '';
+    }
+</script>

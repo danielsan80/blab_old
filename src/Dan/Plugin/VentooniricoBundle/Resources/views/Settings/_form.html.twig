@@ -1,0 +1,9 @@
+{{ form_start(form) }}
+<div>
+    {{ form_errors(form.data) }}
+    {{ form_widget(form.data) }}
+</div>
+{{ form_row(form.submit, {attr:{class:"btn btn-mini"}}) }}
+
+
+{{ form_end(form) }}
