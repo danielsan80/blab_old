@@ -109,7 +109,7 @@ class ApiController extends Controller
      */
     public function getGameAction($id)
     {
-        $user = $this->get('user');
+        $user = $this->getUser();
 
         $service = new BGGService($this->get('liip_doctrine_cache.ns.bgg'));
         $game = $service->getGame($id);
@@ -139,7 +139,7 @@ class ApiController extends Controller
      */
     public function getDesiresAction()
     {
-        $manager = $this->get('model.manager.desires');
+        $manager = $this->get('model.manager.desire');
         $serializer = $this->get('serializer');
         $desires = $manager->getDesires();
 
@@ -162,12 +162,13 @@ class ApiController extends Controller
     public function postDesireAction()
     {
 
-        $user = $this->get('user');
+        $user = $this->getUser();
 
         $request = $this->getRequest();
         $em = $this->getDoctrine()->getEntityManager();
-        $desireRepo = $em->getRepository('DanPluginVentooniricoBundle:Desire')->setUser($user);
-        $desire = $this->deserialize('Dan\Plugin\VentooniricoBundle\Entity\Desire', $request);
+        $data = json_decode($request->getContent(), true);
+        
+        $desire = $this->deserialize('Dan\Plugin\VentooniricoBundle\Entity\Desire', json_encode($data));
 
         $em->persist($desire);
         $em->flush($desire);
@@ -190,11 +191,11 @@ class ApiController extends Controller
     public function postJoinAction()
     {
 
-        $user = $this->get('user');
+        $user = $this->getUser();
 
         $request = $this->getRequest();
         $em = $this->getDoctrine()->getEntityManager();
-        $join = $this->deserialize('Dan\Plugin\VentooniricoBundle\Entity\Join', $request);
+        $join = $this->deserialize('Dan\Plugin\VentooniricoBundle\Entity\Join', $request->getContent());
 
         $em->persist($join);
         $em->flush($join);
@@ -217,7 +218,7 @@ class ApiController extends Controller
     public function deleteJoinAction($id)
     {
 
-        $user = $this->get('user');
+        $user = $this->getUser();
 
         $em = $this->getDoctrine()->getEntityManager();
         $joinRepo = $em->getRepository('DanPluginVentooniricoBundle:Join');
@@ -246,7 +247,7 @@ class ApiController extends Controller
     public function getDesireAction($id)
     {
 
-        $user = $this->get('user');
+        $user = $this->getUser();
 
         $request = $this->getRequest();
         $em = $this->getDoctrine()->getEntityManager();
@@ -274,12 +275,12 @@ class ApiController extends Controller
     public function putDesireAction($id)
     {
 
-        $user = $this->get('user');
+        $user = $this->getUser();
 
         $request = $this->getRequest();
         $em = $this->getDoctrine()->getEntityManager();
         $repo = $em->getRepository('DanPluginVentooniricoBundle:Desire');
-        $desire = $this->deserialize('Dan\Plugin\VentooniricoBundle\Entity\Desire', $request);
+        $desire = $this->deserialize('Dan\Plugin\VentooniricoBundle\Entity\Desire', $request->getContent());
         
         $response = new Response();
         if (!$desire) {
@@ -304,7 +305,7 @@ class ApiController extends Controller
     public function deleteDesireAction($id)
     {
 
-        $user = $this->get('user');
+        $user = $this->getUser();
 
         $request = $this->getRequest();
         $gameId = $request->get('gameId');

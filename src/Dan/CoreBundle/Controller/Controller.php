@@ -49,14 +49,14 @@ class Controller extends BaseController
         return $this->getDoctrine()->getManager()->getRepository($name);
     }
     
-    protected function deserialize($class, Request $request, $format = 'json')
+    protected function deserialize($class, $data, $format = 'json')
     {
         $serializer = $this->get('serializer');
         $validator = $this->get('validator');
 
         try {
             $entity = $serializer->deserialize(
-                    $request->getContent(), $class, $format
+                    $data, $class, $format
             );
         } catch (\RuntimeException $e) {
             throw new HttpException(400, $e->getMessage());
