@@ -40,15 +40,15 @@ class ApiController extends Controller
             $user = $manager->findUserBy(array('id' => $user->getId()));
         }
         
-        $desireManager = $this->get('model.manager.desire');
+//        $desireManager = $this->get('model.manager.desire');
+//        
+//        $desires = $desireManager->getDesiresByOwner($user);
+//        $user = json_decode($this->serialize($user), true);
+//        $user['desires_count'] = count($desires);
+//        $user['desires'] = $desires;
+//        $user = json_encode($user);
         
-        $desires = $desireManager->getDesiresByOwner($user);
-        $user = json_decode($this->serialize($user), true);
-        $user['desires_count'] = count($desires);
-        $user['desires'] = $desires;
-        $user = json_encode($user);
-        
-        $response = new Response($user, 200, array('Content-Type' => 'application/json'));
+        $response = new Response($this->serialize($user), 200, array('Content-Type' => 'application/json'));
 
         return $response;
     }

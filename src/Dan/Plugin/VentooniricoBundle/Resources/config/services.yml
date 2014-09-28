@@ -27,8 +27,12 @@ services:
 
     dan_desire_subscriber:
         class: Dan\Plugin\VentooniricoBundle\Subscriber\DesireEventSubscriber
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @model.manager.desire
         calls:
-            - [ setEntityManager, [ @doctrine.orm.entity_manager ] ]
+            - [ setLogger, [ @logger ] ]
         tags:
             - { name: jms_serializer.event_subscriber, event: preDeserialize, direction: deserialization, format: json }
             - { name: jms_serializer.event_subscriber, event: postDeserialize, direction: deserialization, format: json }
+            - { name: jms_serializer.event_subscriber, event: postSerialize, direction: serialization, format: json }

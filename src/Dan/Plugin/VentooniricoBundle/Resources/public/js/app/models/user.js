@@ -6,6 +6,7 @@ define([
         urlRoot: module.config().urlRoot,
         desiresLimit: module.config().desiresLimit,
         notifyRemoveDesire: function() {
+            console.log('notified')
             this.set('desires_count', this.get('desires_count')-1);
         },
         notifyCreateDesire: function() {

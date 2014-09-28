@@ -10,3 +10,7 @@ profile:
 change_password:
   flash:
     success: La tua password è stata aggiornata.
+    
+resetting:
+  flash:
+    invalid_username: utente %invalid_username% non trovato

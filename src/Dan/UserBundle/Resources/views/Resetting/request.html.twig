@@ -1,4 +1,12 @@
 {% extends 'DanUserBundle::layout.html.twig' %}
+{% from 'DanCoreBundle::flash.html.twig' import session_flashes, flash %}
+
+{% block flashes %}
+    {{parent()}}
+    {% if invalid_username is defined %}
+        {{ flash('error', 'resetting.flash.invalid_username'| trans({'%invalid_username%': invalid_username})) }}
+    {% endif %}
+{% endblock %}
 
 {% block fos_user_content %}
     <div class="page-center">

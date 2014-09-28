@@ -38,7 +38,7 @@ class WebTestCase extends BaseWebTestCase
     {
         $kernel = $client->getKernel();
         file_put_contents($kernel->getRootDir().'/cache/output.html', $client->getResponse()->getContent());
-        exec('chromium-browser '.$kernel->getRootDir().'/cache/output.html');
+        exec('firefox '.$kernel->getRootDir().'/cache/output.html');
     }
     
     protected function loginClientWithUser($client, $username, $password, $options = array())

@@ -6,20 +6,36 @@ class DesireEventSubscriber implements \JMS\Serializer\EventDispatcher\EventSubs
 {
 
     private $em;
+    private $desireManager;
+    private $logger;
+    
+    public function __construct($em, $desireManager)
+    {
+        $this->em = $em;
+        $this->desireManager = $desireManager;
+    }
 
+    public function setLogger($logger)
+    {
+        $this->logger = $logger;
+    }
+    
+    private function log($message, $param=array())
+    {
+        if ($this->logger) {
+            $this->logger->info('[SERIALIZER] '.$message, $param);
+        }
+    }
+    
     public static function getSubscribedEvents()
     {
         return array(
             array('event' => 'serializer.pre_deserialize', 'method' => 'onPreDeserialize'),
             array('event' => 'serializer.post_deserialize', 'method' => 'onPostDeserialize'),
+            array('event' => 'serializer.post_serialize', 'method' => 'onPostSerialize'),
         );
     }
     
-    public function setEntityManager($em)
-    {
-        $this->em = $em;
-    }
-
     public function onPreDeserialize(\JMS\Serializer\EventDispatcher\PreDeserializeEvent $event)
     {
         $this->normalizeDesire($event);
@@ -30,6 +46,16 @@ class DesireEventSubscriber implements \JMS\Serializer\EventDispatcher\EventSubs
     {
         $this->mergeDesireRelatedObjects($event);
         $this->mergeJoinRelatedObjects($event);
+    }
+    
+    public function onPostSerialize(\JMS\Serializer\EventDispatcher\ObjectEvent $event)
+    {
+        $type = $event->getType();
+        if ($type['name']=='Dan\UserBundle\Entity\User') {
+            $desires = $this->desireManager->getDesiresByOwner($event->getObject());
+            $event->getVisitor()->addData('desires_count', count($desires));            
+//            $event->getVisitor()->addData('desires', $desires );
+        }
     }
     
     
