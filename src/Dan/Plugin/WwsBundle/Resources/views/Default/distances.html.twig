@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <style>
+            .sf-toolbar{ display:none !important; }
+            .board {
+                position: relative;
+                width: {{board.width}}mm;
+                height: {{board.height-19}}mm;
+            }
+            .col {
+                float:left;
+                margin-left:8mm;
+                font-family: 'Courier New';
+            }
+            
+            .col .star {
+                font-weight: bold;
+                font-size: 3mm;
+            }
+            .col .label {
+                font-style: italic;
+                font-size: 2.5mm;
+                padding-left: 3mm;
+                font-weight: bold;
+            }
+            .col .coord {
+                font-style: italic;
+                font-size: 2.5mm;
+                /*font-family: 'Arial';*/
+                padding-left: 6mm;
+            }
+            .col .other-star {
+                font-size: 2.5mm;
+                padding-left: 6mm;
+            }
+            
+            .col .other-star .label {
+                font-weight: bold;
+                font-style: italic;
+            }
+            
+            .col .separator {
+                height: 2mm;
+            }
+            
+        </style>
+    </head>
+    <body>
+        <div class="board">
+            {% for col in cols %}
+                <div class="col">
+                    {% for block in col %}
+                        {% if block.type=='head' %}
+                            <div class="star">{{block.key}}:</div> 
+                            <div class="label">coord:</div>
+                            <div class="coord">
+                                r: &nbsp;{{block.coord.r}}<br/>
+                                az: {{block.coord.azi}}<br/>
+                                al: {{block.coord.alt}}
+                            </div>
+                            <div class="label">distances:</div>
+                        {% endif %}
+                        {% if block.type=='distance' %}
+                            <div class="other-star">
+                                <span class="name">{{block.key}}:</span>
+                                <span class="distance">{{block.distance}}</span>
+                            </div>
+                        {% endif %}
+                        {% if block.type=='separator' and not loop.first %}
+                            <div class="separator"><br/></div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </body>
+</html>

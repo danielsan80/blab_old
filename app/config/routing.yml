@@ -1,4 +1,5 @@
 
+
 dan_core:
     resource: "@DanCoreBundle/Resources/config/routing.yml"
     prefix:   /
@@ -34,6 +35,9 @@ dan_plugin_try:
     resource: "@DanPluginTryBundle/Resources/config/routing.yml"
     prefix:   /
 
+dan_plugin_wws:
+    resource: "@DanPluginWwsBundle/Resources/config/routing.yml"
+    prefix:   /
 
 
 fos_user_security:

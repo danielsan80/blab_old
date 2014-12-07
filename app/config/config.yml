@@ -243,3 +243,10 @@ trt_async_tasks:
         # Define the exchange name for rabbitmq
         exchange:
             exchange: 'exchange_symfony_events'
+            
+            
+knp_snappy:
+    pdf:
+        enabled:    true
+        binary:     %kernel.root_dir%/../vendor/google/wkhtmltopdf-i386/wkhtmltopdf-i386
+        options:    []

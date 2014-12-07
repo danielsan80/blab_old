@@ -1,0 +1,13 @@
+{% extends 'DanPluginDiaryBundle::layout.html.twig' %}
+
+{% block title %}WWS{% endblock %}
+{% block content %}
+    <h1>Wild Wide Space</h1>
+    <h3>utilities</h3>
+    <ul>
+        <li><a href="{{path('wws_generate')}}">Genera una nuova mappa</a></li>
+        <li><a href="{{path('wws_yml')}}" target="_blank">Scarica il file Yaml della mappa</a></li>
+        <li><a href="{{path('wws_labels_pdf')}}" target="_blank">Scarica il pdf delle etichette</a></li>
+        <li><a href="{{path('wws_distances_pdf')}}" target="_blank">Scarica il pdf delle distanze</a></li>
+    </ul>    
+{% endblock %}

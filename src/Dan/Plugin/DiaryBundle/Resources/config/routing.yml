@@ -1,4 +1,4 @@
-main:
+diary:
     resource: "@DanPluginDiaryBundle/Controller"
     type: annotation
     prefix: /diary

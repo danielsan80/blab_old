@@ -1,0 +1,22 @@
+parameters:
+    wws.options:
+        num_stars: 50
+        sphere_r: 20
+        min_distance: 2
+        max_distance: 10
+        box_size: 20
+        box_margin: 5
+        plan_inclination: 4
+    wws.store: stars.yml
+services:
+    dan_wws.plugin:
+        class: Dan\Plugin\WwsBundle\Plugin
+        tags:
+            - {name: dan.plugin}
+    wws:
+        class: Dan\Plugin\WwsBundle\Service\WWS
+        calls:
+            - [ setStoreFilename, [ %kernel.root_dir%/data/wws/%wws.store% ] ]
+            - [ setOptions, [ %wws.options% ] ]
+
+

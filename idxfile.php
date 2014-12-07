@@ -110,9 +110,9 @@ $idx->
     add('chmod',
         function() use ($idx)
         {
-            $idx->local("chmod -R 777 app/cache app/logs  app/files app/sessions web/media");
-            $idx->local("setfacl -Rn -m u:www-data:rwX -m u:`whoami`:rwX app/cache app/logs  app/files app/sessions web/media");
-            $idx->local("setfacl -dRn -m u:www-data:rwX -m u:`whoami`:rwX app/cache app/logs  app/files app/sessions web/media");
+            $idx->local("chmod -R 777 app/cache app/logs  app/files app/data app/sessions web/media");
+            $idx->local("setfacl -Rn -m u:www-data:rwX -m u:`whoami`:rwX app/cache app/logs  app/files app/data app/sessions web/media");
+            $idx->local("setfacl -dRn -m u:www-data:rwX -m u:`whoami`:rwX app/cache app/logs  app/files app/data app/sessions web/media");
         })->
 
     add('chmod:remote',

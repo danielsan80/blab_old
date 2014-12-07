@@ -54,7 +54,12 @@
         
         "hwi/oauth-bundle": "0.3.*@dev",
 
-        "trt/async-tasks-bundle": "dev-master"
+        "trt/async-tasks-bundle": "dev-master",
+        
+        "knplabs/knp-snappy-bundle": "dev-master",
+        "knplabs/knp-snappy": "*",
+        "google/wkhtmltopdf-i386": "0.11.0-RC1",
+        "google/wkhtmltopdf-amd64": "0.11.0-RC1"
     },
     
     "scripts": {
@@ -90,5 +95,29 @@
         "branch-alias": {
             "dev-master": "2.5-dev"
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "google/wkhtmltopdf-amd64",
+                "version": "0.11.0-RC1",
+                "dist": {
+                    "url": "http://wkhtmltopdf.googlecode.com/files/wkhtmltopdf-0.11.0_rc1-static-amd64.tar.bz2",
+                    "type": "tar"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "google/wkhtmltopdf-i386",
+                "version": "0.11.0-RC1",
+                "dist": {
+                    "url": "http://wkhtmltopdf.googlecode.com/files/wkhtmltopdf-0.11.0_rc1-static-i386.tar.bz2",
+                    "type": "tar"
+                }
+            }
+        }
+    ]
 }

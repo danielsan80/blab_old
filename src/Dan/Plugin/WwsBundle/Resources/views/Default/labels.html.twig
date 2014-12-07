@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <style>
+            .sf-toolbar{ display:none !important; }
+            .board {
+                position: relative;
+                width: {{board.width}}mm;
+                height: {{board.height}}mm;
+            }
+            .box {
+                position: absolute;
+                width: {{box.size}}mm;
+                height: {{box.size}}mm;
+                background-color: white;
+                text-align: center;
+            }
+            .id {
+                position: absolute;
+                text-align: center;
+                width: 100%;
+                font-size: 3mm;
+                font-family: Courier New;
+            }
+            span.coord {
+                font-size: 1.5mm;
+            }
+            .sphere {
+                position: absolute;
+                top: 0mm;
+                left: 0mm;
+            }
+            .edge {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: {{box.size}}mm;
+                height: {{box.size}}mm;
+                border-radius: {{box.size/2}}mm;
+                border: 0.5mm solid black;
+            }
+            .plan {
+                position: absolute;
+                width: {{box.size}}mm;
+                height: {{box.size/4}}mm;
+                top: {{(box.size - (box.size/4))/2}}mm;
+                left: 0mm;
+                border: 0.5mm solid black;
+                border-top-left-radius: 160mm 40mm;
+                border-top-right-radius: 160mm 40mm;
+                border-bottom-left-radius: 160mm 40mm;
+                border-bottom-right-radius: 160mm 40mm;
+            }
+            .azi {
+                height: {{box.size/2}}mm;
+                width: 0mm;
+                border-left: 0.5mm solid green;
+                position:absolute;
+            }
+            .alt {
+                width: 0;
+                border-left: 0.5mm solid green;
+                position:absolute;
+            }
+            .middle-v {
+                height: {{box.size}}mm;
+                width: 0;
+                border-left: 0.5mm dotted graytext;
+                position:absolute;
+                top: 0mm;
+                left: {{box.size/2}}mm;
+            }
+            .middle-h {
+                width: {{box.size}}mm;
+                height: 0;
+                border-top: 0.5mm dotted graytext;
+                position:absolute;
+                top: {{box.size/2}}mm;
+                left: 0mm;
+            }
+            .star {
+                height: 2mm;
+                width: 2mm;
+                background-color: red;
+                position:absolute;
+                border-radius: 2mm;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="board">
+            {% for box in boxes %}
+                <div class="box" style="
+                        top:{{box.pos.y}}mm;
+                        left: {{box.pos.x}}mm;
+                     ">
+                    <div class="sphere">
+                        <div class="middle-v"></div>
+                        <div class="middle-h"></div>
+                        <div class="edge"></div>
+                        <div class="plan"></div>
+                        <div class="azi" style="
+                                height:{{box.azi.r}}mm;
+                                top:{{box.azi.y}}mm;
+                                left:{{box.azi.x}}mm;
+                                transform: rotate({{box.azi.rotate}}rad);
+                                -webkit-transform:rotate({{box.azi.rotate}}rad);
+                             ">
+                         </div>
+                        <div class="alt" style="
+                                height:{{box.alt.height}}mm;
+                                top:{{box.alt.y}}mm;
+                                left:{{box.alt.x}}mm;
+                             ">
+                        </div>
+                        <div class="star"
+                             style="
+                                top:{{box.star.y - 0.8}}mm;
+                                left:{{box.star.x - 0.8}}mm;
+                             ">
+                        </div>
+                    </div>
+                    <div class="id" style="{% if box.idMode == 'top' %}top{% else %}bottom{% endif %}:2mm;">
+                        {{box.id}}
+                        {#<span class="coord">r:{{box.coord.r|number_format(2)}} az:{{box.coord.azi|number_format(2)}} al:{{box.coord.alt|number_format(2)}}</span>#}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </body>
+</html>

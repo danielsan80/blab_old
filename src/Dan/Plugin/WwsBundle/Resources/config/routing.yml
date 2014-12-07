@@ -1,0 +1,4 @@
+wws:
+    resource: "@DanPluginWwsBundle/Controller"
+    type: annotation
+    prefix: /wws

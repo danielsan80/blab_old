@@ -45,6 +45,8 @@ class AppKernel extends Kernel
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
 
             new Trt\AsyncTasksBundle\TrtAsyncTasksBundle(),
+
+            new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
             
             new Dan\CoreBundle\DanCoreBundle(),
             new Dan\MainBundle\DanMainBundle(),
@@ -54,7 +56,7 @@ class AppKernel extends Kernel
             new Dan\Plugin\DiaryBundle\DanPluginDiaryBundle(),
             new Dan\Plugin\ReformBundle\DanPluginReformBundle(),
             new Dan\Plugin\TryBundle\DanPluginTryBundle(),
-            
+            new Dan\Plugin\WwsBundle\DanPluginWwsBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
