@@ -1,0 +1,50 @@
+dates:
+    -
+        date: "2015-01-27"
+        content: Lorem ipsum...
+    -
+        date: "2015-01-28"
+        content: Other Lorem ipsum...
+    -
+        date: "2015-01-29"
+        content: |
+            Etc...
+            Etc...
+            Etc...
+            
+            
+            
+            .
+content: |
+    {{0}}
+
+    Lorem ipsum...
+
+    {{1}}
+
+    Other Lorem ipsum...
+
+    {{2}}
+
+    Etc...
+    Etc...
+    Etc...
+    
+    
+    
+    .
+placeholders:
+    -
+        value: "mar 27 gennaio 2015"
+        data: "2015-01-27"
+        title: "date"
+    -
+        value: "mer 28 gennaio 2015"
+        data: "2015-01-28"
+        title: "date"
+    -
+        value: "gio 29 gennaio 2015"
+        data: "2015-01-29"
+        title: "date"
+        
+        

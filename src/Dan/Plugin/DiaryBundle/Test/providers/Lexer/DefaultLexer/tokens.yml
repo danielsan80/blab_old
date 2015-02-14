@@ -1,0 +1,72 @@
+-
+    match: 'mar 27 gennaio 2015'
+    token: T_DATE
+    matches: { 0: 'mar 27 gennaio 2015', match: 'mar 27 gennaio 2015', 1: 'mar 27 gennaio 2015', 2: 'mar ', dow: mar, 3: mar, day: '27', 4: '27', month: gennaio, 5: gennaio, year: '2015', 6: '2015' }
+    data: '2015-01-27'
+-
+    match: "\n\n"
+    token: T_CONTENT
+    data: "\n\n"
+-
+    match: '[project1]'
+    token: T_PROJECT
+    matches: { 0: '[project1]', match: '[project1]', 1: '[project1]', project: project1, 2: project1 }
+    data: project1
+-
+    match: "\nLorem ipsum...\n\n"
+    token: T_CONTENT
+    data: "\nLorem ipsum...\n\n"
+-
+    match: 'Mer 28 gennaio 2015'
+    token: T_DATE
+    matches: { 0: 'Mer 28 gennaio 2015', match: 'Mer 28 gennaio 2015', 1: 'Mer 28 gennaio 2015', 2: 'Mer ', dow: Mer, 3: Mer, day: '28', 4: '28', month: gennaio, 5: gennaio, year: '2015', 6: '2015' }
+    data: '2015-01-28'
+-
+    match: "\n"
+    token: T_CONTENT
+    data: "\n"
+-
+    match: '[project2]'
+    token: T_PROJECT
+    matches: { 0: '[project2]', match: '[project2]', 1: '[project2]', project: project2, 2: project2 }
+    data: project2
+-
+    match: "\n\nOther Lorem ipsum...\n\n"
+    token: T_CONTENT
+    data: "\n\nOther Lorem ipsum...\n\n"
+-
+    match: '29 Gennaio 2015'
+    token: T_DATE
+    matches: { 0: '29 Gennaio 2015', match: '29 Gennaio 2015', 1: '29 Gennaio 2015', 2: '', dow: '', 3: '', day: '29', 4: '29', month: Gennaio, 5: Gennaio, year: '2015', 6: '2015' }
+    data: '2015-01-29'
+-
+    match: "\n"
+    token: T_CONTENT
+    data: "\n"
+-
+    match: '[project 3]'
+    token: T_PROJECT
+    matches: { 0: '[project 3]', match: '[project 3]', 1: '[project 3]', project: 'project 3', 2: 'project 3' }
+    data: 'project 3'
+-
+    match: "\n\nBla bla bla...\n\ngio 31 GEN 2015\n"
+    token: T_CONTENT
+    data: "\n\nBla bla bla...\n\ngio 31 GEN 2015\n"
+-
+    match: '[project1]'
+    token: T_PROJECT
+    matches: { 0: '[project1]', match: '[project1]', 1: '[project1]', project: project1, 2: project1 }
+    data: project1
+-
+    match: "\n\nEtc...\n"
+    token: T_CONTENT
+    data: "\n\nEtc...\n"
+-
+    match: '[project2]'
+    token: T_PROJECT
+    matches: { 0: '[project2]', match: '[project2]', 1: '[project2]', project: project2, 2: project2 }
+    data: project2
+-
+    match: "\nEtc...\nEtc...\n\n\n"
+    token: T_CONTENT
+    data: "\nEtc...\nEtc...\n\n\n"

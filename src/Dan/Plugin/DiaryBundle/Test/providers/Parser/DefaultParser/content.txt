@@ -1,0 +1,19 @@
+mar 27 gennaio 2015
+[project1]
+
+Lorem ipsum...
+
+mer 28 gennaio 2015
+[project2]
+Other Lorem ipsum...
+
+gio 29 gennaio 2015
+[project1]
+Etc...
+[project2]
+Etc...
+Etc...
+
+
+
+.

@@ -1,0 +1,22 @@
+dates:
+    -
+        date: '2015-01-27'
+        projects:
+            -
+                project: project1
+                content: 'Lorem ipsum...'
+    -
+        date: '2015-01-28'
+        projects:
+            -
+                project: project2
+                content: 'Other Lorem ipsum...'
+    -
+        date: '2015-01-29'
+        projects:
+            -
+                project: project1
+                content: Etc...
+            -
+                project: project2
+                content: "Etc...\nEtc...\n\n\n\n."
