@@ -8,7 +8,7 @@ class ReadDates extends ParserStep
     protected function run($path)
     {
         
-        $tokens = $this->parser->getProperty($path.'._tokens');
+        $tokens = $this->parser->getProperty($path.'._tokens', array());
         
         $dates = array();
         $date = null;
@@ -36,6 +36,6 @@ class ReadDates extends ParserStep
         } else {
             $this->parser->unsetProperty($path.'._tokens');
         }
-        $this->parser->setProperty($path.'.dates', $dates);
+        $this->parser->setProperty($path.'.properties.dates', $dates);
     }
 }

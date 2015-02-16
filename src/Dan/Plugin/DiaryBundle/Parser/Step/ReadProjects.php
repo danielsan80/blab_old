@@ -8,7 +8,7 @@ class ReadProjects extends ParserStep
     protected function run($path)
     {
         
-        $tokens = $this->parser->getProperty($path.'._tokens');
+        $tokens = $this->parser->getProperty($path.'._tokens', array());
         
         $projects = array();
         $project = null;
@@ -36,6 +36,8 @@ class ReadProjects extends ParserStep
         } else {
             $this->parser->unsetProperty($path.'._tokens');
         }
-        $this->parser->setProperty($path.'.projects', $projects);
+        if ($projects) {
+            $this->parser->setProperty($path.'.projects', $projects);
+        }
     }
 }

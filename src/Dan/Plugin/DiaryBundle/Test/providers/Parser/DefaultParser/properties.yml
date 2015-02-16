@@ -20,3 +20,26 @@ dates:
             -
                 project: project2
                 content: "Etc...\nEtc...\n\n\n\n."
+content: "{{0}}\n{{1}}\n\nLorem ipsum...\n\n{{2}}\n{{3}}\nOther Lorem ipsum...\n\n{{4}}\n{{5}}\nEtc...\n{{6}}\nEtc...\nEtc...\n\n\n\n.\n"
+placeholders:
+    -
+        value: 'mar 27 gennaio 2015'
+        title: date
+    -
+        value: '[project1]'
+        title: project
+    -
+        value: 'mer 28 gennaio 2015'
+        title: date
+    -
+        value: '[project2]'
+        title: project
+    -
+        value: 'gio 29 gennaio 2015'
+        title: date
+    -
+        value: '[project1]'
+        title: project
+    -
+        value: '[project2]'
+        title: project

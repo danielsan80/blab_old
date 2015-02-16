@@ -2,8 +2,7 @@
 namespace Dan\Plugin\DiaryBundle\Parser\Lexer;
 
 use Dan\Plugin\DiaryBundle\Parser\Lexer;
-use Dan\Plugin\DiaryBundle\Parser\LexerTerminal\Date;
-use Dan\Plugin\DiaryBundle\Parser\LexerTerminal\Project;
+use Dan\Plugin\DiaryBundle\Parser\LexerTerminal;
 
 class DefaultLexer extends Lexer
 {
@@ -12,7 +11,11 @@ class DefaultLexer extends Lexer
     {
         parent::__construct();
         
-        $this->addTerminal(new Date());
-        $this->addTerminal(new Project());
+        $this->addTerminal(new LexerTerminal\Date());
+        $this->addTerminal(new LexerTerminal\Project());
+        $this->addTerminal(new LexerTerminal\TimeRange());
+        $this->addTerminal(new LexerTerminal\TimeMod());
+        $this->addTerminal(new LexerTerminal\Task());
+        $this->addTerminal(new LexerTerminal\Tags());
     }
 }

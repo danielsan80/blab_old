@@ -13,6 +13,8 @@ use Dan\Plugin\DiaryBundle\Form\ReportType;
 
 use Symfony\Component\Yaml\Yaml;
 
+use Dan\Plugin\DiaryBundle\Parser\Parser\DefaultParser;
+
 /**
  * Report controller.
  *
@@ -37,11 +39,22 @@ class ReportController extends Controller
         $data = json_decode($request->getContent(), true);
 
         $content = $data['content'];
-        $regexps = $userManager->getMetadata($user, 'diary', 'regexp', $helper->getDefaultRegexp());
+        
+        $parser = new \Dan\Plugin\DiaryBundle\Parser\Parser\DefaultParser();
+        $parser->setContent($content);
+        $parser->execute();
+        
+        $properties = $parser->getProperties();
+        
+        $data = array();
+        
+//        $regexps = $userManager->getMetadata($user, 'diary', 'regexp', $helper->getDefaultRegexp());
 
-        $data = $helper->decompose($content, $regexps);
-        $data['html'] = $helper->getAsHtml($data['content'], $data['placeholders']);
-        $data['properties_yaml'] = Yaml::dump($data['properties']);
+//        $data = $helper->decompose($content, $regexps);
+//        $data['html'] = $helper->getAsHtml($data['content'], $data['placeholders']);
+        $data['html'] = $helper->getAsHtml($properties['content'], $properties['placeholders']);
+        
+        $data['properties_yaml'] = Yaml::dump($properties['properties'], 100);
 
         $content = json_encode($data);
 

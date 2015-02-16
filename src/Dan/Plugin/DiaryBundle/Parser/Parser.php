@@ -63,9 +63,9 @@ abstract class Parser
         return $this;
     }
     
-    public function getProperty($key)
+    public function getProperty($key, $default = null)
     {
-        return $this->arrayHelper->getPath($this->properties, $key, null);
+        return $this->arrayHelper->getPath($this->properties, $key, $default);
     }
     
     
