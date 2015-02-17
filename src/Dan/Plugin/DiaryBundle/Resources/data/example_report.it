@@ -1,0 +1,69 @@
+
+
+
+
+{{today}}
+
+[diary]
+
+Oggi ti sei registrato in Diary.
+Questo è un esempio di report per mostrarti come funziona.
+
+In un report puoi scrivere tutto quello che vuoi in linguaggio naturale.
+Sulla destra --------->
+il sistema ti ripropone quello che hai scritto evidenziando i pattern che ha riconosciuto.
+
+Questo testo è stato scritto dopo la data di oggi e dopo "diary" per cui si considera
+assegnato al progetto "diary" e relativo alla data di oggi.
+
+Nel descrivere quello che hai fatto oggi relativamente al progetto "diary" puoi specificare dei periodi temporali come segue:
+18.00 - 19.00
+
+Puoi includerli anche all'interno del testo (20.00 - 23.15), controllando a destra che vengano riconosciuti.
+
+Questi orari verranno utilizzati per calcolare il tempo totale dedicato a questo progetto oggi.
+
+Se ad esempio facessi una pausa di mezzora e volessi stornare dal calcolo del tempo totale
+questo valore, potresti semplicemente scrivere -30m
+
+Puoi descrivere in maniera contratta a cosa si riferisce questo testo attraverso i task :
+
+task: Istruzioni utilizzo Diary
+
+Puoi infine taggare questo report nel seguent modo:
+
+tags: diary, start, important
+
+
+[properties]
+
+Sulla destra, sotto il testo evidenziato vengono mostrate le proprietà lette dal testo che hai scritto
+e la loro struttura.
+
+Ecco altri dettagli sui pattern per definire proprietà:
+
+Puoi tranquillamente sforare la mezzanotte: 23.00 - 02.00
+
+Per le variazioni sui tempi puoi aggiungere o togliere, ore e minuti:
+
++2h -1.30 -5m
+
+Anche sui tag ed i task il sistema è abbastanza flessibile:
+
+Task: Dettagli Diary
+TASK: Le proprietà
+
+TAG: diary
+Tags: properties, important
+
+
+Ora visita le pagine di analisi e guarda come questi dati vengono aggregati.
+
+
+{{tomorrow}}
+
+[diary]
+
+Per ora gli orari sono relativi alla data e non si possono assegnare ad un tag.
+E probabilmente una delle prossime cose che verranno fatte.
+10.00 - 11.05; +25m

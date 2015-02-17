@@ -35,12 +35,15 @@ class DefaultController extends Controller
         }
 
         $kernel = $this->get('kernel');
-        $content = file_get_contents($kernel->locateResource('@DanPluginDiaryBundle/Resources/data/example_report'));
+        $content = file_get_contents($kernel->locateResource('@DanPluginDiaryBundle/Resources/data/example_report.it'));
 
-        $now = new \DateTime();
-        $date = $t->trans('dow.'.$now->format('D')).' '.$now->format('d').' '.$t->trans('month.'.$now->format('F')).' '.$now->format('Y');
+        $date = new \DateTime();
+        $today = $t->trans('dow.'.$date->format('D')).' '.$date->format('d').' '.$t->trans('month.'.$date->format('F')).' '.$date->format('Y');
+        $date = new \DateTime('+1 day');
+        $tomorrow = $t->trans('dow.'.$date->format('D')).' '.$date->format('d').' '.$t->trans('month.'.$date->format('F')).' '.$date->format('Y');
         $content = strtr($content, array(
-                '{{date}}' => $date
+                '{{today}}' => $today,
+                '{{tomorrow}}' => $tomorrow
             ));
 
         $entity = new Report();

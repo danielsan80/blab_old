@@ -1,5 +1,5 @@
 projects:
-    aProject:
+    myProject:
         euro_per_day: 300
         euro_per_hour: 50
         hours_per_day: 7

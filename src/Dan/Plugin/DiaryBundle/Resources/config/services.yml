@@ -7,16 +7,8 @@ services:
             - @doctrine.orm.entity_manager
             - @dan_diary.regexp.helper
         
-    
-    dan_diary.regexp.transformer:
-        class: Dan\Plugin\DiaryBundle\Regexp\Transformer
-
     dan_diary.regexp.helper:
         class: Dan\Plugin\DiaryBundle\Regexp\Helper
-        arguments:
-            - @dan_diary.regexp.transformer
-        calls:
-            - [setDefaultRegexpFilename, [%diary_default_regexp_filename%]]
 
     dan_diary.analysis.helper:
         class: Dan\Plugin\DiaryBundle\Analysis\Helper
