@@ -1,25 +1,26 @@
-dates:
-    -
-        date: '2015-01-27'
-        projects:
-            -
-                project: project1
-                content: 'Lorem ipsum...'
-    -
-        date: '2015-01-28'
-        projects:
-            -
-                project: project2
-                content: 'Other Lorem ipsum...'
-    -
-        date: '2015-01-29'
-        projects:
-            -
-                project: project1
-                content: Etc...
-            -
-                project: project2
-                content: "Etc...\nEtc...\n\n\n\n."
+properties:
+    dates:
+        -
+            date: '2015-01-27'
+            projects:
+                -
+                    project: project1
+                    content: 'Lorem ipsum...'
+        -
+            date: '2015-01-28'
+            projects:
+                -
+                    project: project2
+                    content: 'Other Lorem ipsum...'
+        -
+            date: '2015-01-29'
+            projects:
+                -
+                    project: project1
+                    content: Etc...
+                -
+                    project: project2
+                    content: "Etc...\nEtc...\n\n\n\n."
 content: "{{0}}\n{{1}}\n\nLorem ipsum...\n\n{{2}}\n{{3}}\nOther Lorem ipsum...\n\n{{4}}\n{{5}}\nEtc...\n{{6}}\nEtc...\nEtc...\n\n\n\n.\n"
 placeholders:
     -

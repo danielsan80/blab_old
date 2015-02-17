@@ -19,7 +19,11 @@ class ReadTags extends ParserStep
         }
         
         foreach($tags as $i => $tag) {
-            $tags[$i] = trim($tag);
+            $tag = trim($tag);
+            $tags[$i] = $tag;
+            if (!$tag) {
+                unset($tags[$i]);
+            }
         }
         $tags = array_unique($tags);
         

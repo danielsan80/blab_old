@@ -124,10 +124,11 @@ class AnalysisController extends Controller
     {
         $collection = $this->createReportCollection($user, $project);
 
-        $em = $this->getDoctrine()->getManager();
         $helper = $this->get('dan_diary.analysis.helper');
-        $reports = $em->getRepository('DanPluginDiaryBundle:Report')->findByUser($user);
-
+        $reportManager = $this->get('dan_diary.model.manager.report');
+        
+        $reports = $reportManager->getReportsByUser($user);
+        $reports = $reportManager->explodeReports($reports);
 
         foreach($reports as $report) {
             if ($project != $helper->getProject($report)) {
@@ -142,7 +143,7 @@ class AnalysisController extends Controller
             if (!$date) {
                 continue;
             }
-
+            
             $weekNumber = (int)$date->format('W');
             $dow = (int)$date->format('w');
             $dow = $dow==0?7:$dow;
@@ -162,8 +163,11 @@ class AnalysisController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $helper = $this->get('dan_diary.analysis.helper');
-        $reports = $em->getRepository('DanPluginDiaryBundle:Report')->findByUser($user);
-
+        
+        $reportManager = $this->get('dan_diary.model.manager.report');
+        
+        $reports = $reportManager->getReportsByUser($user);
+        $reports = $reportManager->explodeReports($reports);
 
         foreach($reports as $report) {
             if ($project != $helper->getProject($report)) {

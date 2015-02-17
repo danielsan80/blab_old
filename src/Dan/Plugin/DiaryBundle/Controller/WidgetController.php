@@ -28,8 +28,10 @@ class WidgetController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $helper = $this->get('dan_diary.analysis.helper');
+        $reportManager = $this->get('dan_diary.model.manager.report');
 
-        $reports = $em->getRepository('DanPluginDiaryBundle:Report')->findByUser($user);
+        $reports = $reportManager->getReportsByUser($user);
+        $reports = $reportManager->explodeReports($reports);
 
         $projects = array();
         foreach($reports as $report) {
@@ -62,7 +64,10 @@ class WidgetController extends Controller
 
         $helper = $this->get('dan_diary.analysis.helper');
 
-        $reports = $em->getRepository('DanPluginDiaryBundle:Report')->findByUser($user);
+        $reportManager = $this->get('dan_diary.model.manager.report');
+
+        $reports = $reportManager->getReportsByUser($user);
+        $reports = $reportManager->explodeReports($reports);
 
         $yearMonths = array();
         foreach($reports as $report) {

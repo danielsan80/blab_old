@@ -15,13 +15,13 @@ abstract class Parser
     protected $properties;
     
     
-    public function __construct()
+    public function __construct($content = null)
     {
         $this->steps = array();
         $this->arrayHelper = new ArrayHelper();
         $this->lexer = new Lexer\DefaultLexer();
         
-        $this->reset();
+        $this->setContent($content);
     }
     
     private function reset()

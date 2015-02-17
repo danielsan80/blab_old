@@ -62,7 +62,7 @@ class ReportCollection extends BaseReportCollection
         }
         return $this->hoursPerDay;
     }
-
+    
     public function getSeconds()
     {
 

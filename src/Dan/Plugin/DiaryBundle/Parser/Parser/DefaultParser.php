@@ -5,6 +5,7 @@ use Dan\Plugin\DiaryBundle\Parser\Step;
 
 class DefaultParser extends Parser
 {
+    
     protected function setup()
     {
         $this->addStep(new Step\SetTokens());
@@ -21,7 +22,7 @@ class DefaultParser extends Parser
         $this->addStep(new Step\ReadTasks('properties.dates.*.projects.*'));
         $this->addStep(new Step\ReadTags('properties.dates.*.projects.*'));
         
-//        $this->addStep(new Step\ReadContent('properties.dates.*.projects.*'));
+        $this->addStep(new Step\ReadContent('properties.dates.*.projects.*'));
         $this->addStep(new Step\UnsetTokens('properties.dates.*.projects.*'));
         
         $this->addStep(new Step\SetTokens());

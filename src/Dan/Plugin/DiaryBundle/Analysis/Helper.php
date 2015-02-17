@@ -2,18 +2,49 @@
 namespace Dan\Plugin\DiaryBundle\Analysis;
 
 use Symfony\Component\Yaml\Yaml;
-use Dan\Plugin\DiaryBundle\Entity\Report;
+use Dan\Plugin\DiaryBundle\Model\ReportChild as Report;
+
+use Dan\MainBundle\Model\ArrayHelper;
 
 class Helper
 {
-
-    public function getProject(Report $report)
+    
+    public function __construct()
+    {
+        $this->arrayHelper = new ArrayHelper();
+    }
+    
+    private function getPropertyValue($report, $path)
     {
         $properties = $report->getProperties();
-        if (!isset($properties['project'])) {
+        return $this->arrayHelper->getPath($properties, $path);
+    }
+    
+    private function getPropertyValues($report, $path)
+    {
+        $properties = $report->getProperties();
+        $pathes = $this->arrayHelper->explodePath($properties, $path);
+        $values = array();
+        foreach($pathes as $path) {
+            $values[] = $this->arrayHelper->getPath($properties, $path);
+        }
+
+        return $values;
+    }
+    
+    
+    public function getProject(Report $report)
+    {
+        return $this->getPropertyValue($report, 'project');
+    }
+    
+    public function getDate(Report $report)
+    {
+        $date = $this->getPropertyValue($report, 'date');
+        if (!$date) {
             return null;
         }
-        return $properties['project'];
+        return new \DateTime($date);
     }
 
     public function getMonth(Report $report)
@@ -25,14 +56,35 @@ class Helper
         return $date->format('Y-m');
     }
 
-    public function getDate(Report $report)
-    {
-        $properties = $report->getProperties();
-        if (!isset($properties['date'])) {
-            return null;
-        }
-        return new \DateTime($properties['date']);
-    }
+   
+    
+
+//    public function getProjects(Report $report)
+//    {
+//        $projects = $this->getPropertyValues($report, 'dates.*.projects.*.project');
+//        return array_unique($projects);
+//    }
+//
+//
+//    public function getDates(Report $report)
+//    {
+//        $dates = $this->getPropertyValues($report, 'dates.*.date');
+//        $dates = array_unique($dates);
+//        foreach($dates as $i => $date) {
+//            $dates[$i] = new \DateTime($date);
+//        }
+//        return $dates;
+//    }
+//
+//    public function getMonths(Report $report)
+//    {
+//        $dates = $this->getDates($report);
+//        foreach($dates as $i => $date) {
+//            $dates[$i] = $date->format('Y-m');
+//        }
+//        $dates = array_unique($dates);
+//        return $dates;
+//    }
 
     public function getTasks(Report $report)
     {
@@ -49,8 +101,8 @@ class Helper
 
         $properties = $report->getProperties();
         $seconds = 0;
-        if (isset($properties['times'])) {
-            $times = $properties['times'];
+        if (isset($properties['time_ranges'])) {
+            $times = $properties['time_ranges'];
             foreach($times as $time) {
                 $time = explode(' - ', $time);
 
@@ -69,8 +121,8 @@ class Helper
 
             }
         }
-        if (isset($properties['times_mods'])) {
-            $timesMods = $properties['times_mods'];
+        if (isset($properties['time_mods'])) {
+            $timesMods = $properties['time_mods'];
             foreach($timesMods as $mod) {
                 if (preg_match('/^(?P<sign>[\+\-])(?P<num>\d{1,2})(?P<unit>[m])$/', $mod, $matches)) {
                     $seconds += ($matches['sign'].$matches['num']) * 60;

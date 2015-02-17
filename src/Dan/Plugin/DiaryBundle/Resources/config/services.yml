@@ -1,6 +1,13 @@
 parameters:
 
 services:
+    dan_diary.model.manager.report:
+        class: Dan\Plugin\DiaryBundle\Model\Manager\ReportManager
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @dan_diary.regexp.helper
+        
+    
     dan_diary.regexp.transformer:
         class: Dan\Plugin\DiaryBundle\Regexp\Transformer
 
@@ -17,14 +24,13 @@ services:
     dan_diary.event_listener.report:
         class: Dan\Plugin\DiaryBundle\EventListener\ReportListener
         arguments:
-            - @dan_diary.regexp.helper
+            - @service_container
         calls:
             - [setLogger, [@logger]]
-            - [setContainer, [@service_container]]
         tags:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }
-
+            
     dan_diary.plugin:
         class: Dan\Plugin\DiaryBundle\Plugin
         tags:

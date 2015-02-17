@@ -48,7 +48,9 @@ class BaseReportCollection implements \ArrayAccess
     {
         
         if (is_null($path)) {
-            $this->reports[] = $report;
+            if (!in_array($report, $this->reports)) {
+                $this->reports[] = $report;
+            }
             return $this;
         }
         $separator = $this->pathSeparator;
@@ -59,7 +61,7 @@ class BaseReportCollection implements \ArrayAccess
         if (!isset($this->reports[$key])) {
             $this->reports[$key] = $this->createReportCollection();
         }
-        $this->reports[$key]->addReport($report, $subpath, $separator);
+        $this->reports[$key]->addReport($report, $subpath);
         return $this;
     }
     

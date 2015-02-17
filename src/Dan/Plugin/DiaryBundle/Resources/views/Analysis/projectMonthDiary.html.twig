@@ -30,10 +30,11 @@
                                     {% for report in dailyReports.reports %}
                                         {% if shareData.isOwner(app.user) %}
                                             <div class="pull-right">
-                                                <a href="{{path('report_edit', {id:report.id})}}" target="_blank" class="icon icon-edit"></a>
+                                                <a href="{{path('report_edit', {id:report.parent.id})}}" target="_blank" class="icon icon-edit"></a>
                                             </div>
                                         {% endif %}
 
+                                        <strong>{{report.properties.date|date('l')|slice(0,3)}} {{report.properties.date|date('d')}}</strong><br/>
                                         {{report.content|trans|nl2br}}
                                         <hr/>
                                     {% endfor %}

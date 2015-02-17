@@ -33,28 +33,12 @@ class ReportController extends Controller
 
         $user = $this->getUser();
         $userManager = $this->get('model.manager.user');
-        $helper = $this->get('dan_diary.regexp.helper');
-
+        $reportManager = $this->get('dan_diary.model.manager.report');
 
         $data = json_decode($request->getContent(), true);
-
         $content = $data['content'];
-        
-        $parser = new \Dan\Plugin\DiaryBundle\Parser\Parser\DefaultParser();
-        $parser->setContent($content);
-        $parser->execute();
-        
-        $properties = $parser->getProperties();
-        
-        $data = array();
-        
-//        $regexps = $userManager->getMetadata($user, 'diary', 'regexp', $helper->getDefaultRegexp());
 
-//        $data = $helper->decompose($content, $regexps);
-//        $data['html'] = $helper->getAsHtml($data['content'], $data['placeholders']);
-        $data['html'] = $helper->getAsHtml($properties['content'], $properties['placeholders']);
-        
-        $data['properties_yaml'] = Yaml::dump($properties['properties'], 100);
+        $data = $reportManager->parseContentForPreview($content);
 
         $content = json_encode($data);
 
