@@ -14,7 +14,7 @@ class TimeRange implements LexerTerminalInterface
     {
         $this->lexerTerminal = new LexerTerminal();
         $this->lexerTerminal->setName('T_TIME_RANGE');
-        $this->lexerTerminal->addPattern('(?P<from>\d{2}\.\d{2})[ ]?-[ ]?(?P<to>\d{2}\.\d{2})');
+        $this->lexerTerminal->addPattern('(?P<from>\d{1,2}\.\d{2})[ ]?-[ ]?(?P<to>\d{1,2}\.\d{2})');
     }
     
     public function match($string)
@@ -33,7 +33,7 @@ class TimeRange implements LexerTerminalInterface
     {
         if ($token) {
             $matches = $token['matches'];
-            $token['data'] = $matches['from'] .' - '. $matches['to'];
+            $token['data'] = str_pad($matches['from'], 5, "0", STR_PAD_LEFT) .' - '. $matches['to'];
         }
         return $token;
     }    

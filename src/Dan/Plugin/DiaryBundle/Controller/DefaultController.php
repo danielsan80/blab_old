@@ -19,11 +19,17 @@ class DefaultController extends Controller
     public function indexAction()
     {
         $this->givenUserIsLoggedIn();
-        $this->checkFirstAccess();
+        $this->doLoginChecks();
 
         return array();
     }
 
+    private function doLoginChecks()
+    {
+        $this->checkFirstAccess();
+        $this->checkParseModuleUpgrade();
+    }
+    
     private function checkFirstAccess()
     {
         $user = $this->getUser();
@@ -57,6 +63,27 @@ class DefaultController extends Controller
         $userManager->setMetadata($user, 'diary', 'settings', $this->getDefaultSettings());
 
         $userManager->setMetadata($user, 'diary', 'user_status.example_report_created', true);
+    }
+    
+    private function checkParseModuleUpgrade()
+    {
+        $user = $this->getUser();
+        $userManager = $this->get('model.manager.user');
+        $reportManager = $this->get('dan_diary.model.manager.report');
+
+        if ($userManager->getMetadata($user, 'diary', 'user_status.report_properties_regenerated', false)) {
+            return;
+        }
+        
+        $reports = $reportManager->getReportsByUser($user);
+        
+        foreach($reports as $report) {
+            $report->setUpdatedAt();
+        }
+        
+        $this->getDoctrine()->getManager()->flush();
+
+        $userManager->setMetadata($user, 'diary', 'user_status.report_properties_regenerated', true);
     }
 
     private function getDefaultSettings() {

@@ -42,7 +42,7 @@ class ReportManager
         $data = array();
         $data['html'] = $this->regexpHelper->getAsHtml($properties['content'], $properties['placeholders']);
         
-        $data['properties_yaml'] = Yaml::dump($properties['properties'], 100);
+        $data['properties_yaml'] = strtr(Yaml::dump($properties['properties'], 100), array('    ' => '  '));
         
         return $data;
     }

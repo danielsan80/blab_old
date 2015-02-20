@@ -5,4 +5,5 @@
         {% set params = params|merge({month:yearMonth}) %}
         <a href="{{path(route, params)}}" class="{{ yearMonth == current?'active':''}}" >{{monthName|lower}}</a> 
     {% endfor %}
+    <br/>
 {% endfor %}

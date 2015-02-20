@@ -14,7 +14,8 @@ class Project implements LexerTerminalInterface
     {
         $this->lexerTerminal = new LexerTerminal();
         $this->lexerTerminal->setName('T_PROJECT');
-        $this->lexerTerminal->addPattern('\[(?P<project>[\w ]+)\]');
+        $this->lexerTerminal->addPattern('^\[(?P<project>[\w ]+)\]');
+        $this->lexerTerminal->addPattern('\n\[(?P<project>[\w ]+)\]');
     }
     
     public function match($string)
