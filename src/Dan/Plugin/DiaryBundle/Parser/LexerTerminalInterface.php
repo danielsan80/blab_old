@@ -5,4 +5,6 @@ interface LexerTerminalInterface
 {
     public function match($string);
     public function findIn($string);
+    
+    public function getOption($key);
 }

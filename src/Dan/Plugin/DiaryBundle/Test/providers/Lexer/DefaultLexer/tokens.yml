@@ -4,18 +4,34 @@
     matches: { 0: 'mar 27 gennaio 2015', match: 'mar 27 gennaio 2015', 1: 'mar 27 gennaio 2015', 2: 'mar ', dow: mar, 3: mar, day: '27', 4: '27', month: gennaio, 5: gennaio, year: '2015', 6: '2015' }
     data: '2015-01-27'
 -
-    match: "\n\n"
-    token: T_CONTENT
-    data: "\n\n"
+    match: "\n"
+    token: T_NEWLINE
+    data: "\n"
+-
+    match: "\n"
+    token: T_NEWLINE
+    data: "\n"
 -
     match: '[project1]'
     token: T_PROJECT
     matches: { 0: '[project1]', match: '[project1]', 1: '[project1]', project: project1, 2: project1 }
     data: project1
 -
-    match: "\nLorem ipsum...\n\n"
+    match: "\n"
+    token: T_NEWLINE
+    data: "\n"
+-
+    match: 'Lorem ipsum...'
     token: T_CONTENT
-    data: "\nLorem ipsum...\n\n"
+    data: 'Lorem ipsum...'
+-
+    match: "\n"
+    token: T_NEWLINE
+    data: "\n"
+-
+    match: "\n"
+    token: T_NEWLINE
+    data: "\n"
 -
     match: 'Mer 28 gennaio 2015'
     token: T_DATE
@@ -23,7 +39,7 @@
     data: '2015-01-28'
 -
     match: "\n"
-    token: T_CONTENT
+    token: T_NEWLINE
     data: "\n"
 -
     match: '[project2]'
@@ -31,9 +47,25 @@
     matches: { 0: '[project2]', match: '[project2]', 1: '[project2]', project: project2, 2: project2 }
     data: project2
 -
-    match: "\n\nOther Lorem ipsum...\n\n"
+    match: "\n"
+    token: T_NEWLINE
+    data: "\n"
+-
+    match: "\n"
+    token: T_NEWLINE
+    data: "\n"
+-
+    match: 'Other Lorem ipsum...'
     token: T_CONTENT
-    data: "\n\nOther Lorem ipsum...\n\n"
+    data: 'Other Lorem ipsum...'
+-
+    match: "\n"
+    token: T_NEWLINE
+    data: "\n"
+-
+    match: "\n"
+    token: T_NEWLINE
+    data: "\n"
 -
     match: '29 Gennaio 2015'
     token: T_DATE
@@ -41,7 +73,7 @@
     data: '2015-01-29'
 -
     match: "\n"
-    token: T_CONTENT
+    token: T_NEWLINE
     data: "\n"
 -
     match: '[project 3]'
@@ -49,24 +81,84 @@
     matches: { 0: '[project 3]', match: '[project 3]', 1: '[project 3]', project: 'project 3', 2: 'project 3' }
     data: 'project 3'
 -
-    match: "\n\nBla bla bla...\n\ngio 31 GEN 2015\n"
+    match: "\n"
+    token: T_NEWLINE
+    data: "\n"
+-
+    match: "\n"
+    token: T_NEWLINE
+    data: "\n"
+-
+    match: 'Bla bla bla...'
     token: T_CONTENT
-    data: "\n\nBla bla bla...\n\ngio 31 GEN 2015\n"
+    data: 'Bla bla bla...'
+-
+    match: "\n"
+    token: T_NEWLINE
+    data: "\n"
+-
+    match: "\n"
+    token: T_NEWLINE
+    data: "\n"
+-
+    match: 'gio 31 GEN 2015'
+    token: T_CONTENT
+    data: 'gio 31 GEN 2015'
+-
+    match: "\n"
+    token: T_NEWLINE
+    data: "\n"
 -
     match: '[project1]'
     token: T_PROJECT
     matches: { 0: '[project1]', match: '[project1]', 1: '[project1]', project: project1, 2: project1 }
     data: project1
 -
-    match: "\n\nEtc...\n"
+    match: "\n"
+    token: T_NEWLINE
+    data: "\n"
+-
+    match: "\n"
+    token: T_NEWLINE
+    data: "\n"
+-
+    match: Etc...
     token: T_CONTENT
-    data: "\n\nEtc...\n"
+    data: Etc...
+-
+    match: "\n"
+    token: T_NEWLINE
+    data: "\n"
 -
     match: '[project2]'
     token: T_PROJECT
     matches: { 0: '[project2]', match: '[project2]', 1: '[project2]', project: project2, 2: project2 }
     data: project2
 -
-    match: "\nEtc...\nEtc...\n\n\n"
+    match: "\n"
+    token: T_NEWLINE
+    data: "\n"
+-
+    match: Etc...
     token: T_CONTENT
-    data: "\nEtc...\nEtc...\n\n\n"
+    data: Etc...
+-
+    match: "\n"
+    token: T_NEWLINE
+    data: "\n"
+-
+    match: Etc...
+    token: T_CONTENT
+    data: Etc...
+-
+    match: "\n"
+    token: T_NEWLINE
+    data: "\n"
+-
+    match: "\n"
+    token: T_NEWLINE
+    data: "\n"
+-
+    match: "\n"
+    token: T_NEWLINE
+    data: "\n"

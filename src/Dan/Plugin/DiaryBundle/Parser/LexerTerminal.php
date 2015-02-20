@@ -6,11 +6,13 @@ class LexerTerminal implements LexerTerminalInterface
     
     private $patterns;
     private $modes;
+    private $options;
     private $name;
     
     public function __construct()
     {
         $this->patterns = array();
+        $this->options = array();
         $this->modes = array();
     }
     
@@ -28,6 +30,20 @@ class LexerTerminal implements LexerTerminalInterface
     public function getName()
     {
         return $this->name;
+    }
+    
+    public function setOption($key, $value)
+    {
+        $this->options[$key] = $value;
+    }
+            
+    public function getOption($key, $default=null)
+    {
+        if (isset($this->options[$key])) {
+            return $this->options[$key];
+        }
+        
+        return $default;
     }
             
     private function doMatch($string, $atStart = true)
@@ -59,5 +75,10 @@ class LexerTerminal implements LexerTerminalInterface
     public function findIn($string)
     {
         return $this->doMatch($string, false);
-    }    
+    }
+    
+    public function isAtStartOfLine()
+    {
+        return false;
+    }
 }

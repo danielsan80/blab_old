@@ -13,7 +13,7 @@ class ReadPlaceholders extends ParserStep
         $contents = array();
         $placeholders = array();
         foreach($tokens as $i => $token) {
-            if ($token['token'] == 'T_CONTENT') {
+            if ($token['token'] == 'T_CONTENT' || $token['token'] == 'T_NEWLINE') {
                 $contents[] = $token['data'];
             } else {
                 $j = count($placeholders);

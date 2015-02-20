@@ -9,7 +9,6 @@ class DefaultParser extends Parser
     protected function setup()
     {
         $this->addStep(new Step\SetTokens());
-//        $this->addStep(new Step\RemoveEmptyContentTokens()); //WRONG
         
         $this->addStep(new Step\ReadDates());
         $this->addStep(new Step\UnsetTokens());

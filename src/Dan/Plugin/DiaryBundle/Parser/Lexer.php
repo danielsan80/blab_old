@@ -13,21 +13,25 @@ class Lexer
 
     public function run($content)
     {
-        $tokens = array();
-        $offset = 0;
-        $length = strlen($content);
+        $lines = explode("\n", $content);
         
-//        $i=0;
-        while ($offset < $length) {
-//            if ($i++>10) {
-//                break;
-//            }
-            $result = $this->match($content, $offset);
-            if ($result === false) {
-                throw new Exception('Unable to parse the given content');
+        $tokens = array();
+        
+        foreach($lines as $i => $line) {
+            $offset = 0;
+            $length = strlen($line);
+
+            while ($offset < $length) {
+                $result = $this->match($line, $offset);
+                if ($result === false) {
+                    throw new Exception('Unable to parse the given content');
+                }
+                $tokens[] = $result;
+                $offset += strlen($result['match']);            
             }
-            $tokens[] = $result;
-            $offset += strlen($result['match']);            
+            if ($i+1 < count($lines)) {
+                $tokens[] = $this->getNewLineToken();
+            }
         }
         
         
@@ -35,11 +39,15 @@ class Lexer
         
     }
     
-    protected function match($content, $offset)
+    protected function match($line, $offset)
     {
-        $string = substr($content, $offset);
+        $string = substr($line, $offset);
         
         foreach($this->terminals as $terminal) {
+            
+            if ($terminal->getOption('must_be_at_start_of_line', false) && $offset>0) {
+                continue;
+            }
             if ($token = $terminal->match($string)) {
                 return $token;
             }
@@ -57,12 +65,7 @@ class Lexer
             }
         }
         
-        $token = array(
-            'match' => $inc?substr($string, 0, $inc):substr($string, 0),
-            'token' => 'T_CONTENT',
-        );
-        
-        $token['data'] = $token['match'];
+        $token = $this->getContentToken($inc?substr($string, 0, $inc):substr($string, 0));
         
         return $token;
         
@@ -73,6 +76,22 @@ class Lexer
         $this->terminals[] = $terminal;
     }
     
-   
+    private function getNewLineToken()
+    {
+        return array(
+            'match' => "\n",
+            'token' => 'T_NEWLINE',
+            'data' => "\n",
+        );
+    }
+    
+    private function getContentToken($string)
+    {
+        return array(
+            'match' => $string,
+            'token' => 'T_CONTENT',
+            'data' => $string,
+        );
+    }
     
 }

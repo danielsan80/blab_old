@@ -12,7 +12,7 @@ class ReadContent extends ParserStep
         
         $contents = array();
         foreach($tokens as $i => $token) {
-            if ($token['token'] == 'T_CONTENT') {
+            if ($token['token'] == 'T_CONTENT' || $token['token'] == 'T_NEWLINE') {
                 $contents[] = $token['data'];
                 unset($tokens[$i]);
             } else {

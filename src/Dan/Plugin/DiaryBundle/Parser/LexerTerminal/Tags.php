@@ -27,7 +27,12 @@ class Tags implements LexerTerminalInterface
     {
         $token = $this->lexerTerminal->findIn($string);
         return $this->afterMatch($token);
-    }  
+    }
+    
+    public function getOption($key)
+    {
+        return $this->lexerTerminal->getOption($key);
+    }
     
     private function afterMatch($token)
     {

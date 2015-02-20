@@ -20,6 +20,7 @@ class ProjectTest extends WebTestCase
             array('[project1]', true, 'project1'),
             array('[project 1]', true, 'project 1'),
             array('project1', false),
+            array('other contents [project1]', false),
         );
     }
 
@@ -38,7 +39,6 @@ class ProjectTest extends WebTestCase
         );
         
         $token = $terminal->match($string);
-        
         
         if ($match) {
             unset($token['matches']);
