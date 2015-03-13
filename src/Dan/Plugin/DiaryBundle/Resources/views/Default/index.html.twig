@@ -8,10 +8,18 @@
             <a href="{{path('diary_settings_edit')}}" >Settings</a>
         </li>
         <li>
-            <a href="{{path('report')}}" >Reports</a>
-        </li>
-        <li>
-            <a href="{{path('report_calendar')}}" >Report Calendar</a>
+            Reports
+            <ul>
+                <li>
+                    <a href="{{path('report')}}" >List</a>
+                </li>
+                <li>
+                    <a href="{{path('report_calendar')}}" >Calendar</a>
+                </li>
+                <li>
+                    <a href="{{path('report_new')}}" >New</a>
+                </li>
+            </ul>
         </li>
         <li>
             Analysis
