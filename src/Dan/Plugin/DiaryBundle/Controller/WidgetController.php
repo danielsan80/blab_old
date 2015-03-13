@@ -81,6 +81,15 @@ class WidgetController extends Controller
             }
             $yearMonths[$year][$date->format('m')] = $date->format('F');
         }
+        
+        $date = new \DateTime($month);
+        $year = $date->format('Y');
+        if (!isset($yearMonths[$year])) {
+            $yearMonths[$year] = array();
+        }
+        $yearMonths[$year][$date->format('m')] = $date->format('F');
+        
+        
 
         ksort($yearMonths);
         foreach($yearMonths as $year => $months) {

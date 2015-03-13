@@ -11,6 +11,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Dan\Plugin\DiaryBundle\Entity\Report;
 use Dan\Plugin\DiaryBundle\Form\ReportType;
 
+use Dan\Plugin\DiaryBundle\Model\ReportCollection;
+
 use Symfony\Component\Yaml\Yaml;
 
 use Dan\Plugin\DiaryBundle\Parser\Parser\DefaultParser;
@@ -77,6 +79,128 @@ class ReportController extends Controller
             'entities' => $entities,
             'forms_delete' => $deleteForms,
         );
+    }
+    
+    
+    /**
+     * Lists all Report entities by month.
+     *
+     * @Route("/calendar", name="report_calendar")
+     * @Method("GET")
+     * @Template()
+     */
+    public function calendarAction()
+    {
+        
+        $this->givenUserIsLoggedIn();
+        $request = $this->getRequest();
+
+        $user = $this->getUser();
+        $project = $request->get('project');
+        $month = $request->get('month');
+        
+        if (!$month) {
+            $now = new \DateTime();
+            $month = $now->format('Y-m');
+        }
+       
+        
+        $data = $this->getCalendarData($user, $project, $month);
+        
+        $deleteForms = array();
+        
+        $arrayHelper = new \Dan\MainBundle\Model\ArrayHelper();
+        $pathes = $arrayHelper->explodePath($data, 'reports.*.*.*');
+        foreach ($pathes as $path) {
+            $report = $arrayHelper->getPath($data, $path);
+            $deleteForms[$report->getParent()->getId()] = $this->createDeleteForm($report->getParent()->getId(), array(
+                'class' =>  'delete',
+                'label' => 'del',
+            ))->createView();
+        }
+
+        return array_merge($data, array(
+            'user' => $user,
+            'route' => 'report_calendar',
+            'params' => array(),
+            'month' => $month,
+            'forms_delete' => $deleteForms,
+        ));
+    }
+    
+    private function getCalendarData($user, $project, $month)
+    {
+        
+        $arrayHelper = new \Dan\MainBundle\Model\ArrayHelper();
+        $data = array();
+
+        $analysisHelper = $this->get('dan_diary.analysis.helper');
+        $reportManager = $this->get('dan_diary.model.manager.report');
+        
+        $reports = $reportManager->getReportsByUser($user);
+        $reportChildren = $reportManager->explodeReports($reports);
+        
+        $_reportChildren = array();
+
+        foreach($reportChildren as $reportChild) {
+            if (!$month || $month != $analysisHelper->getMonth($reportChild)) {
+                continue;
+            }
+            
+            
+            if ($project && $project != $analysisHelper->getProject($reportChild)) {
+                continue;
+            }
+            
+            $_reportChildren[] = $reportChild;
+
+        }
+        
+        $reportChildren = $_reportChildren;
+        
+        $pager = new \Dan\Plugin\DiaryBundle\Model\Pager\CalendarPager($reportChildren);
+        $pager->setDateRetrieveCallback(function($reportChild) use ($analysisHelper) {
+            return $analysisHelper->getDate($reportChild);
+        });
+        $pager->setMonth($month);
+        
+//        foreach($reports as $report) {
+//        
+//            $date = $analysisHelper->getDate($report);
+//            if (!$date) {
+//                continue;
+//            }
+//            
+//            $monthNumber = (int)$date->format('j');
+//            $weekNumber = (int)$date->format('W');
+//            $dow = (int)$date->format('w');
+//            $dow = $dow==0?7:$dow;
+//            $dayReports = $arrayHelper->getPath($data, $weekNumber.'.'.$dow, array());
+//            $dayReports[] = $report;
+//            $data = $arrayHelper->setPath($data, $weekNumber.'.'.$dow, $dayReports);
+//        }
+        
+        return array(
+            'project' => $project,
+            'month' => $month,
+            'reports' => $data,
+            'pager' => $pager,
+        );
+    }
+    
+    private function createReportCollection($user, $project)
+    {
+        $userManager = $this->get('model.manager.user');
+        $euroPerHour = $userManager->getMetadata($user, 'diary', 'settings.projects.'.$project.'.euro_per_hour', null);
+        $euroPerDay = $userManager->getMetadata($user, 'diary', 'settings.projects.'.$project.'.euro_per_day', null);
+        $hoursPerDay = $userManager->getMetadata($user, 'diary', 'settings.projects.'.$project.'.hours_per_day', null);
+
+        $collection = new ReportCollection();
+        $collection->setMoneyPerHour($euroPerHour);
+        $collection->setMoneyPerDay($euroPerDay);
+        $collection->setHoursPerDay($hoursPerDay);
+
+        return $collection;
     }
 
     /**

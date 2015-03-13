@@ -56,6 +56,13 @@ class InstallPluginsCommand extends ContainerAwareCommand
             $content .= '@import "plugin/'.$plugin->getCode().'/index.less";'."\n";
         }
         file_put_contents($mainLessDir.'/plugin.less', $content);
+        
+        $content = file_get_contents($mainLessDir.'/index.less');
+        if (count(explode("\n", $content)) > count(explode("\n", trim($content)))+10) {
+            file_put_contents($mainLessDir.'/index.less', trim($content));
+        } else {
+            file_put_contents($mainLessDir.'/index.less', $content."\n");
+        }
 
         $output->writeln('DONE');
     }

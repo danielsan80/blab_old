@@ -1,0 +1,77 @@
+{% extends 'DanPluginDiaryBundle::layout.html.twig' %}
+
+{% block title %}blab{% endblock %}
+{% block content %}
+    <div class="pull-right" >
+        <ul class="unstyled inline record_actions">
+            <li>
+                <a href="{{ path('report_new') }}" class="btn btn-mini" >
+                    New
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+    <h3>Reports</h3>
+    
+    <div class="widgets" >
+        {{ render(controller('DanPluginDiaryBundle:Widget:selectMonth', {user: user, route: route, params:params, month:month})) }}
+        <br/>
+    </div>
+
+    <table class="table table-bordered table-list table-calendar">
+        <thead>
+            <tr>
+                <th>Lunedì</th>
+                <th>Martedì</th>
+                <th>Mercoledì</th>
+                <th>Giovedì</th>
+                <th>Venerdì</th>
+                <th>Sabato</th>
+                <th>Domenica</th>
+            </tr>
+        </thead>
+        <tbody>
+           {# {% for weekReports in reports %}
+                <tr>
+                    {% for dow in 1..7 %}
+                        <td>
+                            {% if weekReports[dow] is defined %}
+                                {% for reportChild in weekReports[dow] %}
+                                    {% set entity = reportChild.parent %}
+                                    <a href="{{path('report_edit', {id:entity.id})}}" title="{{entity.id}}" alt="{{entity.id}}" target="_blank" class="icon icon-edit"></a>
+                               {% endfor %}
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}#}
+            {% for week in pager.weeks %}
+                <tr>
+                    {% for day in week.previousMonthDays %}
+                        <td></td>
+                    {% endfor %}
+
+                    {% for day in week.inMonthDays %}
+                        <td>
+                            <span class="daynum {{day.isPast?'past':''}} {{day.isToday?'today':''}}">{{day.date|date('d')}}</span>
+                            <span class="elements">
+                                {% for reportChild in day.elements %}
+                                    {% set report = reportChild.parent %}
+                                    <a href="{{path('report_edit', {id:report.id})}}" title="{{report.id}}" alt="{{report.id}}" target="_blank" class="icon icon-edit"></a>
+                                {% endfor %}
+                            </span>
+                        </td>
+                    {% endfor %}
+                    
+                    {% for day in week.nextMonthDays %}
+                        <td></td>
+                    {% endfor %}
+                    
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+{% endblock %}

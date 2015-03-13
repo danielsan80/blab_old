@@ -101,6 +101,10 @@ class ArrayHelper
 //            if ($right) {
 //                $right = '.'.$right;
 //            }
+            
+            if (!is_array($data)) {
+                throw new \Exception('maybe this path is not ok: '.implode('.', $path));
+            }
             foreach($data as $key => $value) {
                 $subpath = array_merge($left, array($key), $right);
                 $pathes = array_merge($pathes, $this->explodePath($array, implode('.', $subpath)));
