@@ -162,6 +162,9 @@ class ReportController extends Controller
         $pager->setDateRetrieveCallback(function($reportChild) use ($analysisHelper) {
             return $analysisHelper->getDate($reportChild);
         });
+        $pager->setIdRetrieveCallback(function($reportChild) {
+            return $reportChild->getParent()->getId();
+        });
         $pager->setMonth($month);
         
 //        foreach($reports as $report) {

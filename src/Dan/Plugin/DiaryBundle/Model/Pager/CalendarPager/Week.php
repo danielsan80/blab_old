@@ -94,9 +94,9 @@ class Week
         return $this->days;
     }
     
-    public function addElement($el, $date) {
+    public function addElement($el, $date, $id = null) {
         foreach($this->days as $day) {
-            $day->addElement($el, $date);
+            $day->addElement($el, $date, $id);
         }
     }
 }

@@ -5,14 +5,22 @@ namespace Dan\Plugin\DiaryBundle\Model\Pager;
 class CalendarPager
 {
     private $elements;
-    private $year;
     private $month;
     private $dateRetrieveCallback;
+    private $idRetrieveCallback;
 
     public function __construct(array $elements)
     {
         $this->elements = $elements;
         $this->setMonth();
+        
+        $this->dateRetrieveCallback = function(){
+            return null;
+        };
+        
+        $this->idRetrieveCallback = function(){
+            return null;
+        };
     }
 
     public function setMonth($month=null)
@@ -30,10 +38,11 @@ class CalendarPager
         $weeks = $this->generateMonthWeeks($this->month);
         
         $getDate = $this->dateRetrieveCallback;
+        $getId = $this->idRetrieveCallback;
         
         foreach($this->elements as $el) {
             foreach($weeks as $week) {
-                $week->addElement($el, $getDate($el));
+                $week->addElement($el, $getDate($el), $getId($el));
             }
         }
         
@@ -72,6 +81,11 @@ class CalendarPager
     public function setDateRetrieveCallback(callable $callback)
     {
         $this->dateRetrieveCallback = $callback;
+    }
+    
+    public function setIdRetrieveCallback(callable $callback)
+    {
+        $this->idRetrieveCallback = $callback;
     }
     
  }

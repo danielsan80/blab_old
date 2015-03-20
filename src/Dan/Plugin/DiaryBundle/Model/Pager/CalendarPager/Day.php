@@ -32,11 +32,14 @@ class Day
     }
     
     
-    public function addElement($element, $date = null) {
-        if ($date) {
-            if ($this->date == $date) {
-                $this->elements[] = $element;
-            }
+    public function addElement($element, $date = null, $id = null)
+    {
+        if ($date && $this->date != $date) {
+            return;
+        }
+        
+        if ($id) {
+            $this->elements[$id] = $element;
         } else {
             $this->elements[] = $element;
         }
