@@ -14,9 +14,7 @@ class CalendarPager
         $this->elements = $elements;
         $this->setMonth();
         
-        $this->dateRetrieveCallback = function(){
-            return null;
-        };
+        $this->dateRetrieveCallback;
         
         $this->idRetrieveCallback = function(){
             return null;
@@ -33,6 +31,10 @@ class CalendarPager
     {
         if (!$this->month) {
             throw new \Exception('You must set a month: "yyyy-mm" ');
+        }
+        
+        if ($this->elements && !$this->dateRetrieveCallback) {
+            throw new \Exception('You must set a callback to get the element date with setDateRetriveCallback()');
         }
 
         $weeks = $this->generateMonthWeeks($this->month);
