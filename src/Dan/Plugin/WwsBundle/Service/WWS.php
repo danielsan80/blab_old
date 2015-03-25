@@ -14,19 +14,17 @@ class WWS
 
     private $options;
     private $storeFilename;
+    private $starGenerator;
 
     public function __construct()
     {
-        $this->options = $this->getDefaultOptions();
+        $this->setOptions();
+        $this->starsGenerator = new StarsGenerator();
     }
 
     public function getDefaultOptions()
     {
         return array(
-            'num_stars' => 50,
-            'sphere_r' => 20,
-            'min_distance' => 2,
-            'max_distance' => 10,
             'board_width' => 297,
             'board_height' => 210,
             'board_padding' => 5,
@@ -60,65 +58,12 @@ class WWS
     {
         return file_exists($this->storeFilename);
     }
-
+    
     public function generateStars()
     {
-        $n = $this->options['num_stars'];
-        $r = $this->options['sphere_r'];
-        $min = $this->options['min_distance'];
-        $max = $this->options['max_distance'];
+        $this->starsGenerator->generateStars();
 
-        $stars = array();
-        for ($i = 0; $i < $n; $i++) {
-            $stars[$i] = array(
-                'coord' => array(
-                    'r' => $this->rand(),
-                    'azi' => $this->rand() * 2 * pi(),
-                    'alt' => ($this->rand() * pi()),
-                ),
-            );
-        }
-
-        foreach ($stars as $i => $star1) {
-            foreach ($stars as $j => $star2) {
-                if ($i != $j) {
-                    $distance = round($this->distance($star1, $star2) * $r);
-                    if ($distance < $min) {
-                        unset($stars[$j]);
-                        continue;
-                    }
-                }
-            }
-        }
-        $stars = array_values($stars);
-
-        $_stars = array();
-        foreach ($stars as $i => $star) {
-            $_stars[str_pad($i, 3, '0', STR_PAD_LEFT)] = $star;
-        }
-        $stars = $_stars;
-
-        foreach ($stars as $i => $star1) {
-            $distances = array();
-            foreach ($stars as $j => $star2) {
-                if ($i != $j) {
-                    $distance = round($this->distance($star1, $star2) * $r);
-                    if ($distance <= $max) {
-                        $distances[$j] = $distance;
-                    }
-                }
-            }
-            asort($distances);
-            $stars[$i]['distances'] = $distances;
-        }
-
-        foreach ($stars as $i => $star) {
-            $stars[$i]['coord']['r'] = round($stars[$i]['coord']['r'], 2);
-            $stars[$i]['coord']['alt'] = round($stars[$i]['coord']['alt'], 2);
-            $stars[$i]['coord']['azi'] = round($stars[$i]['coord']['azi'], 2);
-        }
-
-        return $stars;
+        return $this->starsGenerator->getStars();
     }
 
     public function saveStars($stars)
@@ -216,28 +161,6 @@ class WWS
         return $data;
     }
 
-    private function rand()
-    {
-        $precision = 1000;
-        return rand(0, $precision) / $precision;
-    }
-
-    private function distance($star1, $star2)
-    {
-        $r1 = $star1['coord']['r'];
-        $teta1 = $star1['coord']['alt'];
-        $fi1 = $star1['coord']['azi'];
-
-        $r2 = $star2['coord']['r'];
-        $teta2 = $star2['coord']['alt'];
-        $fi2 = $star2['coord']['azi'];
-
-        $x = pow($r1 * sin($teta1) * cos($fi1) - $r2 * sin($teta2) * cos($fi2), 2);
-        $y = pow($r1 * sin($teta1) * sin($fi1) - $r2 * sin($teta2) * sin($fi2), 2);
-        $z = pow($r1 * cos($teta1) - $r2 * cos($teta2), 2);
-
-        return sqrt($x + $y + $z);
-    }
 
     private function addXYZ($coord)
     {
